@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -72,7 +76,7 @@
     </div>
     </div>
   </nav>
-<form method="post">
+<form:form method="post" modelAttribute="member">
    <div class="container" style="padding-top:5%">
  	<div class="row">
  	<div class="col-md-3"></div>
@@ -82,29 +86,29 @@
   		<div class="card-body">
             <div class="form-group">
               <label for="InputId">아이디</label>
-              <input type="text" class="form-control" id="id" name="id" placeholder="ID">
+              <form:input type="text" class="form-control" id="id" name="id" placeholder="ID" path="id"/><p style="color:red"><form:errors path="id"/></p>
             </div>
             <div class="form-group">
               <label for="InputPassword">비밀번호</label>
-              <input type="password" class="form-control" id="password"  name="password" placeholder="Password">
+              <form:input type="password" class="form-control" id="password"  name="password" placeholder="Password" path="password"/><p style="color:red"><form:errors path="password"/></p>
             </div>
             <div class="form-group">
               <label for="InputName">이름</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+              <form:input type="text" class="form-control" id="name" name="name" placeholder="Name" path="name"/><p style="color:red"><form:errors path="name"/></p>
             </div>
               <div class="form-group">
               <label for="InputName">성</label>
-              <input type="text" class="form-control" id="gender" name="gender" placeholder="Gender">
+              <form:input type="text" class="form-control" id="gender" name="gender" placeholder="Gender" path="gender"/><p style="color:red"><form:errors path="gender"/></p>
             </div>
              <div class="form-group">
               <label for="phoneNumber">휴대폰 번호</label>
-              <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone_number">
+              <form:input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone_number" path="phone_number"/><p style="color:red"><form:errors path="phone_number"/></p>
             </div>
                <div class="form-group">
               <label for="phoneNumber">pt횟수</label>
-              <input type="text" class="form-control" id="pt" name="pt" placeholder="Pt">
+              <form:input type="text" class="form-control" id="pt" name="pt" placeholder="Pt" path="pt"/><p style="color:red"><form:errors path="pt"/></p>
             </div>
-            <button type="submit" class="btn btn-block btn-primary text-light">서비스 이용자 등록</button>
+            <button type="submit" id="btnSave" class="btn btn-block btn-primary text-light">서비스 이용자 등록</button>
                   <input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 		</div>
@@ -113,7 +117,7 @@
  	<div class="col-md-3"></div>
  	</div>
  	</div>
- 	</form>
+ 	</form:form>
  	
      <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
