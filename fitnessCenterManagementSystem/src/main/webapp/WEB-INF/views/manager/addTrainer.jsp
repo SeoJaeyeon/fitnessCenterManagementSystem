@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -87,7 +91,7 @@
     </div>
     </div>
   </nav>
-<form method="post" enctype="multipart/form-data">
+<form:form method="post" enctype="multipart/form-data" modelAttribute="trainer">
    <div class="container" style="padding-top:5%">
  	<div class="row">
  	<div class="col-md-3"></div>
@@ -98,7 +102,7 @@
   		<!-- 사진 입력폼  -->
   		  <div class="form-group">
               <label for="InputId">아이디</label>
-              <input type="text" class="form-control" id="id" name="id" placeholder="ID">
+              <form:input type="text" class="form-control" id="id" name="id" placeholder="ID" path="id" /><p style="color:red"><form:errors path="id"/></p>
             </div>
             <!-- 사진 입력폼 -->
             <div class="form-group">
@@ -108,27 +112,43 @@
             </div>
             <div class="form-group">
               <label for="InputPassword">비밀번호</label>
-              <input type="password" class="form-control" id="password"  name="password" placeholder="Password">
+              <form:input type="password" class="form-control" id="password"  name="password" placeholder="Password" path="password"/><p style="color:red"><form:errors path="password"/></p>
             </div>
             <div class="form-group">
               <label for="InputName">이름</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+              <form:input type="text" class="form-control" id="name" name="name" placeholder="Name" path="name"/><p style="color:red"><form:errors path="name"/></p>
             </div>
               <div class="form-group">
-              <label for="InputName">성</label>
-              <input type="text" class="form-control" id="gender" name="gender" placeholder="Gender">
+              <label for="InputName">성별</label>
+              	<div class="form-check form-check-inline">
+  				<input class="form-check-input" type="radio" name="gender" id="M" value="M" checked>
+  				<label class="form-check-label" for="inlineRadio1">남성</label>
+			</div>
+				<div class="form-check form-check-inline">
+  				<input class="form-check-input" type="radio" name="gender" id="G" value="G">
+  			<label class="form-check-label" for="inlineRadio2">여성</label>
+				</div>
             </div>
     	<div class="form-group">
               <label for="InputName">생년월일</label>
-              <input type="text" class="form-control" id="birth" name="birth" placeholder="BirthDate">
+              <form:input type="text" class="form-control" id="birthdate" name="birthdate" placeholder="BirthDate" path="birthdate"/><p style="color:red"><form:errors path="birthdate"/></p>
             </div>
              <div class="form-group">
               <label for="phoneNumber">휴대폰 번호</label>
-              <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone_number">
+              <form:input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone_number" path="phone_number"/><p style="color:red"><form:errors path="phone_number"/></p>
             </div>
                <div class="form-group">
               <label for="closedDay">휴무일</label>
-              <input type="text" class="form-control" id="closed_day" name="closed_day" placeholder="Closed Day">
+              <select id="closed_day" name="closed_day" class="custom-select">
+ 			 <option value="MON" selected>월요일</option>
+ 			 <option value="TUE">화요일</option>
+  			<option value="WED">수요일</option>
+  			<option value="THU">목요일</option>
+  			 <option value="FRI">금요일</option>
+  			<option value="SAT">토요일</option>
+  			<option value="SUN">일요일</option>
+			</select>
+            </div>
             </div>
             <button type="submit" class="btn btn-block btn-primary text-light">서비스 이용자 등록</button>
                   <input type="hidden" name="${_csrf.parameterName}"
@@ -138,8 +158,7 @@
  	</div>
  	<div class="col-md-3"></div>
  	</div>
- 	</div>
- 	</form>
+ 	</form:form>
  	
      <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
