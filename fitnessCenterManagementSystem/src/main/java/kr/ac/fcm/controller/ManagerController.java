@@ -5,13 +5,17 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +35,7 @@ import kr.ac.fcm.user.Trainer;
 
 @Controller
 public class ManagerController {
-	
+	Logger logger=LoggerFactory.getLogger(ManagerController.class);
 	private Manager manager;
 	@Autowired
 	private AccountService accountService;
@@ -55,12 +59,17 @@ public class ManagerController {
 	}
 	
 	@GetMapping("/manager/addUser")
-	public String addUserByGet(){
+	public String addUserByGet(Model model){
+		model.addAttribute("member", new Member());
 		return "manager/addUser";
 	}
 	
 	@PostMapping("/manager/addUser")
-	public String addUserByPose(Member member,Model model){
+	public String addUserByPose(@Valid Member member, BindingResult bindingResult,Model model){
+		if(bindingResult.hasErrors()){
+			logger.info("form error");
+			return "/manager/addUser";
+		}
 		Account account=new Account();
 		account.setId(member.getId());
 		account.setPassword(member.getPassword());
