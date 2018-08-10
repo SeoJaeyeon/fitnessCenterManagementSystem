@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class Account implements UserDetails{
 	
-	@Size(min=5, max=15)@Pattern(regexp="/^[_A-Za-z0-9+]*$/", message="아이디는 반드시 영문자와 숫자로만 구성해야합니다!!") @NotNull(message="이 필드는 비어있을 수 없습니다!!!")
+	@Size(min=5, max=15)@Pattern(regexp="^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", message="아이디는 반드시 영문자와 숫자로만 구성해야합니다!!") @NotNull(message="이 필드는 비어있을 수 없습니다!!!")
 	private String id;
 	private String password;
 	private String type;
