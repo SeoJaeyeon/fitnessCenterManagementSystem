@@ -26,6 +26,7 @@ import kr.ac.fcm.mapper.ManagerMapper;
 import kr.ac.fcm.mapper.MemberMapper;
 import kr.ac.fcm.mapper.TrainerMapper;
 import kr.ac.fcm.service.AccountService;
+import kr.ac.fcm.service.AddUser;
 import kr.ac.fcm.service.s3.S3Wrapper;
 import kr.ac.fcm.user.Account;
 import kr.ac.fcm.user.Manager;
@@ -37,16 +38,13 @@ import kr.ac.fcm.user.Trainer;
 public class ManagerController {
 	Logger logger=LoggerFactory.getLogger(ManagerController.class);
 	private Manager manager;
-	@Autowired
-	private AccountService accountService;
+
 	@Autowired
 	private ManagerMapper managerMapper;	
 	@Autowired
-	private MemberMapper memberMapper;
-	@Autowired
-	private TrainerMapper trainerMapper;
-	@Autowired
 	private S3Wrapper s3Service;
+	@Autowired
+	private AddUser addUserService;
 	
 	@GetMapping("/manager")
 	public String manager(@RequestParam("id")String id,HttpServletRequest req, HttpServletResponse res){
@@ -65,7 +63,7 @@ public class ManagerController {
 	}
 	
 	@PostMapping("/manager/addUser")
-	public String addUserByPose(@Valid Member member, BindingResult bindingResult,Model model){
+	public String addUserByPost(@Valid Member member, BindingResult bindingResult,Model model){
 		if(bindingResult.hasErrors()){
 			logger.info("form error");
 			return "/manager/addUser";
@@ -75,8 +73,8 @@ public class ManagerController {
 		account.setPassword(member.getPassword());
 		member.setCenter_id(this.manager.getCenter_id());
 		try{
-			accountService.save(account, "ROLE_MEMBER", "MEMBER");
-			memberMapper.insertMember(member);
+			addUserService.addAccount(account,"member");
+			addUserService.addMember(member);
 		}catch(Exception ex){
 			ex.printStackTrace();
 			model.addAttribute("message","사용자 추가 에러!!!");
@@ -88,19 +86,24 @@ public class ManagerController {
 	}
 
 	@GetMapping("/manager/addTrainer")
-	public String addTrainerByGET(){
+	public String addTrainerByGET(Model model){
+		model.addAttribute("trainer", new Trainer());
 		return "/manager/addTrainer";
 	}
 	@PostMapping("/manager/addTrainer")
-	public String addTrainer(Trainer trainer,Model model,HttpServletRequest req,@RequestParam("file") MultipartFile multipartFile){
+	public String addTrainer(@Valid Trainer trainer,BindingResult bindingResult, Model model,HttpServletRequest req,@RequestParam("file") MultipartFile multipartFile){
+		if(bindingResult.hasErrors()){
+			logger.info("form error in addTrainer");
+			return "/manager/addTrainer";
+		}
 		Account account=new Account();
 		account.setId(trainer.getId());
 		account.setPassword(trainer.getPassword());
 		trainer.setCenter_id(this.manager.getCenter_id());
 		try{
-			accountService.save(account, "ROLE_TRAINER", "TRAINER");
-			trainerMapper.insertTrainer(trainer);
-			s3Service.upload(multipartFile, "traienr");
+			addUserService.addAccount(account, "trainer");
+			addUserService.addTrainer(trainer);
+			s3Service.upload(multipartFile, "trainer",trainer.getId());
 		}catch(Exception ex){
 			ex.printStackTrace();
 			model.addAttribute("message","사용자 추가 에러!!!");
@@ -110,10 +113,4 @@ public class ManagerController {
 		return "/manager/addTrainer";
 	}
 
-    @PostMapping("/upload")
-    @ResponseBody
-    public String upload(@RequestParam("data") MultipartFile multipartFile) throws IOException {
-        return s3Service.upload(multipartFile, "trainer");
-    }
-	
 }
