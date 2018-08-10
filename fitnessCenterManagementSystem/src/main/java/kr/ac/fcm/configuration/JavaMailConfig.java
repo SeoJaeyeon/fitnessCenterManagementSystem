@@ -31,9 +31,9 @@ public class JavaMailConfig {
     @Value("${mail.smtp.socketFactory.fallback}")
     private boolean fallback;
     
-    @Value("${mail.account.username")
+    @Value("${mail.account.username}")
     private String username;
-    @Value("${mail.account.password")
+    @Value("${mail.account.password}")
     private String password;
     
 
