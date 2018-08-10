@@ -97,16 +97,31 @@
               <form:input type="text" class="form-control" id="name" name="name" placeholder="Name" path="name"/><p style="color:red"><form:errors path="name"/></p>
             </div>
               <div class="form-group">
-              <label for="InputName">성</label>
-              <form:input type="text" class="form-control" id="gender" name="gender" placeholder="Gender" path="gender"/><p style="color:red"><form:errors path="gender"/></p>
-            </div>
+              <label for="InputName">성별</br></br></label>
+			<div class="form-check form-check-inline">
+  				<input class="form-check-input" type="radio" name="gender" id="M" value="M" checked>
+  				<label class="form-check-label" for="inlineRadio1">남성</label>
+			</div>
+				<div class="form-check form-check-inline">
+  				<input class="form-check-input" type="radio" name="gender" id="G" value="G">
+  			<label class="form-check-label" for="inlineRadio2">여성</label>
+				</div>
              <div class="form-group">
               <label for="phoneNumber">휴대폰 번호</label>
               <form:input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone_number" path="phone_number"/><p style="color:red"><form:errors path="phone_number"/></p>
             </div>
                <div class="form-group">
-              <label for="phoneNumber">pt횟수</label>
-              <form:input type="text" class="form-control" id="pt" name="pt" placeholder="Pt" path="pt"/><p style="color:red"><form:errors path="pt"/></p>
+              <label for="pt">주 pt횟수</label>
+              <select id="pt" name="pt" class="custom-select">
+ 			 <option value="0" selected>0</option>
+ 			 <option value="1">1</option>
+  			<option value="2">2</option>
+  			<option value="3">3</option>
+  			 <option value="4">4</option>
+  			<option value="5">5</option>
+  			<option value="6">6</option>
+  			<option value="7">7</option>
+			</select>
             </div>
             <button type="submit" id="btnSave" class="btn btn-block btn-primary text-light">서비스 이용자 등록</button>
                   <input type="hidden" name="${_csrf.parameterName}"
