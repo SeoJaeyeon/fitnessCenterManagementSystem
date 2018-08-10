@@ -77,6 +77,8 @@
               	    <button class="btn btn-secondary" type="submit">이메일 상담하기</button>
                 </div>
          	 </div>
+         	 	<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
             </form>
         </div>
       </div>
