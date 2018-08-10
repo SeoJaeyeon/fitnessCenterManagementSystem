@@ -48,8 +48,8 @@ public class S3Wrapper {
       }
     
 
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException {
-        File uploadFile = convert(multipartFile)
+    public String upload(MultipartFile multipartFile, String dirName, String tr_id) throws IOException {
+        File uploadFile = convert(multipartFile, tr_id)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
         return upload(uploadFile, dirName);
@@ -75,8 +75,8 @@ public class S3Wrapper {
         }
     }
 
-    private Optional<File> convert(MultipartFile file) throws IOException {
-        File convertFile = new File(file.getOriginalFilename());
+    private Optional<File> convert(MultipartFile file, String tr_id) throws IOException {
+        File convertFile = new File(tr_id);
         if(convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(file.getBytes());
