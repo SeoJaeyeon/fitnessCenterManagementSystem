@@ -1,5 +1,7 @@
 package kr.ac.fcm.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,26 +21,27 @@ public class AddUserImpl implements AddUser {
 	private TrainerMapper trainerMapper;
 	
 	@Override
+	@Transactional
 	public void addMember(Member member) {
+		Account account=new Account();
+		account.setId(member.getId());
+		account.setPassword(member.getPassword());
+		account.setType("MEMBER");
+		accountService.save(account, "ROLE_MEMBER", "MEMBER");
 		memberMapper.insertMember(member);
 	}
 
 	@Override
+	@Transactional
 	public void addTrainer(Trainer trainer) {
+		Account account=new Account();
+		account.setId(trainer.getId());
+		account.setType("TRAINER");
+		account.setPassword(trainer.getPassword());
+		accountService.save(account, "ROLE_TRAINER", "TRAINER");
 		trainerMapper.insertTrainer(trainer);
 	}
 
-	@Override
-	public void addAccount(Account account, String type) {
-		// TODO Auto-generated method stub
-	
-		if(type.equals("member"))
-			accountService.save(account, "ROLE_MEMBER", "MEMBER");
-		
-		if(type.equals("trainer"))
-			accountService.save(account, "ROLE_TRAINER", "TRAINER");
-		
 
-	}
 
 }
