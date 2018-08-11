@@ -1,34 +1,29 @@
 package kr.ac.fcm.controller;
 
-import java.io.IOException;
-import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.fcm.mapper.ManagerMapper;
-import kr.ac.fcm.mapper.MemberMapper;
-import kr.ac.fcm.mapper.TrainerMapper;
-import kr.ac.fcm.service.AccountService;
+
 import kr.ac.fcm.service.AddUser;
 import kr.ac.fcm.service.s3.S3Wrapper;
-import kr.ac.fcm.user.Account;
+
 import kr.ac.fcm.user.Manager;
 import kr.ac.fcm.user.Member;
 import kr.ac.fcm.user.Trainer;
@@ -68,12 +63,8 @@ public class ManagerController {
 			logger.info("form error");
 			return "/manager/addUser";
 		}
-		Account account=new Account();
-		account.setId(member.getId());
-		account.setPassword(member.getPassword());
 		member.setCenter_id(this.manager.getCenter_id());
 		try{
-			addUserService.addAccount(account,"member");
 			addUserService.addMember(member);
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -96,12 +87,9 @@ public class ManagerController {
 			logger.info("form error in addTrainer");
 			return "/manager/addTrainer";
 		}
-		Account account=new Account();
-		account.setId(trainer.getId());
-		account.setPassword(trainer.getPassword());
+		
 		trainer.setCenter_id(this.manager.getCenter_id());
 		try{
-			addUserService.addAccount(account, "trainer");
 			addUserService.addTrainer(trainer);
 			s3Service.upload(multipartFile, "trainer",trainer.getId());
 		}catch(Exception ex){

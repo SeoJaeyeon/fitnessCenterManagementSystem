@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 
 @Service
+@Transactional
 public class S3Wrapper {
     @Autowired
       private AmazonS3 amazonS3Client;
@@ -34,6 +37,7 @@ public class S3Wrapper {
     
     Logger logger=LoggerFactory.getLogger(S3Wrapper.class);
     
+    //S3 download test
     public ResponseEntity<byte[]> download(String key) throws IOException {
             GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, key);
             S3Object s3Object = amazonS3Client.getObject(getObjectRequest);
