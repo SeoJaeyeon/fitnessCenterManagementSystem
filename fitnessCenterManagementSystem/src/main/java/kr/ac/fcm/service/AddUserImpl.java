@@ -20,6 +20,7 @@ public class AddUserImpl implements AddUser {
 	@Autowired
 	private TrainerMapper trainerMapper;
 	
+	//트랜잭션 처
 	@Override
 	@Transactional
 	public void addMember(Member member) {
