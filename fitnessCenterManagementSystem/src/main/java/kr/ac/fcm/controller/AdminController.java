@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.ac.fcm.mapper.CenterMapper;
 import kr.ac.fcm.mapper.ManagerMapper;
 import kr.ac.fcm.service.AccountService;
+import kr.ac.fcm.service.AddUser;
 import kr.ac.fcm.service.s3.S3Wrapper;
 import kr.ac.fcm.user.Account;
 import kr.ac.fcm.user.Center;
@@ -28,16 +29,7 @@ import kr.ac.fcm.user.Manager;
 public class AdminController {
 	
 	@Autowired
-	AccountService accountService;
-	
-	@Autowired
-	ManagerMapper managerMapper;
-	
-	@Autowired
-	CenterMapper centerMapper;
-	
-	@Autowired
-	private S3Wrapper s3Wrapper;
+	private AddUser addUserService;
 	
 	@RequestMapping(value="/admin", method=RequestMethod.GET)
 	public String adminPage(Model model,HttpServletRequest req){
@@ -47,14 +39,10 @@ public class AdminController {
 	//관리자 추가 
 	@RequestMapping(value="/admin", method=RequestMethod.POST) 
 	public String addManager(Center center,Manager manager,HttpServletRequest req,Model model){
-		Account account=new Account();
-		account.setId(manager.getId());
-		account.setPassword(manager.getPassword());
+
 	
 		try{
-		accountService.save(account, "ROLE_MANAGER", "MANAGER");
-		managerMapper.insertManager(manager);
-		centerMapper.insertCenterData(center);
+			addUserService.addManager(manager, center);
 		
 		}catch(Exception ex){ 
 			ex.printStackTrace();
@@ -67,11 +55,4 @@ public class AdminController {
 		
 	}
 	
-
-	@RequestMapping(value = "/download", method = RequestMethod.GET)
-	@ResponseBody
-	public ResponseEntity<byte[]> download(@RequestParam String key) throws IOException {
-	     return s3Wrapper.download(key);
-	}
-
 }

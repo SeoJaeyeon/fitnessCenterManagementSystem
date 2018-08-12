@@ -5,9 +5,13 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.ac.fcm.mapper.CenterMapper;
+import kr.ac.fcm.mapper.ManagerMapper;
 import kr.ac.fcm.mapper.MemberMapper;
 import kr.ac.fcm.mapper.TrainerMapper;
 import kr.ac.fcm.user.Account;
+import kr.ac.fcm.user.Center;
+import kr.ac.fcm.user.Manager;
 import kr.ac.fcm.user.Member;
 import kr.ac.fcm.user.Trainer;
 
@@ -19,8 +23,11 @@ public class AddUserImpl implements AddUser {
 	private MemberMapper memberMapper;
 	@Autowired
 	private TrainerMapper trainerMapper;
+	@Autowired
+	private ManagerMapper managerMapper;
+	@Autowired
+	private CenterMapper centerMapper;
 	
-	//트랜잭션 처
 	@Override
 	@Transactional
 	public void addMember(Member member) {
@@ -41,6 +48,20 @@ public class AddUserImpl implements AddUser {
 		account.setPassword(trainer.getPassword());
 		accountService.save(account, "ROLE_TRAINER", "TRAINER");
 		trainerMapper.insertTrainer(trainer);
+	}
+
+	@Override
+	@Transactional
+	public void addManager(Manager manager, Center center) throws Exception {
+		// TODO Auto-generated method stub
+		Account account=new Account();
+		account.setId(manager.getId());
+		account.setType("MANAGER");
+		account.setPassword(manager.getPassword());
+		managerMapper.insertManager(manager);
+		centerMapper.insertCenterData(center);
+		
+		
 	}
 
 
