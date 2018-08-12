@@ -21,7 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.fcm.mapper.ManagerMapper;
 
-import kr.ac.fcm.service.AddUser;
+import kr.ac.fcm.service.AddUserService;
+import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.s3.S3Wrapper;
 
 import kr.ac.fcm.user.Manager;
@@ -35,19 +36,16 @@ public class ManagerController {
 	private Manager manager;
 
 	@Autowired
-	private ManagerMapper managerMapper;	
+	private FindUserService findUserService;
 	@Autowired
 	private S3Wrapper s3Service;
 	@Autowired
-	private AddUser addUserService;
+	private AddUserService addUserService;
 	
 	@GetMapping("/manager")
 	public String manager(@RequestParam("id")String id,HttpServletRequest req, HttpServletResponse res){
 
-		System.out.println(id);
-		this.manager=managerMapper.findManagerByManagerId(id);
-		System.out.println(manager.getCenter_id()+"/////");
-
+		this.manager=findUserService.findManagerById(id);
 		return "manager/manager";
 	}
 	

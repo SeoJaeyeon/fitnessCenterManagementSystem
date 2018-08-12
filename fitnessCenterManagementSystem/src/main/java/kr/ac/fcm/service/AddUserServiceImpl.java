@@ -16,7 +16,7 @@ import kr.ac.fcm.user.Member;
 import kr.ac.fcm.user.Trainer;
 
 @Service
-public class AddUserImpl implements AddUser {
+public class AddUserServiceImpl implements AddUserService {
 	@Autowired
 	private AccountService accountService;
 	@Autowired
@@ -49,7 +49,7 @@ public class AddUserImpl implements AddUser {
 		accountService.save(account, "ROLE_TRAINER", "TRAINER");
 		trainerMapper.insertTrainer(trainer);
 	}
-
+// id         | name      | center_id | birthdate  | gender | closed_day | phone_number 
 	@Override
 	@Transactional
 	public void addManager(Manager manager, Center center) throws Exception {

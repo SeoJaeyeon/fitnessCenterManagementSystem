@@ -10,8 +10,8 @@ import kr.ac.fcm.user.Member;
 @Mapper
 public interface MemberMapper {
 
-	@Select("SELECT * FROM Member WHERE id= #{id} and password=#{password}")
-	Member findMemberByMemberId(@Param("id")String id,@Param("password")String password);
+	@Select("SELECT * FROM Member WHERE id= #{id}")
+	Member findMemberByMemberId(@Param("id")String id);
 
 	@Insert("INSERT INTO MEMBER VALUES(#{member.id},#{member.name}, #{member.center_id}, #{member.gender}, #{member.pt}, #{member.phone_number})")
 	void insertMember(@Param("member") Member member);
