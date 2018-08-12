@@ -10,8 +10,8 @@ import kr.ac.fcm.user.Trainer;
 @Mapper
 public interface TrainerMapper {
 
-	@Select("SELECT * FROM Trainer WHERE id= #{id} and password=#{password}")
-	Trainer findTrainerByTrainerId(@Param("id")String id,@Param("password")String password);
+	@Select("SELECT * FROM Trainer WHERE id= #{id}")
+	Trainer findTrainerByTrainerId(@Param("id")String id);
 	
 	/*id           | varchar(15) | NO   | PRI | NULL    |       |
 	| name         | varchar(5)  | YES  |     | NULL    |       |

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.ac.fcm.mapper.CenterMapper;
 import kr.ac.fcm.mapper.ManagerMapper;
 import kr.ac.fcm.service.AccountService;
-import kr.ac.fcm.service.AddUser;
+import kr.ac.fcm.service.AddUserService;
 import kr.ac.fcm.service.s3.S3Wrapper;
 import kr.ac.fcm.user.Account;
 import kr.ac.fcm.user.Center;
@@ -29,7 +29,7 @@ import kr.ac.fcm.user.Manager;
 public class AdminController {
 	
 	@Autowired
-	private AddUser addUserService;
+	private AddUserService addUserService;
 	
 	@RequestMapping(value="/admin", method=RequestMethod.GET)
 	public String adminPage(Model model,HttpServletRequest req){
