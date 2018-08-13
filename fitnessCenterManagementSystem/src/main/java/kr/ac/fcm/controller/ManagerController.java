@@ -71,6 +71,7 @@ public class ManagerController {
 		}
 		
 		model.addAttribute("message","정상적으로 등록되었습니다.");
+		model.addAttribute("member", new Member());
 		return "/manager/addUser";
 	}
 
@@ -96,6 +97,7 @@ public class ManagerController {
 			return "/manager/addTrainer";
 		}
 		model.addAttribute("message","정상적으로 추가되었습니다!!");
+		model.addAttribute("trainer",new Trainer());
 		return "/manager/addTrainer";
 	}
 

@@ -18,8 +18,27 @@
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath}/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
+	<script>
+		var message="${message}";
+		if(message!=""){
+			alert("${message}")
+		}
+		//이미지 미리보기 
+    	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-  <!-- Custom styles for this template-->
+            reader.onload = function (e) {
+                $('#ShowImage')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+	</script>
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -84,36 +103,36 @@
   <h5 class="card-header">마이페이지</h5>
   <div class="card-body">
     <h5 class="card-title">정보수정</h5>
-    <form method="post">
+    <form:form method="post" modelAttribute="trainer" enctype="multipart/form-data" action="/trainer/mypage">
             <div class="form-group">
               <label for="InpuImage">사진</label>          
 			  <input type='file' id="file" name="file" onchange="readURL(this);" /> 
-		      <img id="ShowImage" src="#"/>
+		      <img id="ShowImage" src="${img}"/>
             </div>
             <div class="form-group">
             <label for="ShowId">아이디</label>
-            <input type="text" class="form-control" id="id" name="id" value="${trainer.id}" disabled="disabled"/>
+            <form:input readonly="true" type="text" class="form-control" id="id" name="trainer.id"  path="id"/><p style="color:red"><form:errors path="id"/></p>
             </div>
             <div class="form-group">
               <label for="InputPassword">현재비밀번호</label>
-              <input type="password" class="form-control" id="password"  name="password" placeholder="Password"/>
+              <input type="password" class="form-control" id="cur_password"  name="cur_password" placeholder="Password">
             </div>
              <div class="form-group">
-              <label for="InputNewPassword">변경할비밀번호</label>
-              <input type="password" class="form-control" id="newpassword"  name="newpassword" placeholder="New Password"/>
+              <label for="InputNewPassword">변경할비밀번호(변경하지 않을 시 기존 비밀번호 입력 )</label>
+              <form:input type="password" class="form-control" id="password"  name="password" placeholder="New Password" path="password" /><p style="color:red"><form:errors path="password"/></p>
             </div>
             <div class="form-group">
               <label for="InputName">이름</label>
-              <input type="text" class="form-control" id="name" name="name" value="${trainer.name}" disabled="disabled"/>
+              <form:input readonly="true" type="text" class="form-control" id="name" name="trainer.name"  path="name"/><p style="color:red"><form:errors path="name"/></p>
             </div>
              <div class="form-group">
               <label for="phoneNumber">휴대폰 번호</label>
-              <input type="text" class="form-control" id="phone_number" name="phone_number" value="${phone_number}" />
+              <form:input type="text" class="form-control" id="phone_number" name="trainer.phone_number" path="phone_number"/><p style="color:red"><form:errors path="phone_number"/></p>
             </div>
                <div class="form-group">
               <label for="closedDay">휴무일</label>
               <select id="closed_day" name="closed_day" class="custom-select">
- 			 <option value="MON" <c:if test="${closed_day==MON}"> selected </c:if>>월요일</option>
+ 			 <option value="MON" <c:if test="${closed_day=='MON'}"> selected </c:if>>월요일</option>
  			 <option value="TUE" <c:if test="${closed_day=='TUE'}"> selected </c:if> >화요일</option>
   			<option value="WED" <c:if test="${closed_day=='WED'}"> selected </c:if>>수요일</option>
   			<option value="THU" <c:if test="${closed_day=='THU'}"> selected </c:if>>목요일</option>
@@ -122,10 +141,10 @@
   			<option value="SUN" <c:if test="${closed_day=='SUN'}"> selected </c:if>>일요일</option>
 			</select>
             </div>
-            <button type="submit" class="btn btn-block btn-primary text-light">서비스 이용자 등록</button>
+            <button type="submit" class="btn btn-block btn-primary text-light">개인정보 수정</button>
                   <input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
-			</form>
+			</form:form>
 			</div>
 			</div>
 		</div>

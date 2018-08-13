@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.ac.fcm.user.Account;
 
@@ -28,5 +29,8 @@ public interface AccountMapper {
 	
 	@Select("SELECT* FROM USER")
 	public List<Account> readAllUsers();
+	
+	@Update("UPDATE USER SET password=#{password} WHERE id=#{id}")
+	public void updatePassword(@Param("id") String id, @Param("password")String password);
 
 }
