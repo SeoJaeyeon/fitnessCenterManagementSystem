@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>관리자페이지</title>
+  <title>회원페이지</title>
   <!-- Bootstrap core CSS-->
   <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -29,36 +29,44 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-         <li class="nav-item " data-toggle="tooltip" data-placement="right" title="adminUser">
+         <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="adminUser">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-sitemap"></i>
-            <span class="nav-link-text">사용자관리</span>
+            <span class="nav-link-text">스케줄</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMulti">
             <li>
-              <a href="/manager/addMember">회원추가</a>
+              <a href="/member">PT일정조회</a>
             </li>
             <li>
-              <a href="#">회원관리</a>
-            </li>
-            <li>
-              <a href="/manager/addTrainer">트레이너추가</a>
-            </li>
-              <li>
-              <a href="#">트레이너관리</a>
+              <a href="#">PT신청/예약</a>
             </li>
           </ul>
         </li>
-          <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="/manager">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">스케줄</span>
-          </a>
-        </li>
          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link" href="/manager/board.do" >
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">게시판</span>
+          </a>
+        </li>
+ 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="adminUser">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMypage" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-sitemap"></i>
+            <span class="nav-link-text">마이페이지</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseMypage">
+            <li>
+              <a href="/trainer/showMemberList">개인정보수정</a>
+            </li>
+            <li>
+              <a href="#">인바디조회</a>
+            </li>
+          </ul>
+        </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-file"></i>
+           <span class="nav-link-text">Q&A</span>
           </a>
         </li>
         <li class="nav justify-content-end">
