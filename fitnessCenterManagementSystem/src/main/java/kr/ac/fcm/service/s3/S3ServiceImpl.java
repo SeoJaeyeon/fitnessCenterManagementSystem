@@ -33,13 +33,13 @@ import lombok.Data;
 @Service
 @Transactional
 @Data
-public class S3Wrapper {
+public class S3ServiceImpl implements S3Service{
     @Autowired
       private AmazonS3 amazonS3Client;
     @Value("${amazonProperties.bucketName}")
      private String bucket;
     
-    Logger logger=LoggerFactory.getLogger(S3Wrapper.class);
+    Logger logger=LoggerFactory.getLogger(S3ServiceImpl.class);
     
 
 	public String getFileURL(String bucketName, String fileName) {

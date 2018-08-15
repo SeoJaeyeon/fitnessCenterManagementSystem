@@ -36,7 +36,7 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMulti">
             <li>
-              <a href="/manager/addUser">회원추가</a>
+              <a href="/manager/addMember">회원추가</a>
             </li>
             <li>
               <a href="#">회원관리</a>

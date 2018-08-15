@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.ac.fcm.service.EmailService;
 import kr.ac.fcm.service.EmailServiceImpl;
 import kr.ac.fcm.user.AccountRepository;
 
@@ -25,10 +26,10 @@ import org.springframework.ui.Model;
 public class MainController {
 	
 	@Autowired
-	JavaMailSender javaMailSender;
+	private EmailService emailService;
 	
 	@Autowired
-	AccountRepository accounts;
+	private AccountRepository accounts;
 
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
@@ -41,13 +42,8 @@ public class MainController {
 	
 	@RequestMapping(value="/mail", method=RequestMethod.POST)
 	public String mail(HttpServletRequest req,HttpServletResponse res, Model model) throws IOException{
-	
-
-		EmailServiceImpl es=new EmailServiceImpl();
 		
-		es.setJavaMailSender(javaMailSender);
-		
-		boolean result=es.sendSimpleMessage("a1010100z@naver.com","헬스예약관리서비스 상담요청" , req.getParameter("email").toString());
+		boolean result=emailService.sendSimpleMessage("a1010100z@naver.com","헬스예약관리서비스 상담요청" , req.getParameter("email").toString());
 		
 		if(result){
 			//메일 발송 성공 

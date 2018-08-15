@@ -23,7 +23,8 @@ import kr.ac.fcm.mapper.ManagerMapper;
 
 import kr.ac.fcm.service.AddUserService;
 import kr.ac.fcm.service.FindUserService;
-import kr.ac.fcm.service.s3.S3Wrapper;
+import kr.ac.fcm.service.s3.S3Service;
+import kr.ac.fcm.service.s3.S3ServiceImpl;
 
 import kr.ac.fcm.user.Manager;
 import kr.ac.fcm.user.Member;
@@ -38,7 +39,7 @@ public class ManagerController {
 	@Autowired
 	private FindUserService findUserService;
 	@Autowired
-	private S3Wrapper s3Service;
+	private S3Service s3Service;
 	@Autowired
 	private AddUserService addUserService;
 	
@@ -49,13 +50,13 @@ public class ManagerController {
 		return "manager/manager";
 	}
 	
-	@GetMapping("/manager/addUser")
+	@GetMapping("/manager/addMember")
 	public String addUserByGet(Model model){
 		model.addAttribute("member", new Member());
-		return "manager/addUser";
+		return "manager/addMember";
 	}
 	
-	@PostMapping("/manager/addUser")
+	@PostMapping("/manager/addMember")
 	public String addUserByPost(@Valid Member member, BindingResult bindingResult,Model model){
 		if(bindingResult.hasErrors()){
 			logger.info("form error");
@@ -67,7 +68,7 @@ public class ManagerController {
 		}catch(Exception ex){
 			ex.printStackTrace();
 			model.addAttribute("message","사용자 추가 에러!!!");
-			return "/manager/addUser";
+			return "/manager/addMember";
 		}
 		
 		model.addAttribute("message","정상적으로 등록되었습니다.");
