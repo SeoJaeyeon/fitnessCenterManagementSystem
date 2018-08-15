@@ -101,5 +101,10 @@ public class ManagerController {
 		model.addAttribute("trainer",new Trainer());
 		return "/manager/addTrainer";
 	}
+	
+	@GetMapping("/manager/board.do")
+	public String showBoardList(){
+		return "/manager/board_manager";
+	}
 
 }
