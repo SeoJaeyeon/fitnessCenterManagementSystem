@@ -3,6 +3,7 @@ package kr.ac.fcm.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -18,7 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseMyInfoService;
-import kr.ac.fcm.service.s3.S3Wrapper;
+import kr.ac.fcm.service.s3.S3Service;
+import kr.ac.fcm.service.s3.S3ServiceImpl;
 import kr.ac.fcm.user.Trainer;
 
 @Controller
@@ -31,7 +33,7 @@ public class TrainerController {
 	private FindUserService findUserService;
 	
 	@Autowired
-	private S3Wrapper s3Service;
+	private S3Service s3Service;
 	
 	@Autowired
 	private ReviseMyInfoService reviseMyInfoService;
@@ -44,6 +46,7 @@ public class TrainerController {
 	}
 	
 	@PostMapping("/trainer/mypage")
+	@Transactional
 	public String trainerMyPageByPost(@Valid Trainer trainer, HttpServletRequest req, BindingResult bindingResult, Model model, @RequestParam("file") MultipartFile multipartFile) throws IOException{
 		if(bindingResult.hasErrors())
 		{

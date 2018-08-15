@@ -1,21 +1,17 @@
 package kr.ac.fcm.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
+@Service
+public class EmailServiceImpl implements EmailService{
 
-public class EmailServiceImpl {
-
-/*    AnnotationConfigApplicationContext ctx=new AnnotationConfigApplicationContext(Config.class);
-    public JavaMailSender emailSender=ctx.getBean("javaMailService",JavaMailSender.class);
-*/
-	
+	@Autowired
 	JavaMailSender emailSender;
-	
-	public void setJavaMailSender(JavaMailSender javaMailSender){
-		this.emailSender=javaMailSender;
-	}
+
     public boolean sendSimpleMessage(String to, String subject, String text) {
 
         SimpleMailMessage message = new SimpleMailMessage();

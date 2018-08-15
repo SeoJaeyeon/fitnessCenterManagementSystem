@@ -19,7 +19,7 @@ import kr.ac.fcm.mapper.CenterMapper;
 import kr.ac.fcm.mapper.ManagerMapper;
 import kr.ac.fcm.service.AccountService;
 import kr.ac.fcm.service.AddUserService;
-import kr.ac.fcm.service.s3.S3Wrapper;
+import kr.ac.fcm.service.s3.S3ServiceImpl;
 import kr.ac.fcm.user.Account;
 import kr.ac.fcm.user.Center;
 import kr.ac.fcm.user.Manager;

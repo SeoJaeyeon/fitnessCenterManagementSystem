@@ -10,7 +10,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import kr.ac.fcm.service.SaveLoginIdHandler;
+import kr.ac.fcm.handler.SaveLoginIdHandler;
 
 
 @Configuration
@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/login","/service","/resources/**","/view","/trainer/**").permitAll()
+                .antMatchers("/", "/login","/service","/resources/**","/view","/trainer/**","/mail").permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/manager/**").hasRole("MANAGER")
                 .anyRequest().authenticated()
@@ -39,9 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
            		.logoutSuccessUrl("/login")
            		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .permitAll();
-        	
-    
-        
 
     }
 	
