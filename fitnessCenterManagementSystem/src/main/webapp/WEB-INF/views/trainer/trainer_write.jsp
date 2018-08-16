@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>관리자페이지</title>
+  <title>트레이너페이지</title>
   <!-- Bootstrap core CSS-->
   <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -17,6 +21,28 @@
 <link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
+  <!-- Page level plugin CSS-->
+	<script>
+		var message="${message}";
+		if(message!=""){
+			alert("${message}")
+		}
+		//이미지 미리보기 
+    	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#ShowImage')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+	</script>
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -33,33 +59,36 @@
          <li class="nav-item " data-toggle="tooltip" data-placement="right" title="adminUser">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-sitemap"></i>
-            <span class="nav-link-text">사용자관리</span>
+            <span class="nav-link-text">회원관리</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMulti">
             <li>
-              <a href="/manager/addMember">회원추가</a>
+              <a href="/trainer/showMemberList">회원조회</a>
             </li>
             <li>
-              <a href="#">회원관리</a>
+              <a href="#">인바디기록</a>
             </li>
             <li>
-              <a href="/manager/addTrainer">트레이너추가</a>
-            </li>
-              <li>
-              <a href="#">트레이너관리</a>
+              <a href="/trainer/showInbody">인바디조회</a>
             </li>
           </ul>
         </li>
-          <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="/manager">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="/trainer">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">스케줄</span>
           </a>
         </li>
-         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#" data-parent="#exampleAccordion">
+       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+          <a class="nav-link" href="/trainer/board.do" >
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">게시판</span>
+          </a>
+        </li>
+         <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="/trainer/mypage">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">마이페이지</span>
           </a>
         </li>
         <li class="nav justify-content-end">
@@ -70,39 +99,24 @@
     </div>
     </div>
   </nav>
+   <div class="container-fluid" style="padding-left: 15%; padding-right:15%; padding-top: 5%">	
+    	<form method="post">
+ 		 <div class="form-group">
+    			<input type="text" class="form-control" id="exampleFormControlInput1" name="subject" placeholder="제목을 입력하세요">
+ 		 </div>
+ 		  <div class="form-group">
+   		 <textarea class="form-control" id="exampleFormControlTextarea1" rows="20" name="content" placeholder="내용을 입력하세요"></textarea>
+   		 </div>
+   		 <div class="form-group">
+   			 <button type="submit" class="btn btn-secondary btn-lg btn-block">글쓰기</button>
+   		</div>
+                  <input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
+   		 </form>
+  </div>
+    
 
-        <div class="container-fluid" style="padding-left: 10%; padding-right:10%; padding-top: 5%">	
-
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>NO</th>
-                      <th>작성자</th>
-                      <th>제목</th>
-                      <th>작성시간</th>
-                      <th>조회수</th>
-                    </tr>
-                  </thead>
- 				 <tbody>
-					<%for(int i=0; i<5; i++){ %>
-						<tr>
-							<td><%=i%></td>
-							<td><%=i%>번째 작성자</td>
-							<td><%=i%>번째 제목</td>
-							<td><%=i%>번째 작성시간</td>
-							<td><%=i%>번쨰 조회수</td>
-						</tr>
-					<%} %> 
-  				</tbody>
-			</table>
-		</div>
-	</div>
-	</div>
-	</div>
-</div>
-  
-    <!-- Bootstrap core JavaScript-->
+   <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
@@ -115,7 +129,6 @@
 
     <!-- Demo scripts for this page-->
     <script src="${pageContext.request.contextPath}/resources/js/demo/datatables-demo.js"></script>
-    
     
 
     <!-- Logout Modal-->

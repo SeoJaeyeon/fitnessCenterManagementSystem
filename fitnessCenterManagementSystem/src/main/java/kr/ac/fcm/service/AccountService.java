@@ -15,8 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ch.qos.logback.classic.Logger;
-import kr.ac.fcm.user.Account;
-import kr.ac.fcm.user.AccountRepository;
+import kr.ac.fcm.DTO.user.Account;
+import kr.ac.fcm.DTO.user.AccountRepository;
 
 @Service
 public class AccountService implements UserDetailsService{

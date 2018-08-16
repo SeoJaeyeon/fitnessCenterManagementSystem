@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,13 +10,13 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>회원페이지</title>
-  <!-- Bootstrap core CSS-->
-  <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath}/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
-
-  <!-- Custom styles for this template-->
+<link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -76,35 +77,35 @@
       </ul>
     </div>
     </div>
-  </nav>
-   <div class="container" style="padding-top:5%">
- 	<div class="row">
- <table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">시간</th>
-      <th scope="col">월</th>
-      <th scope="col">화</th>
-      <th scope="col">수</th>
-      <th scope="col">목</th>
-      <th scope="col">금</th>
-      <th scope="col">토</th>
-      <th scope="col">일</th>
-    </tr>
-  </thead>
-  <tbody>
-  	<% for(int time=9; time<22; time++){ %>
-    <tr>
-      <th scope="row"><%= time %>시~<%= time+1 %>시</th>
-	  <%for(int i=0; i<7; i++){ %>
-	  	<td><%= i %></td>
-	  	<%}; %>
-    </tr>
-    <%}%>
-  </tbody>
-</table>
-</div>
-</div>
+    </nav>
+	
+        <div class="container-fluid" style="padding-left: 10%; padding-right:10%; padding-top: 5%">	
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>NO</th>
+                      <th>작성자</th>
+                      <th>제목</th>
+                      <th>작성시간</th>
+                      <th>조회수</th>
+                    </tr>
+                  </thead>
+ 				 <tbody>
+ 				 <c:forEach var="article" items="${articles}">
+						<tr>
+							<td>${article.idx}</td>
+							<td>${article.writer}</td>
+							<td>${article.subject}</td>
+							<td>${article.created}</td>
+							<td>${article.view}</td>
+						</tr>
+				</c:forEach>
+  				</tbody>
+			</table>
+				<a href="/member/write.do" class="btn btn-primary active" role="button" aria-pressed="true">글쓰기</a>
+		</div>
+	</div>
   
     <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
@@ -112,6 +113,13 @@
     <!-- Core plugin JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Page level plugin JavaScript-->
+   	<script src="${pageContext.request.contextPath}/resources/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.js"></script>
+        <!-- Custom scripts for all pages-->
+    <script src="${pageContext.request.contextPath}/resources/js/sb-admin.min.js"></script>
+
+    <!-- Demo scripts for this page-->
+    <script src="${pageContext.request.contextPath}/resources/js/demo/datatables-demo.js"></script>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

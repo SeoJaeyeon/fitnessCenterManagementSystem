@@ -1,4 +1,4 @@
-package kr.ac.fcm.user;
+package kr.ac.fcm.DTO.user;
 
 import java.util.List;
 
@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import kr.ac.fcm.mapper.AccountMapper;
 import lombok.Data;
+import lombok.Getter;
 
 @Repository
-@Data
+@Getter
 public class AccountRepository {
 	
 	@Autowired

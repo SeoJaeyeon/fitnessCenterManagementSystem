@@ -2,6 +2,9 @@ package kr.ac.fcm.controller;
 
 
 
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -9,7 +12,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,22 +22,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.ac.fcm.mapper.ManagerMapper;
-
+import kr.ac.fcm.DTO.ArticleDTO;
+import kr.ac.fcm.DTO.user.Account;
+import kr.ac.fcm.DTO.user.ManagerDTO;
+import kr.ac.fcm.DTO.user.MemberDTO;
+import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.service.AddUserService;
+import kr.ac.fcm.service.BoardService;
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.s3.S3Service;
-import kr.ac.fcm.service.s3.S3ServiceImpl;
-
-import kr.ac.fcm.user.Manager;
-import kr.ac.fcm.user.Member;
-import kr.ac.fcm.user.Trainer;
 
 
 @Controller
 public class ManagerController {
 	Logger logger=LoggerFactory.getLogger(ManagerController.class);
-	private Manager manager;
+	private ManagerDTO manager;
 
 	@Autowired
 	private FindUserService findUserService;
@@ -42,22 +44,24 @@ public class ManagerController {
 	private S3Service s3Service;
 	@Autowired
 	private AddUserService addUserService;
+	@Autowired
+	private BoardService boardService;
 	
 	@GetMapping("/manager")
-	public String manager(@RequestParam("id")String id,HttpServletRequest req, HttpServletResponse res){
-
-		this.manager=findUserService.findManagerById(id);
+	public String manager(@AuthenticationPrincipal Account account, HttpServletRequest req, HttpServletResponse res){
+		logger.info(account.getUsername()+"접속");
+		this.manager=findUserService.findManagerById(account.getUsername());
 		return "manager/manager";
 	}
 	
 	@GetMapping("/manager/addMember")
 	public String addUserByGet(Model model){
-		model.addAttribute("member", new Member());
+		model.addAttribute("member", new MemberDTO());
 		return "manager/addMember";
 	}
 	
 	@PostMapping("/manager/addMember")
-	public String addUserByPost(@Valid Member member, BindingResult bindingResult,Model model){
+	public String addUserByPost(@Valid MemberDTO member, BindingResult bindingResult,Model model){
 		if(bindingResult.hasErrors()){
 			logger.info("form error");
 			return "/manager/addUser";
@@ -72,17 +76,17 @@ public class ManagerController {
 		}
 		
 		model.addAttribute("message","정상적으로 등록되었습니다.");
-		model.addAttribute("member", new Member());
+		model.addAttribute("member", new MemberDTO());
 		return "/manager/addUser";
 	}
 
 	@GetMapping("/manager/addTrainer")
 	public String addTrainerByGET(Model model){
-		model.addAttribute("trainer", new Trainer());
+		model.addAttribute("trainer", new TrainerDTO());
 		return "/manager/addTrainer";
 	}
 	@PostMapping("/manager/addTrainer")
-	public String addTrainer(@Valid Trainer trainer,BindingResult bindingResult, Model model,HttpServletRequest req,@RequestParam("file") MultipartFile multipartFile){
+	public String addTrainer(@Valid TrainerDTO trainer,BindingResult bindingResult, Model model,HttpServletRequest req,@RequestParam("file") MultipartFile multipartFile){
 		if(bindingResult.hasErrors()){
 			logger.info("form error in addTrainer");
 			return "/manager/addTrainer";
@@ -98,13 +102,33 @@ public class ManagerController {
 			return "/manager/addTrainer";
 		}
 		model.addAttribute("message","정상적으로 추가되었습니다!!");
-		model.addAttribute("trainer",new Trainer());
+		model.addAttribute("trainer",new TrainerDTO());
 		return "/manager/addTrainer";
 	}
 	
 	@GetMapping("/manager/board.do")
-	public String showBoardList(){
-		return "/manager/board_manager";
+	public String showBoardList(Model model){
+		List<ArticleDTO> articles=boardService.showAllArticles();
+		model.addAttribute("articles",articles);
+		return "/manager/manager_articleList";
+	}
+	
+	@GetMapping("/manager/write.do")
+	public String showArticle(){
+		return "/manager/manager_write";
+	}
+	
+	@PostMapping("/manager/write.do")
+	public String addArticle(ArticleDTO article, Model model){
+		try{
+			article.setCreated(new Date());
+			article.setView(0);
+			article.setWriter(manager.getId());
+			boardService.write(article);
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+		return "/manager/article.do?idx="+article.getIdx();
 	}
 
 }

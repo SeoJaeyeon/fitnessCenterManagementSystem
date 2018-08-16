@@ -14,7 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
-import kr.ac.fcm.user.Account;
+
+import kr.ac.fcm.DTO.user.Account;
 
 
 @Service
@@ -52,9 +53,9 @@ public class SaveLoginIdHandler extends SavedRequestAwareAuthenticationSuccessHa
 		 if(usertype.equals("ADMIN"))
 			 new DefaultRedirectStrategy().sendRedirect(request, response, "/admin");
 		 if(usertype.equals("MANAGER"))
-			 new DefaultRedirectStrategy().sendRedirect(request, response, "/manager?id="+user.getId());
+			 new DefaultRedirectStrategy().sendRedirect(request, response, "/manager");
 		 if(usertype.equals("TRAINER"))
-			 new DefaultRedirectStrategy().sendRedirect(request, response, "/trainer?id="+user.getId());
+			 new DefaultRedirectStrategy().sendRedirect(request, response, "/trainer");
 		 if(usertype.equals("MEMBER"))
 			 new DefaultRedirectStrategy().sendRedirect(request, response, "/member");
 	 }

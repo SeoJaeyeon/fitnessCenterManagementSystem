@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import kr.ac.fcm.user.Center;
+import kr.ac.fcm.DTO.user.CenterDTO;
 
 
 
@@ -15,5 +15,5 @@ public interface CenterMapper {
     String findCenterNameByCenterId(@Param("center_id")String center_id);
 	
 	@Insert("INSERT INTO CENTER VALUES(#{center.center_id}, #{center.center_name}, #{center.center_phone_number}, #{center.address})")
-	public void insertCenterData(@Param("center") Center center);
+	public void insertCenterData(@Param("center") CenterDTO center);
 }

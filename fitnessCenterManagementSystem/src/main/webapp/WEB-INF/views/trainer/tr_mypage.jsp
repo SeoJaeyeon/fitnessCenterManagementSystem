@@ -75,8 +75,8 @@
             <span class="nav-link-text">스케줄</span>
           </a>
         </li>
-         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#" data-parent="#exampleAccordion">
+       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+          <a class="nav-link" href="/trainer/board.do" >
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">게시판</span>
           </a>
@@ -105,9 +105,9 @@
     <h5 class="card-title">정보수정</h5>
     <form:form method="post" modelAttribute="trainer" enctype="multipart/form-data" action="/trainer/mypage">
             <div class="form-group">
+            <img id="ShowImage" src="${img}" style="width:200px"/>
               <label for="InpuImage">사진</label>          
-			  <input type='file' id="file" name="file" onchange="readURL(this);" /> 
-		      <img id="ShowImage" src="${img}"/>
+			  <input type='file' id="file" name="file" onchange="readURL(this);" />   
             </div>
             <div class="form-group">
             <label for="ShowId">아이디</label>

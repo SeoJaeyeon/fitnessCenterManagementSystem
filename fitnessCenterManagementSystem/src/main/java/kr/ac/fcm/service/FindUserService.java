@@ -1,11 +1,11 @@
 package kr.ac.fcm.service;
 
-import kr.ac.fcm.user.Manager;
-import kr.ac.fcm.user.Member;
-import kr.ac.fcm.user.Trainer;
+import kr.ac.fcm.DTO.user.ManagerDTO;
+import kr.ac.fcm.DTO.user.MemberDTO;
+import kr.ac.fcm.DTO.user.TrainerDTO;
 
 public interface FindUserService {
-	public Manager findManagerById(String id);
-	public Trainer findTrainerById(String id);
-	public Member findMemberById(String id);
+	public ManagerDTO findManagerById(String id);
+	public TrainerDTO findTrainerById(String id);
+	public MemberDTO findMemberById(String id);
 }
