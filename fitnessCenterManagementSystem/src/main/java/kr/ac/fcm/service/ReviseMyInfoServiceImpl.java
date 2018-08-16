@@ -9,9 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.mapper.AccountMapper;
 import kr.ac.fcm.mapper.TrainerMapper;
-import kr.ac.fcm.user.Trainer;
 
 @Service
 public class ReviseMyInfoServiceImpl implements ReviseMyInfoService {
@@ -28,7 +28,7 @@ public class ReviseMyInfoServiceImpl implements ReviseMyInfoService {
 	
 	@Override
 	@Transactional
-	public String reviseTrainerInfo(String oldpassword, Trainer trainer) {
+	public String reviseTrainerInfo(String oldpassword, TrainerDTO trainer) {
 		UserDetails account=accountService.loadUserByUsername(trainer.getId());
 		if(!passwordEncoder.matches(oldpassword, account.getPassword())){
 			return "비밀번호를 확인해주세요!";

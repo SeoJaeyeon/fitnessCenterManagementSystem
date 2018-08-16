@@ -5,15 +5,15 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.ac.fcm.DTO.user.Account;
+import kr.ac.fcm.DTO.user.CenterDTO;
+import kr.ac.fcm.DTO.user.ManagerDTO;
+import kr.ac.fcm.DTO.user.MemberDTO;
+import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.mapper.CenterMapper;
 import kr.ac.fcm.mapper.ManagerMapper;
 import kr.ac.fcm.mapper.MemberMapper;
 import kr.ac.fcm.mapper.TrainerMapper;
-import kr.ac.fcm.user.Account;
-import kr.ac.fcm.user.Center;
-import kr.ac.fcm.user.Manager;
-import kr.ac.fcm.user.Member;
-import kr.ac.fcm.user.Trainer;
 
 @Service
 public class AddUserServiceImpl implements AddUserService {
@@ -30,7 +30,7 @@ public class AddUserServiceImpl implements AddUserService {
 	
 	@Override
 	@Transactional
-	public void addMember(Member member) {
+	public void addMember(MemberDTO member) {
 		Account account=new Account();
 		account.setId(member.getId());
 		account.setPassword(member.getPassword());
@@ -41,7 +41,7 @@ public class AddUserServiceImpl implements AddUserService {
 
 	@Override
 	@Transactional
-	public void addTrainer(Trainer trainer) {
+	public void addTrainer(TrainerDTO trainer) {
 		Account account=new Account();
 		account.setId(trainer.getId());
 		account.setType("TRAINER");
@@ -52,7 +52,7 @@ public class AddUserServiceImpl implements AddUserService {
 // id         | name      | center_id | birthdate  | gender | closed_day | phone_number 
 	@Override
 	@Transactional
-	public void addManager(Manager manager, Center center) throws Exception {
+	public void addManager(ManagerDTO manager, CenterDTO center) throws Exception {
 		// TODO Auto-generated method stub
 		Account account=new Account();
 		account.setId(manager.getId());

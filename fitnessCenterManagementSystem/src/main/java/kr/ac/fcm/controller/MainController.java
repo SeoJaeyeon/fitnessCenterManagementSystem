@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.ac.fcm.DTO.user.AccountRepository;
 import kr.ac.fcm.service.EmailService;
 import kr.ac.fcm.service.EmailServiceImpl;
-import kr.ac.fcm.user.AccountRepository;
 
 import java.io.IOException;
 

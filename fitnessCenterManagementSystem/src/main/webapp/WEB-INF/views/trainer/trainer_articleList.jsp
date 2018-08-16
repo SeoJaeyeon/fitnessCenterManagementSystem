@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,8 +18,31 @@
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath}/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
+<link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
+  <!-- Page level plugin CSS-->
+	<script>
+		var message="${message}";
+		if(message!=""){
+			alert("${message}")
+		}
+		//이미지 미리보기 
+    	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-  <!-- Custom styles for this template-->
+            reader.onload = function (e) {
+                $('#ShowImage')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+	</script>
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -46,19 +73,19 @@
             </li>
           </ul>
         </li>
-          <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link" href="/trainer">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">스케줄</span>
           </a>
         </li>
-               <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
           <a class="nav-link" href="/trainer/board.do" >
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">게시판</span>
           </a>
         </li>
-         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+         <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link" href="/trainer/mypage">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">마이페이지</span>
@@ -72,61 +99,33 @@
     </div>
     </div>
   </nav>
-   <div class="container" style="padding-top:5%">
- 	<div class="row">
- <table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">시간</th>
-      <th scope="col">월</th>
-      <th scope="col">화</th>
-      <th scope="col">수</th>
-      <th scope="col">목</th>
-      <th scope="col">금</th>
-      <th scope="col">토</th>
-      <th scope="col">일</th>
-    </tr>
-  </thead>
-  <tbody>
-  	<% for(int time=9; time<22; time++){ %>
-    <tr>
-      <th scope="row"><%= time %>시~<%= time+1 %>시</th>
-	  <%for(int i=0; i<7; i++){ %>
-	  	<td><%= i %></td>
-	  	<%}; %>
-    </tr>
-    <%}%>
-  </tbody>
-</table>
-</div>
-</div>
+  <div class="container-fluid" style="padding-left: 10%; padding-right:10%; padding-top: 5%">	
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>NO</th>
+                      <th>작성자</th>
+                      <th>제목</th>
+                      <th>작성시간</th>
+                      <th>조회수</th>
+                    </tr>
+                  </thead>
+ 				 <tbody>
+ 				 <c:forEach var="article" items="${articles}">
+						<tr>
+							<td>${article.idx}</td>
+							<td>${article.writer}</td>
+							<td>${article.subject}</td>
+							<td>${article.created}</td>
+							<td>${article.view}</td>
+						</tr>
+				</c:forEach>
+  				</tbody>
+			</table>
+				<a href="/trainer/write.do" class="btn btn-primary active" role="button" aria-pressed="true">글쓰기</a>
+		</div>
+	</div>
   
-    <!-- Bootstrap core JavaScript-->
-    <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="${pageContext.request.contextPath}/resources/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Page level plugin JavaScript-->
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">로그아웃 하시겠습니까?</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="/logout">Logout</a>
-          </div>
-        </div>
-      </div>
-    </div>
 </body>
-
 </html>
-      

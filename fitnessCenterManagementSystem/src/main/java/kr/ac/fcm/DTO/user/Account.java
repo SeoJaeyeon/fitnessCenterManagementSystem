@@ -1,4 +1,4 @@
-package kr.ac.fcm.user;
+package kr.ac.fcm.DTO.user;
 import java.util.Collection;
 
 import javax.validation.constraints.NotNull;

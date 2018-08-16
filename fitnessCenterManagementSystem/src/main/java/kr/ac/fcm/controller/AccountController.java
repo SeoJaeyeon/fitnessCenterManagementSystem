@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.mapper.AccountMapper;
 import kr.ac.fcm.service.AccountService;
-import kr.ac.fcm.user.Account;
 
 @RestController
 public class AccountController {

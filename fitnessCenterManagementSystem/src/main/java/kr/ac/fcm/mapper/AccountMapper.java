@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import kr.ac.fcm.user.Account;
+import kr.ac.fcm.DTO.user.Account;
 
 
 @Mapper

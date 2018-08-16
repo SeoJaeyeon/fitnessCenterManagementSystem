@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import kr.ac.fcm.DTO.user.Account;
+import kr.ac.fcm.DTO.user.CenterDTO;
+import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.mapper.CenterMapper;
 import kr.ac.fcm.mapper.ManagerMapper;
 import kr.ac.fcm.service.AccountService;
 import kr.ac.fcm.service.AddUserService;
 import kr.ac.fcm.service.s3.S3ServiceImpl;
-import kr.ac.fcm.user.Account;
-import kr.ac.fcm.user.Center;
-import kr.ac.fcm.user.Manager;
 
 
 @Controller
@@ -38,7 +37,7 @@ public class AdminController {
 	}
 	//관리자 추가 
 	@RequestMapping(value="/admin", method=RequestMethod.POST) 
-	public String addManager(Center center,Manager manager,HttpServletRequest req,Model model){
+	public String addManager(CenterDTO center,ManagerDTO manager,HttpServletRequest req,Model model){
 
 	
 		try{
