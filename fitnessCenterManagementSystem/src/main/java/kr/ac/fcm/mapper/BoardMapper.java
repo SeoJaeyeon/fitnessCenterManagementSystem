@@ -16,6 +16,9 @@ public interface BoardMapper {
 	@Select("SELECT* FROM BOARD ORDER BY IDX DESC")
 	public List<ArticleDTO> selectAllArticles();
 	
+	@Select("SELECT* FROM BOARD WHERE IDX=#{idx}")
+	public ArticleDTO selectArticleByIdx(@Param("idx") int idx);
+	
 	@Insert("INSERT INTO BOARD(WRITER, SUBJECT, CONTENT, CREATED, VIEW)  VALUES(#{article.writer},#{article.subject},#{article.content}, #{article.created}, #{article.view})")
 	@Options(useGeneratedKeys=true, keyProperty="article.idx")
 	public int addArticle(@Param("article")ArticleDTO article);

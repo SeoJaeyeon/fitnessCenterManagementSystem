@@ -48,8 +48,10 @@ public class TrainerController {
 	private BoardService boardService;
 
 	@GetMapping("/trainer")
-	public String trainerMain(@AuthenticationPrincipal Account account, HttpServletRequest req,Model model){
+	public String trainerMain(@AuthenticationPrincipal Account account, Model model){
 		this.trainer=findUserService.findTrainerById(account.getUsername());
+		this.trainer.setType(account.getType());
+		model.addAttribute("schedule", "active");
 		return "trainer/trainer";
 	}
 	
@@ -70,6 +72,7 @@ public class TrainerController {
 		model.addAttribute("message",message);
 		this.trainer=findUserService.findTrainerById(trainer.getId());
 		model.addAttribute("trainer",trainer);
+		model.addAttribute("mypage", "active");
 		return "/trainer/tr_mypage";
 	}
 	
@@ -83,7 +86,7 @@ public class TrainerController {
 		else if(req.getParameter("message").length()>0){
 			model.addAttribute("message",req.getParameter("message"));
 		}
-		
+		model.addAttribute("mypage", "active");
 		return "trainer/tr_mypage";
 	}
 	
@@ -91,16 +94,19 @@ public class TrainerController {
 	public String showArticles(Model model){
 		List<ArticleDTO> articles=boardService.showAllArticles();
 		model.addAttribute("articles",articles);
-		return "/trainer/trainer_articleList";
+		model.addAttribute("type",trainer.getType());
+		model.addAttribute("board", "active");
+		return "/board/articleList";
 	}
 	
 	@GetMapping("/trainer/write.do")
-	public String showArticle(){
-		return "/trainer/trainer_write";
+	public String showArticle(Model model){
+		model.addAttribute("board", "active");
+		return "/board/write";
 	}
 	
 	@PostMapping("/trainer/write.do")
-	public String addArticle(ArticleDTO article){
+	public String addArticle(ArticleDTO article, Model model){
 		try{
 			article.setCreated(new Date());
 			article.setWriter(trainer.getId());
@@ -109,6 +115,7 @@ public class TrainerController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "/trainer/article?idx="+article.getIdx();
+		model.addAttribute("board", "active");
+		return "/board/article?idx="+article.getIdx();
 	}
 }

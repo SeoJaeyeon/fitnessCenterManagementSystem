@@ -42,92 +42,41 @@
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
-  <!-- Navigation-->
-   <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">헬스일정예약관리시스템</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-         <li class="nav-item " data-toggle="tooltip" data-placement="right" title="adminUser">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-sitemap"></i>
-            <span class="nav-link-text">회원관리</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseMulti">
-            <li>
-              <a href="/trainer/showMemberList">회원조회</a>
-            </li>
-            <li>
-              <a href="#">인바디기록</a>
-            </li>
-            <li>
-              <a href="/trainer/showInbody">인바디조회</a>
-            </li>
-          </ul>
-        </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="/trainer">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">스케줄</span>
-          </a>
-        </li>
-       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link" href="/trainer/board.do" >
-            <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">게시판</span>
-          </a>
-        </li>
-         <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="/trainer/mypage">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">마이페이지</span>
-          </a>
-        </li>
-        <li class="nav justify-content-end">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
-      </ul>
-    </div>
-    </div>
-  </nav>
-   <div class="container" style="padding-top:5%">
- 	<div class="row">
- 		<div class="col-md-3"></div>
- 			<div class="col-md-6">
+  <!-- header-->
+  <%@ include file="../header/header_trainer.jsp" %>
+  <!-- header-->
+    <div class="container-fluid" style="padding-left: 20%; padding-right:20%; padding-top: 5%">	
  <div class="card">
   <h5 class="card-header">마이페이지</h5>
   <div class="card-body">
-    <h5 class="card-title">정보수정</h5>
     <form:form method="post" modelAttribute="trainer" enctype="multipart/form-data" action="/trainer/mypage">
             <div class="form-group">
-            <img id="ShowImage" src="${img}" style="width:200px"/>
-              <label for="InpuImage">사진</label>          
+            <img id="ShowImage" src="${img}" style="width:200px"/></br>
 			  <input type='file' id="file" name="file" onchange="readURL(this);" />   
             </div>
-            <div class="form-group">
+            <div class="form-group ">
             <label for="ShowId">아이디</label>
             <form:input readonly="true" type="text" class="form-control" id="id" name="trainer.id"  path="id"/><p style="color:red"><form:errors path="id"/></p>
             </div>
-            <div class="form-group">
+              <div class="form-row">
+            <div class="form-group col-md-6">
               <label for="InputPassword">현재비밀번호</label>
               <input type="password" class="form-control" id="cur_password"  name="cur_password" placeholder="Password">
             </div>
-             <div class="form-group">
+             <div class="form-group col-md-6">
               <label for="InputNewPassword">변경할비밀번호(변경하지 않을 시 기존 비밀번호 입력 )</label>
               <form:input type="password" class="form-control" id="password"  name="password" placeholder="New Password" path="password" /><p style="color:red"><form:errors path="password"/></p>
             </div>
-            <div class="form-group">
+            </div>
+              <div class="form-row">
+            <div class="form-group col-md-6">
               <label for="InputName">이름</label>
               <form:input readonly="true" type="text" class="form-control" id="name" name="trainer.name"  path="name"/><p style="color:red"><form:errors path="name"/></p>
             </div>
-             <div class="form-group">
+             <div class="form-group col-md-6">
               <label for="phoneNumber">휴대폰 번호</label>
               <form:input type="text" class="form-control" id="phone_number" name="trainer.phone_number" path="phone_number"/><p style="color:red"><form:errors path="phone_number"/></p>
+            </div>
             </div>
                <div class="form-group">
               <label for="closedDay">휴무일</label>
@@ -148,10 +97,6 @@
 			</div>
 			</div>
 		</div>
-			<div class="col-md-3"></div>
- 	</div>
- 	</div>
- 	<div class="col-md-3"></div>
   
     <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>

@@ -25,4 +25,10 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.addArticle(article);
 	}
 
+	@Override
+	public ArticleDTO showArticleByIdx(int idx) {
+		// TODO Auto-generated method stub
+		return boardMapper.selectArticleByIdx(idx);
+	}
+
 }
