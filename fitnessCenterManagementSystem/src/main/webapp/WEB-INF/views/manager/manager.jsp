@@ -24,12 +24,12 @@
  	<%@ include file="../header/header_manager.jsp" %>
 
 
-   <div class="container" style="padding-top:5%">
+   <div class="container-fuild" style="padding-top:5%; padding-left:10%; padding-right:10%">
  	<div class="row">
  <table class="table table-bordered">
   <thead>
-    <tr>
-      <th scope="col">시간</th>
+    <tr class="text-center">
+      <th scope="col" style="width:15px">시간</th>
       <th scope="col">월</th>
       <th scope="col">화</th>
       <th scope="col">수</th>
@@ -42,7 +42,7 @@
   <tbody>
   	<% for(int time=9; time<22; time++){ %>
     <tr>
-      <th scope="row"><%= time %>시~<%= time+1 %>시</th>
+      <th scope="row"><%= time %>:00~<br/><%= time+1 %>:00</th>
 	  <%for(int i=0; i<7; i++){ %>
 	  	<td><%= i %></td>
 	  	<%}; %>

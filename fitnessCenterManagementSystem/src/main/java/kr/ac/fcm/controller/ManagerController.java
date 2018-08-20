@@ -68,7 +68,7 @@ public class ManagerController {
 	public String addUserByPost(@Valid MemberDTO member, BindingResult bindingResult,Model model){
 		if(bindingResult.hasErrors()){
 			logger.info("form error");
-			return "/manager/addUser";
+			return "/manager/addMember";
 		}
 		member.setCenter_id(this.manager.getCenter_id());
 		try{
@@ -81,7 +81,7 @@ public class ManagerController {
 		model.addAttribute("management","active");
 		model.addAttribute("message","정상적으로 등록되었습니다.");
 		model.addAttribute("member", new MemberDTO());
-		return "/manager/addUser";
+		return "/manager/addMember";
 	}
 
 	@GetMapping("/manager/addTrainer")
@@ -112,40 +112,6 @@ public class ManagerController {
 		return "/manager/addTrainer";
 	}
 	
-	@GetMapping("/manager/board.do")
-	public String showBoardList(Model model){
-		List<ArticleDTO> articles=boardService.showAllArticles();
-		model.addAttribute("articles",articles);
-		model.addAttribute("type",manager.getType());
-		model.addAttribute("board","active");
-		return "/board/articleList";
-	}
-	
-	@GetMapping("/manager/write.do")
-	public String writeArticle(Model model){
-		model.addAttribute("board","active");
-		return "/board/write";
-	}
-	
-	@PostMapping("/manager/write.do")
-	public String addArticle(ArticleDTO article, Model model){
-		try{
-			article.setCreated(new Date());
-			article.setView(0);
-			article.setWriter(manager.getId());
-			boardService.write(article);
-		}catch(Exception e){
-			e.printStackTrace();
-		}		
-		model.addAttribute("board","active");
-		return "/board/article.do?idx="+article.getIdx();
-	}
-	
-/*	@GetMapping("/manager/article")
-	public String showArticle(@Param("no") int idx, Model model){
-		ArticleDTO article=new ArticleDTO();
-		article=boardService.showArticleByIdx(idx);
-		
-	}*/
+
 
 }

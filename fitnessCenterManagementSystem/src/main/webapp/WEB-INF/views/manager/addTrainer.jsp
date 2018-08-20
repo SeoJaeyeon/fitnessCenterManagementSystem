@@ -59,9 +59,11 @@
             </div>
             <!-- 사진 입력폼 -->
             <div class="form-group">
-              <label for="InpuImage">사진</label>          
+              <label for="InpuImage">사진</label>    
+              <div class="custom-file">      
 			  <input type='file' id="file" name="file" onchange="readURL(this);" /> 
-		      <img id="ShowImage" src="#" placeholder="사진을 등록하세요" />
+			  </div>
+		      <img id="ShowImage" src="#"/>
             </div>
             <div class="form-group">
               <label for="InputPassword">비밀번호</label>

@@ -21,7 +21,7 @@ public interface AccountMapper {
 	@Select("SELECT authority_name FROM AUTHORITY WHERE username=#{id}")
 	public List<String> readAutorities(String id);
 	
-	@Insert("INSERT INTO USER VALUES(#{account.id},#{account.password},#{account.isAccountNonExpired},#{account.isAccountNonLocked},#{account.isCredentialsNonExpired},#{account.isEnabled},#{account.type})")
+	@Insert("INSERT INTO USER VALUES(#{account.id},#{account.password},#{account.isAccountNonExpired},#{account.isAccountNonLocked},#{account.isCredentialsNonExpired},#{account.isEnabled},#{account.type},#{account.center_id})")
 	public void insertUser(@Param("account") Account account);
 	
 	@Insert("INSERT INTO AUTHORITY VALUES(#{id},#{autority})")

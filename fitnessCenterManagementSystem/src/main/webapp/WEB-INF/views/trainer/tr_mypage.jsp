@@ -52,7 +52,9 @@
     <form:form method="post" modelAttribute="trainer" enctype="multipart/form-data" action="/trainer/mypage">
             <div class="form-group">
             <img id="ShowImage" src="${img}" style="width:200px"/></br>
-			  <input type='file' id="file" name="file" onchange="readURL(this);" />   
+            <div class="custom-file">    
+			  <input type='file' id="file" name="file" onchange="readURL(this);" /> 
+			  </div>  
             </div>
             <div class="form-group ">
             <label for="ShowId">아이디</label>

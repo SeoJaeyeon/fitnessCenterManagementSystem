@@ -22,6 +22,7 @@ public class Account implements UserDetails{
 	private boolean isAccountNonLocked;
 	private boolean isCredentialsNonExpired; 
 	private boolean isEnabled;
+	private String center_id;
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	@Override
