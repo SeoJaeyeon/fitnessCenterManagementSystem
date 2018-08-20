@@ -35,6 +35,7 @@ public class AddUserServiceImpl implements AddUserService {
 		account.setId(member.getId());
 		account.setPassword(member.getPassword());
 		account.setType("MEMBER");
+		account.setCenter_id(member.getCenter_id());
 		accountService.save(account, "ROLE_MEMBER", "MEMBER");
 		memberMapper.insertMember(member);
 	}
@@ -46,10 +47,10 @@ public class AddUserServiceImpl implements AddUserService {
 		account.setId(trainer.getId());
 		account.setType("TRAINER");
 		account.setPassword(trainer.getPassword());
+		account.setCenter_id(trainer.getCenter_id());
 		accountService.save(account, "ROLE_TRAINER", "TRAINER");
 		trainerMapper.insertTrainer(trainer);
 	}
-// id         | name      | center_id | birthdate  | gender | closed_day | phone_number 
 	@Override
 	@Transactional
 	public void addManager(ManagerDTO manager, CenterDTO center) throws Exception {
@@ -58,6 +59,8 @@ public class AddUserServiceImpl implements AddUserService {
 		account.setId(manager.getId());
 		account.setType("MANAGER");
 		account.setPassword(manager.getPassword());
+		account.setCenter_id(center.getCenter_id());
+		accountService.save(account, "ROLE_MANAGER", "MANAGER");
 		managerMapper.insertManager(manager);
 		centerMapper.insertCenterData(center);
 		

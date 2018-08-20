@@ -22,12 +22,12 @@
 <!-- header-->
   <%@ include file="../header/header_trainer.jsp" %>
   <!-- header-->
-   <div class="container" style="padding-top:5%">
+    <div class="container-fuild" style="padding-top:5%; padding-left:10%; padding-right:10%">
  	<div class="row">
  <table class="table table-bordered">
   <thead>
-    <tr>
-      <th scope="col">시간</th>
+       <tr class="text-center">
+    <th scope="col" style="width:15px">시간</th>
       <th scope="col">월</th>
       <th scope="col">화</th>
       <th scope="col">수</th>

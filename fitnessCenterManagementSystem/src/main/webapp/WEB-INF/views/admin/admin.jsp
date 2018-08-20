@@ -74,7 +74,7 @@
               <input type="text" class="form-control" id="center_name"  name="center_name" placeholder="Center Name">
             </div>
             <div class="form-group">
-              <label for="InputCenterPhoneNumber">센터연라처</label>
+              <label for="InputCenterPhoneNumber">센터연락처</label>
               <input type="text" class="form-control" id="center_phone_number" name="center_phone_number" placeholder="Center PhoneNumber">
             </div>
              <div class="form-group">

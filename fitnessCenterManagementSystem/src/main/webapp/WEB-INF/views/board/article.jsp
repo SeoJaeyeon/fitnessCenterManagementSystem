@@ -19,18 +19,13 @@
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
     <script>
- 	   var usertype;
-   		if('${type}'=='MANAGER');
-   			usertype="manager";
-   			if('${type}'=='TRAINER');
-   			usertype="trainer";
-   			if('${type}'=='MEMBER');
-   			usertype="member";
+		var user=${user};
     </script>
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
-	<c:if test="${type=='MANAGER'}">
+  <!-- Navigation-->
+  <c:if test="${type=='MANAGER'}">
  	<%@ include file="../header/header_manager.jsp" %>
   </c:if>
    <c:if test="${type=='TRAINER'}">
@@ -40,36 +35,67 @@
  	<%@ include file="../header/header_member.jsp" %>
   </c:if>
 
-        <div class="container-fluid" style="padding-left: 10%; padding-right:10%; padding-top: 5%">	
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>NO</th>
-                      <th>작성자</th>
-                      <th>제목</th>
-                      <th>작성시간</th>
-                      <th>조회수</th>
-                    </tr>
-                  </thead>
- 				 <tbody>
- 				 <c:forEach var="article" items="${articles}">
+		
+    <div class="container-fluid" style="padding-left: 15%; padding-right:15%; padding-top: 5%">	
+    	<form method="post">
+    	<div class="form-group">
+ 		 <a href="/manager/write.do" class="btn btn-primary active" role="button" aria-pressed="true">글쓰기</a>
+ 		 <!-- manager는 수정, 삭제 권한 모두 부여  -->
+ 		 <c:if test="${type=='MANAGER'}">
+ 		 <a href="/manager/write.do" class="btn btn-primary active" role="button" aria-pressed="true">수정</a>
+ 		 <a href="/manager/write.do" class="btn btn-primary active" role="button" aria-pressed="true">삭제</a>
+ 		 </c:if>
+ 		  <c:if test="${type!='MANAGER' and user.id==article.writer}">
+ 		 <a href="/manager/write.do" class="btn btn-primary active" role="button" aria-pressed="true">수정</a>
+ 		 <a href="/manager/write.do" class="btn btn-primary active" role="button" aria-pressed="true">삭제</a>
+ 		 </c:if>
+ 		 </div>
+    	<div class="form-row">
+    	 <div class="form-group col-md-3">
+    			<input type="text" class="form-control" id="exampleFormControlInput1" name="subject" value="${article.writer}" readonly="readonly" style="background-color: white">
+ 		 </div>
+ 		 <div class="form-group col-md-9">
+    			<input type="text" class="form-control" id="exampleFormControlInput1" name="subject" value="${article.subject}" readonly="readonly" style="background-color: white">
+ 		 </div>
+ 		 </div>
+ 		  <div class="form-group">
+   		 <textarea class="form-control" id="exampleFormControlTextarea1" rows="20" name="content" readonly="readonly" style="background-color: white">${article.content}</textarea>
+   		 </div>
 
+   		 <div class="form-group">
+   		
+   		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+   		<tr class="text-center">
+						<th>작성자</th>
+						<th>댓글</th>
+						<th>작성시간</th>
+		</tr>
+		 <c:forEach var="comment" items="${comments}">
 						<tr>
-							<td>${article.idx}</td>
-							<td>${article.writer}</td>
-							
-								<td><a href="/article?no=${article.idx}">${article.subject}</a></td>
-						
-							<td>${article.created}</td>
-							<td>${article.view}</td>
+							<td>${comment.writer}</td>
+							<td>${comment.content}</td>
+							<td>${comment.created}</td>
 						</tr>
 				</c:forEach>
   				</tbody>
-			</table>
-				<a href="/write.do" class="btn btn-primary active" role="button" aria-pressed="true">글쓰기</a>
+		</table>
 		</div>
-	</div>
+			<div class="form-row">
+    	 <div class="form-group col-md-3">
+    			<input type="text" class="form-control" id="exampleFormControlInput1" name="subject" value="${user.id}" readonly="readonly" style="background-color: white">
+ 		 </div>
+ 		 <div class="form-group col-md-6">
+    			<input type="text" class="form-control" id="exampleFormControlInput1" name="subject" value="댓글내용"  style="background-color: white">
+ 		 </div>
+ 		 <div class="form-group col-md-3">
+    			<input type="button" class="form-control btn btn-primary" id="exampleFormControlInput1" name="subject" value="작성">
+ 		 </div>
+ 		 </div>
+
+                  <input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
+   		 </form>
+  </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>

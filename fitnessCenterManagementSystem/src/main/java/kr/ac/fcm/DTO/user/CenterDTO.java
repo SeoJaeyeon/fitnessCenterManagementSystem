@@ -2,8 +2,10 @@ package kr.ac.fcm.DTO.user;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class CenterDTO {
 // center_id | center_name  | center_phone_number | registration_date | end_date   | address            
 	private String center_id;

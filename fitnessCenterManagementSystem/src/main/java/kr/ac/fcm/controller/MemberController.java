@@ -3,6 +3,8 @@ package kr.ac.fcm.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +25,12 @@ public class MemberController {
 	
 	private MemberDTO member;
 	
+	
 	Logger logger=LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	private FindUserService findUserService;
-	@Autowired
-	private BoardService boardService;
+
 	
 	@GetMapping("/member")
 	public String showMemberView(@AuthenticationPrincipal Account account,Model model){
@@ -36,35 +38,6 @@ public class MemberController {
 		this.member.setType(account.getType());
 		model.addAttribute("schedule","active");
 		return "/member/member";
-	}
-	
-	@GetMapping("/member/board.do")
-	public String showArticleList(Model model){
-		List<ArticleDTO> articles=boardService.showAllArticles();
-		model.addAttribute("articles",articles);
-		model.addAttribute("type",member.getType());
-		model.addAttribute("board","active");
-		return "/board/articleList";
-	}
-	
-	@GetMapping("/member/write.do")
-	public String showArticle(Model model){
-		model.addAttribute("board","active");
-		return "/board/write";
-	}
-	
-	@PostMapping("/member/write.do")
-	public String addArticle(ArticleDTO article,Model model){
-		try{
-			article.setWriter(member.getId());
-			article.setView(0);
-			article.setCreated(new Date());
-			boardService.write(article);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		model.addAttribute("board","active");
-		return "/board/article.do?idx="+article.getIdx();
 	}
 
 }

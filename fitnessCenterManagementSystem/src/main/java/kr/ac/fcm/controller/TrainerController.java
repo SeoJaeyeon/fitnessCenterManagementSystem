@@ -43,9 +43,6 @@ public class TrainerController {
 	
 	@Autowired
 	private ReviseMyInfoService reviseMyInfoService;
-	
-	@Autowired
-	private BoardService boardService;
 
 	@GetMapping("/trainer")
 	public String trainerMain(@AuthenticationPrincipal Account account, Model model){
@@ -64,7 +61,7 @@ public class TrainerController {
 			return "/trainer/tr_mypage";
 		}
 		String message=reviseMyInfoService.reviseTrainerInfo(req.getParameter("cur_password"), trainer);
-		if(multipartFile!=null){
+		if(!multipartFile.isEmpty()){
 			s3Service.deleteFile(trainer.getId());
 			s3Service.upload(multipartFile, "trainer", trainer.getId());
 		}
@@ -89,33 +86,5 @@ public class TrainerController {
 		model.addAttribute("mypage", "active");
 		return "trainer/tr_mypage";
 	}
-	
-	@GetMapping("/trainer/board.do")
-	public String showArticles(Model model){
-		List<ArticleDTO> articles=boardService.showAllArticles();
-		model.addAttribute("articles",articles);
-		model.addAttribute("type",trainer.getType());
-		model.addAttribute("board", "active");
-		return "/board/articleList";
-	}
-	
-	@GetMapping("/trainer/write.do")
-	public String showArticle(Model model){
-		model.addAttribute("board", "active");
-		return "/board/write";
-	}
-	
-	@PostMapping("/trainer/write.do")
-	public String addArticle(ArticleDTO article, Model model){
-		try{
-			article.setCreated(new Date());
-			article.setWriter(trainer.getId());
-			article.setView(0);
-			boardService.write(article);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		model.addAttribute("board", "active");
-		return "/board/article?idx="+article.getIdx();
-	}
+
 }

@@ -43,7 +43,7 @@
           </a>
         </li>
          <li class="nav-item ${board}" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link" href="/manager/board.do" >
+          <a class="nav-link" href="/board.do" >
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">게시판</span>
           </a>
