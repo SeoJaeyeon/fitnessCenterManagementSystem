@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,14 +49,17 @@ public class ManagerController {
 	private BoardService boardService;
 	
 	@GetMapping("/manager")
-	public String manager(@AuthenticationPrincipal Account account, HttpServletRequest req, HttpServletResponse res){
+	public String manager(@AuthenticationPrincipal Account account, Model model){
 		logger.info(account.getUsername()+"접속");
 		this.manager=findUserService.findManagerById(account.getUsername());
+		this.manager.setType(account.getType());
+		model.addAttribute("schedule","active");
 		return "manager/manager";
 	}
 	
 	@GetMapping("/manager/addMember")
 	public String addUserByGet(Model model){
+		model.addAttribute("management","active");
 		model.addAttribute("member", new MemberDTO());
 		return "manager/addMember";
 	}
@@ -74,7 +78,7 @@ public class ManagerController {
 			model.addAttribute("message","사용자 추가 에러!!!");
 			return "/manager/addMember";
 		}
-		
+		model.addAttribute("management","active");
 		model.addAttribute("message","정상적으로 등록되었습니다.");
 		model.addAttribute("member", new MemberDTO());
 		return "/manager/addUser";
@@ -83,6 +87,7 @@ public class ManagerController {
 	@GetMapping("/manager/addTrainer")
 	public String addTrainerByGET(Model model){
 		model.addAttribute("trainer", new TrainerDTO());
+		model.addAttribute("management","active");
 		return "/manager/addTrainer";
 	}
 	@PostMapping("/manager/addTrainer")
@@ -101,6 +106,7 @@ public class ManagerController {
 			model.addAttribute("message","사용자 추가 에러!!!");
 			return "/manager/addTrainer";
 		}
+		model.addAttribute("management","active");
 		model.addAttribute("message","정상적으로 추가되었습니다!!");
 		model.addAttribute("trainer",new TrainerDTO());
 		return "/manager/addTrainer";
@@ -110,12 +116,15 @@ public class ManagerController {
 	public String showBoardList(Model model){
 		List<ArticleDTO> articles=boardService.showAllArticles();
 		model.addAttribute("articles",articles);
-		return "/manager/manager_articleList";
+		model.addAttribute("type",manager.getType());
+		model.addAttribute("board","active");
+		return "/board/articleList";
 	}
 	
 	@GetMapping("/manager/write.do")
-	public String showArticle(){
-		return "/manager/manager_write";
+	public String writeArticle(Model model){
+		model.addAttribute("board","active");
+		return "/board/write";
 	}
 	
 	@PostMapping("/manager/write.do")
@@ -128,7 +137,15 @@ public class ManagerController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}		
-		return "/manager/article.do?idx="+article.getIdx();
+		model.addAttribute("board","active");
+		return "/board/article.do?idx="+article.getIdx();
 	}
+	
+/*	@GetMapping("/manager/article")
+	public String showArticle(@Param("no") int idx, Model model){
+		ArticleDTO article=new ArticleDTO();
+		article=boardService.showArticleByIdx(idx);
+		
+	}*/
 
 }

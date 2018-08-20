@@ -31,8 +31,10 @@ public class MemberController {
 	private BoardService boardService;
 	
 	@GetMapping("/member")
-	public String showMemberView(@AuthenticationPrincipal Account account){
+	public String showMemberView(@AuthenticationPrincipal Account account,Model model){
 		this.member=findUserService.findMemberById(account.getId());
+		this.member.setType(account.getType());
+		model.addAttribute("schedule","active");
 		return "/member/member";
 	}
 	
@@ -40,16 +42,19 @@ public class MemberController {
 	public String showArticleList(Model model){
 		List<ArticleDTO> articles=boardService.showAllArticles();
 		model.addAttribute("articles",articles);
-		return "/member/member_articleList";
+		model.addAttribute("type",member.getType());
+		model.addAttribute("board","active");
+		return "/board/articleList";
 	}
 	
 	@GetMapping("/member/write.do")
-	public String showArticle(){
-		return "/member/member_write";
+	public String showArticle(Model model){
+		model.addAttribute("board","active");
+		return "/board/write";
 	}
 	
 	@PostMapping("/member/write.do")
-	public String addArticle(ArticleDTO article){
+	public String addArticle(ArticleDTO article,Model model){
 		try{
 			article.setWriter(member.getId());
 			article.setView(0);
@@ -58,7 +63,8 @@ public class MemberController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "/member/article.do?idx="+article.getIdx();
+		model.addAttribute("board","active");
+		return "/board/article.do?idx="+article.getIdx();
 	}
 
 }

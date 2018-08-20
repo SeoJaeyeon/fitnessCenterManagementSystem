@@ -43,54 +43,7 @@
 </head>
 <body>
    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">헬스일정예약관리시스템</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-         <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="adminUser">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-sitemap"></i>
-            <span class="nav-link-text">사용자관리</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseMulti">
-            <li>
-              <a href="/manager/addMember">회원추가</a>
-            </li>
-            <li>
-              <a href="#">회원관리</a>
-            </li>
-            <li>
-              <a href="/manager/addTrainer">트레이너추가</a>
-            </li>
-              <li>
-              <a href="#">트레이너관리</a>
-            </li>
-          </ul>
-        </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="/manager">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">스케줄</span>
-          </a>
-        </li>
-         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link" href="/manager/board.do" >
-            <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">게시판</span>
-          </a>
-        </li>
-        <li class="nav justify-content-end">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
-      </ul>
-    </div>
-    </div>
-  </nav>
+  <%@ include file="../header/header_manager.jsp" %>
 <form:form method="post" enctype="multipart/form-data" modelAttribute="trainer">
    <div class="container" style="padding-top:5%">
  	<div class="row">
