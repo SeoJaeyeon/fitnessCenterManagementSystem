@@ -12,4 +12,5 @@ public class CommentDTO {
 	private String writer;
 	private String content;
 	private Date created;
+	private int idx;
 }
