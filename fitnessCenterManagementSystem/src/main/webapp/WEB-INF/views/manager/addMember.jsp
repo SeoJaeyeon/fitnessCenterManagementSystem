@@ -29,27 +29,27 @@
 <body>
   <%@ include file="../header/header_manager.jsp" %>
 <form:form method="post" modelAttribute="member">
-   <div class="container" style="padding-top:5%">
- 	<div class="row">
- 	<div class="col-md-3"></div>
- 		<div class="col-md-6">
+   <div class="container-fulid" style="padding-top:5%; padding-left:10%; padding-right:10%;">
 		     <div class="card">
 		  <h5 class="card-header">회원추가</h5>
   		<div class="card-body">
-            <div class="form-group">
+            <div class="form-row">
+            <div class="form-group col-md-6">
               <label for="InputId">아이디</label>
               <form:input type="text" class="form-control" id="id" name="id" placeholder="ID" path="id"/><p style="color:red"><form:errors path="id"/></p>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="InputPassword">비밀번호</label>
               <form:input type="password" class="form-control" id="password"  name="password" placeholder="Password" path="password"/><p style="color:red"><form:errors path="password"/></p>
             </div>
-            <div class="form-group">
+            </div>
+              <div class="form-row">
+            <div class="form-group col-md-6">
               <label for="InputName">이름</label>
               <form:input type="text" class="form-control" id="name" name="name" placeholder="Name" path="name"/><p style="color:red"><form:errors path="name"/></p>
             </div>
-              <div class="form-group">
-              <label for="InputName">성별</br></br></label>
+              <div class="form-group col-md-6">
+              <label for="InputName">성별</label><br/>
 			<div class="form-check form-check-inline">
   				<input class="form-check-input" type="radio" name="gender" id="M" value="M" checked>
   				<label class="form-check-label" for="inlineRadio1">남성</label>
@@ -58,11 +58,16 @@
   				<input class="form-check-input" type="radio" name="gender" id="G" value="G">
   			<label class="form-check-label" for="inlineRadio2">여성</label>
 				</div>
-             <div class="form-group">
+				</div>
+				</div>
+				<div class="form-row">
+             <div class="form-group col-md-12">
               <label for="phoneNumber">휴대폰 번호</label>
               <form:input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone_number" path="phone_number"/><p style="color:red"><form:errors path="phone_number"/></p>
             </div>
-               <div class="form-group">
+            </div>
+  			<div class="form-row">
+             <div class="form-group col-md-12">
               <label for="pt">주 pt횟수</label>
               <select id="pt" name="pt" class="custom-select">
  			 <option value="0" selected>0</option>
@@ -75,14 +80,21 @@
   			<option value="7">7</option>
 			</select>
             </div>
+            </div>
+            <div class="form-row">
+             <div class="form-group col-md-12">
+              <label for="trianer">담당트레이너</label>
+              <select id="trainer_id" name="trainer_id" class="custom-select">
+              <c:forEach var="trainer" items="${trainers}">
+              <option value="${trainer.id}">${trainer.name}</option>
+			</c:forEach>
+			</select>
+            </div>      
+            </div>      
             <button type="submit" id="btnSave" class="btn btn-block btn-primary text-light">서비스 이용자 등록</button>
                   <input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 		</div>
- 	</div>
- 	</div>
- 	<div class="col-md-3"></div>
- 	</div>
  	</div>
  	</div>
  	</form:form>
