@@ -1,12 +1,8 @@
 package kr.ac.fcm.controller;
 
-
-
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
@@ -18,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -58,16 +55,28 @@ public class ManagerController {
 	}
 	
 	@GetMapping("/manager/addMember")
-	public String addUserByGet(Model model){
+	public String addUserByGet(Model model, HttpServletRequest req){
+		if(req.getParameter("error")==null && req.getParameter("success")!=null)
+		{
+			model.addAttribute("message","정상적으로 등록되었습니다");
+		}
+		if(req.getParameter("error")!=null)
+		{
+			model.addAttribute("message","사용자등록오류");
+		}
+		List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
 		model.addAttribute("management","active");
 		model.addAttribute("member", new MemberDTO());
+		model.addAttribute("trainers",trainers);
 		return "manager/addMember";
 	}
 	
 	@PostMapping("/manager/addMember")
-	public String addUserByPost(@Valid MemberDTO member, BindingResult bindingResult,Model model){
+	public String addUserByPost(@Valid @ModelAttribute("member") MemberDTO member, BindingResult bindingResult,Model model){
 		if(bindingResult.hasErrors()){
-			logger.info("form error");
+			List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
+			model.addAttribute("management","active");
+			model.addAttribute("trainers",trainers);
 			return "/manager/addMember";
 		}
 		member.setCenter_id(this.manager.getCenter_id());
@@ -75,23 +84,27 @@ public class ManagerController {
 			addUserService.addMember(member);
 		}catch(Exception ex){
 			ex.printStackTrace();
-			model.addAttribute("message","사용자 추가 에러!!!");
-			return "/manager/addMember";
+			return "redirect:/manager/addMember?error";
 		}
-		model.addAttribute("management","active");
-		model.addAttribute("message","정상적으로 등록되었습니다.");
-		model.addAttribute("member", new MemberDTO());
-		return "/manager/addMember";
+		return "redirect:/manager/addMember?success";
 	}
 
 	@GetMapping("/manager/addTrainer")
-	public String addTrainerByGET(Model model){
+	public String addTrainerByGET(Model model,HttpServletRequest req){
+		if(req.getParameter("error")==null && req.getParameter("success")!=null)
+		{
+			model.addAttribute("message","정상적으로 등록되었습니다");
+		}
+		if(req.getParameter("error")!=null)
+		{
+			model.addAttribute("message","사용자등록오류");
+		}
 		model.addAttribute("trainer", new TrainerDTO());
 		model.addAttribute("management","active");
 		return "/manager/addTrainer";
 	}
 	@PostMapping("/manager/addTrainer")
-	public String addTrainer(@Valid TrainerDTO trainer,BindingResult bindingResult, Model model,HttpServletRequest req,@RequestParam("file") MultipartFile multipartFile){
+	public String addTrainer(@Valid @ModelAttribute("trainer") TrainerDTO trainer,BindingResult bindingResult, Model model,HttpServletRequest req,@RequestParam("file") MultipartFile multipartFile){
 		if(bindingResult.hasErrors()){
 			logger.info("form error in addTrainer");
 			return "/manager/addTrainer";
@@ -103,13 +116,10 @@ public class ManagerController {
 			s3Service.upload(multipartFile, "trainer",trainer.getId());
 		}catch(Exception ex){
 			ex.printStackTrace();
-			model.addAttribute("message","사용자 추가 에러!!!");
-			return "/manager/addTrainer";
+			return "redirect:/manager/addTrainer?error";
 		}
-		model.addAttribute("management","active");
-		model.addAttribute("message","정상적으로 추가되었습니다!!");
-		model.addAttribute("trainer",new TrainerDTO());
-		return "/manager/addTrainer";
+
+		return "redirect:/manager/addTrainer?success";
 	}
 	
 

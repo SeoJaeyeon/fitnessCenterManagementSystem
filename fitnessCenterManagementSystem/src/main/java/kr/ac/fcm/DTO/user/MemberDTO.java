@@ -1,18 +1,13 @@
 package kr.ac.fcm.DTO.user;
 
-import javax.validation.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Check;
-
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+
+@Data
 public class MemberDTO extends Account{
 	
 	private int pt;
@@ -22,5 +17,6 @@ public class MemberDTO extends Account{
 	private String gender;
 	@Pattern(regexp="^01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$", message="올바른 전화번호를 입력해주세요!!") @NotNull(message="이 필드는 비어있을 수 없습니다!!!")
 	private String phone_number;
+	private String trainer_id;
 
 }

@@ -1,5 +1,7 @@
 package kr.ac.fcm.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,13 @@ public class FindUserServiceImpl implements FindUserService {
 	public MemberDTO findMemberById(String id) {
 		// TODO Auto-generated method stub
 		return memberMapper.findMemberByMemberId(id);
+	}
+
+	@Override
+	public List<TrainerDTO> findAllTrainers(String center_id) {
+		// TODO Auto-generated method stub
+		List<TrainerDTO> trainers=trainerMapper.selectAllTrainerByCenter_id(center_id);
+		return trainers;
 	}
 
 }

@@ -13,6 +13,6 @@ public interface MemberMapper {
 	@Select("SELECT * FROM Member WHERE id= #{id}")
 	MemberDTO findMemberByMemberId(@Param("id")String id);
 
-	@Insert("INSERT INTO MEMBER VALUES(#{member.id},#{member.name}, #{member.center_id}, #{member.gender}, #{member.pt}, #{member.phone_number})")
+	@Insert("INSERT INTO MEMBER VALUES(#{member.id},#{member.name}, #{member.center_id}, #{member.gender}, #{member.pt}, #{member.phone_number}, #{member.trainer_id})")
 	void insertMember(@Param("member") MemberDTO member);
 }
