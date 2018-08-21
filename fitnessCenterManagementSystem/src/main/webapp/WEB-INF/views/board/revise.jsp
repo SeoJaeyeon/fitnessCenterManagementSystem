@@ -18,15 +18,8 @@
 <link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin.css" rel="stylesheet">
-    
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script type="text/javascript">
-		var message='${message}';
-		if(message!=""){
-			var re=confirm(message);
-			if(re)
-				window.location.href = '/delete.do?no=${article.idx}';
-		}
+    <script>
+		var user=${user};
     </script>
 </head>
 
@@ -44,61 +37,22 @@
 
 		
     <div class="container-fluid" style="padding-left: 15%; padding-right:15%; padding-top: 5%">	
-    	<form method="post" action="/article?no=${article.idx}">
+    	<form method="post" action="/revise.do?no=${article.idx}">
     	<div class="form-group">
- 		 <a href="/board.do" class="btn btn-primary active" role="button" aria-pressed="true">목록</a>
- 		 <!-- manager는 수정, 삭제 권한 모두 부여  -->
- 		 <c:if test="${type=='MANAGER'}">
- 		 <a href="/revise.do?no=${article.idx}" class="btn btn-primary active" role="button" aria-pressed="true">수정</a>
- 		 <a href="/article?no=${article.idx}&delete=true" class="btn btn-primary active" role="button" aria-pressed="true">삭제</a>
- 		 </c:if>
- 		  <c:if test="${type!='MANAGER' and user.id==article.writer}">
- 		 <a href="/revise.do?no=${article.idx}" class="btn btn-primary active" role="button" aria-pressed="true">수정</a>
- 		 <a href="/article?no=${article.idx}&delete=true" class="btn btn-primary active" role="button" aria-pressed="true">삭제</a>
- 		 </c:if>
+ 		 <button class="btn btn-primary active" aria-pressed="true">수정</button>
+ 		 <a href="/article?no=${article.idx}" class="btn btn-primary active" role="button" aria-pressed="true">삭제</a>
  		 </div>
     	<div class="form-row">
     	 <div class="form-group col-md-3">
-    			<input type="text" class="form-control" id="exampleFormControlInput1" name="subject" value="${article.writer}" readonly="readonly" style="background-color: white">
+    			<input type="text" class="form-control" id="exampleFormControlInput1" name="writer" value="${article.writer}"  readonly="readonly"  style="background-color: white">
  		 </div>
  		 <div class="form-group col-md-9">
-    			<input type="text" class="form-control" id="exampleFormControlInput1" name="subject" value="${article.subject}" readonly="readonly" style="background-color: white">
+    			<input type="text" class="form-control" id="exampleFormControlInput1" name="subject" value="${article.subject}" style="background-color: white">
  		 </div>
  		 </div>
  		  <div class="form-group">
-   		 <textarea class="form-control" id="exampleFormControlTextarea1" rows="20" name="content" readonly="readonly" style="background-color: white">${article.content}</textarea>
+   		 <textarea class="form-control" id="exampleFormControlTextarea1" rows="35" name="content"  style="background-color: white">${article.content}</textarea>
    		 </div>
-
-   		 <div class="form-group">
-   		
-   		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-   		<tr class="text-center">
-						<th>작성자</th>
-						<th>댓글</th>
-						<th>작성시간</th>
-		</tr>
-		 <c:forEach var="comment" items="${comments}">
-						<tr>
-							<td>${comment.writer}</td>
-							<td>${comment.content}</td>
-							<td>${comment.created}</td>
-						</tr>
-				</c:forEach>
-  				</tbody>
-		</table>
-		</div>
-			<div class="form-row">
-    	 <div class="form-group col-md-3">
-    			<input type="text" class="form-control" id="exampleFormControlInput1" name="writer" value="${user.id}" readonly="readonly" style="background-color: white">
- 		 </div>
- 		 <div class="form-group col-md-6">
-    			<input type="text" class="form-control" id="exampleFormControlInput1" name="content" value="댓글내용"  style="background-color: white">
- 		 </div>
- 		 <div class="form-group col-md-3">
-    			<input type="submit" class="form-control btn btn-primary" id="exampleFormControlInput1"  value="작성">
- 		 </div>
- 		 </div>
-
                   <input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
    		 </form>

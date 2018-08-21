@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,8 +22,6 @@ import kr.ac.fcm.service.FindUserService;
 @Controller
 public class BoardController {
 	
-	@Autowired
-	private FindUserService findUesrService;
 	
 	private Account user;
 	
@@ -61,22 +60,61 @@ public class BoardController {
 		return "redirect:/article?no="+article.getIdx();
 	}
 	@GetMapping("/article")
+	@Transactional
 	public String showArticle(HttpServletRequest req, Model model){
 		int idx=Integer.parseInt(req.getParameter("no"));
+		if(req.getParameter("delete")!=null){
+			model.addAttribute("message","정말 삭제하시겠습니까?");
+		}
 		ArticleDTO article=new ArticleDTO();
 		article=boardService.showArticleByIdx(idx);
 		model.addAttribute("type",user.getType());
 		model.addAttribute("article",article);
 		model.addAttribute("user",user);
 		model.addAttribute("board","active");
+		
+		List<CommentDTO> comments=boardService.showAllComments(article.getIdx());
+		model.addAttribute("comments",comments);
 		return "/board/article";
 		
 	}
-/*	
-	//댓글작
+	
+	@GetMapping("/revise.do")
+	public String reviseArticle(Model model, HttpServletRequest req){	
+		int idx=Integer.parseInt(req.getParameter("no"));
+		ArticleDTO article=new ArticleDTO();
+		article=boardService.showArticleByIdx(idx);
+		model.addAttribute("article",article);
+		model.addAttribute("type", user.getType());
+		return "/board/revise";
+	}
+	@PostMapping("/revise.do")
+	public String reviseArticleByPost(ArticleDTO article, Model model, HttpServletRequest req){
+		article.setCreated(new Date());
+		article.setIdx(Integer.parseInt(req.getParameter("no")));
+		boardService.reviseArticle(article);
+		return "redirect:/article?no="+article.getIdx();
+	}
+	@GetMapping("/delete.do")
+	public String deleteArticle(Model model, HttpServletRequest req){
+		int idx=Integer.parseInt(req.getParameter("no"));
+		try{
+			boardService.deleteArticle(idx);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "redirect:/board.do";
+	}
+	
+	//댓글작성
 	@PostMapping("/article")
-	public String addComment(CommentDTO comment){
-		comment.setCenter_id(center_id);
-	}*/
+	public String addComment(CommentDTO comment, HttpServletRequest req){
+		comment.setCenter_id(user.getCenter_id());
+		comment.setCreated(new Date());
+		comment.setIdx(Integer.parseInt(req.getParameter("no")));
+		boardService.addComment(comment);
+		return "redirect:/article?no="+req.getParameter("no");
+		
+	}
 
 }
