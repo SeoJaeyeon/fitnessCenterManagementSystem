@@ -74,6 +74,11 @@ public class BoardController {
 		model.addAttribute("board","active");
 		
 		List<CommentDTO> comments=boardService.showAllComments(article.getIdx());
+		if(comments.size()==0){
+			CommentDTO comment=new CommentDTO();
+			comment.setContent("아직 작성된 댓글이 없습니다");
+			comments.add(comment);
+		}
 		model.addAttribute("comments",comments);
 		return "/board/article";
 		

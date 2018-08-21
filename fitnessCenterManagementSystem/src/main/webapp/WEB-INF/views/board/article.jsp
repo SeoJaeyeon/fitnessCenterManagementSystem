@@ -71,32 +71,28 @@
 
    		 <div class="form-group">
    		
-   		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-   		<tr class="text-center">
+   		<table class="table table-sm" id="dataTable" width="100%" cellspacing="0">
+   		<tr>
 						<th>작성자</th>
 						<th>댓글</th>
 						<th>작성시간</th>
 		</tr>
 		 <c:forEach var="comment" items="${comments}">
 						<tr>
-							<td>${comment.writer}</td>
+							<td style="width:20%">${comment.writer}</td>
 							<td>${comment.content}</td>
-							<td>${comment.created}</td>
+							<td style="width:30%">${comment.created}</td>
 						</tr>
 				</c:forEach>
+				<tr>
+					<td><input type="text" class="form-control" id="exampleFormControlInput1" name="writer" value="${user.id}" readonly="readonly" style="background-color: white"></td>
+					<td><input type="text" class="form-control" id="exampleFormControlInput1" name="content" value="댓글내용"  style="background-color: white"></td>
+					<td><input type="submit" class="form-control btn btn-primary" id="exampleFormControlInput1"  value="작성"></td>
+					
+				</tr>
   				</tbody>
 		</table>
-		</div>
-			<div class="form-row">
-    	 <div class="form-group col-md-3">
-    			<input type="text" class="form-control" id="exampleFormControlInput1" name="writer" value="${user.id}" readonly="readonly" style="background-color: white">
- 		 </div>
- 		 <div class="form-group col-md-6">
-    			<input type="text" class="form-control" id="exampleFormControlInput1" name="content" value="댓글내용"  style="background-color: white">
- 		 </div>
- 		 <div class="form-group col-md-3">
-    			<input type="submit" class="form-control btn btn-primary" id="exampleFormControlInput1"  value="작성">
- 		 </div>
+		
  		 </div>
 
                   <input type="hidden" name="${_csrf.parameterName}"
