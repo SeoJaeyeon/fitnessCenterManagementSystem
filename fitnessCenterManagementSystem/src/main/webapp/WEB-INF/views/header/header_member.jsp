@@ -42,7 +42,7 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMypage">
             <li>
-              <a href="/trainer/showMemberList">개인정보수정</a>
+              <a href="/member/mypage">개인정보수정</a>
             </li>
             <li>
               <a href="#">인바디조회</a>
