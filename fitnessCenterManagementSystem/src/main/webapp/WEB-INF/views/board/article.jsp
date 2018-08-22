@@ -66,7 +66,7 @@
  		 </div>
  		 </div>
  		  <div class="form-group">
-   		 <textarea class="form-control" id="exampleFormControlTextarea1" rows="20" name="content" readonly="readonly" style="background-color: white">${article.content}</textarea>
+   		 <textarea class="form-control" id="exampleFormControlTextarea1" rows="20" name="article_content" readonly="readonly" style="background-color: white">${article.content}</textarea>
    		 </div>
 
    		 <div class="form-group">
