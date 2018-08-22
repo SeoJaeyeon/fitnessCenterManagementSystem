@@ -49,7 +49,8 @@ public class TrainerController {
 		this.trainer=findUserService.findTrainerById(account.getUsername());
 		this.trainer.setType(account.getType());
 		model.addAttribute("schedule", "active");
-		return "trainer/trainer";
+		model.addAttribute("type",trainer.getType());
+		return "/schedule";
 	}
 	
 	@PostMapping("/trainer/mypage")

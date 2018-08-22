@@ -37,7 +37,8 @@ public class MemberController {
 		this.member=findUserService.findMemberById(account.getId());
 		this.member.setType(account.getType());
 		model.addAttribute("schedule","active");
-		return "/member/member";
+		model.addAttribute("type",member.getType());
+		return "/schedule";
 	}
 
 }
