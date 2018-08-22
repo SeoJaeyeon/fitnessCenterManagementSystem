@@ -51,7 +51,8 @@ public class ManagerController {
 		this.manager=findUserService.findManagerById(account.getUsername());
 		this.manager.setType(account.getType());
 		model.addAttribute("schedule","active");
-		return "manager/manager";
+		model.addAttribute("type",manager.getType());
+		return "/schedule";
 	}
 	
 	@GetMapping("/manager/addMember")

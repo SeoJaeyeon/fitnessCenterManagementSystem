@@ -28,6 +28,10 @@ import kr.ac.fcm.service.s3.S3ServiceImpl;
 public class AdminController {
 	
 	@Autowired
+	AccountService accountService;
+
+	
+	@Autowired
 	private AddUserService addUserService;
 	
 	@RequestMapping(value="/admin", method=RequestMethod.GET)
@@ -53,5 +57,17 @@ public class AdminController {
 		return "admin/admin";
 		
 	}
+	
+	//ADMIN 계정 부여
+		@GetMapping("/create")
+		public Account create(){
+			Account account=new Account();
+			account.setId("admin");
+			account.setPassword("1234");
+			accountService.save(account, "ROLE_ADMIN", "ADMIN");
+			return account;
+		}
+
+
 	
 }
