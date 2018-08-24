@@ -38,7 +38,7 @@ public class MemberController {
 	private FindUserService findUserService;
 	
 	@Autowired
-	private ReviseMyInfoService reviseMyFinoService;
+	private ReviseMyInfoService reviseMemberInfoService;
 
 	
 	@GetMapping("/member")
@@ -72,7 +72,7 @@ public class MemberController {
 			logger.info(bindingResult.getAllErrors().get(0).toString());
 			return "/member/mem_mypage";
 		}
-		String result=reviseMyFinoService.reviseMemberInfo(req.getParameter("cur_password"), member);
+		String result=reviseMemberInfoService.reviseMyInfo(req.getParameter("cur_password"), member);
 		model.addAttribute("mypage","active");
 		model.addAttribute("member",member);
 		return "redirect:/member/mypage?"+result;
