@@ -42,7 +42,7 @@ public class TrainerController {
 	private S3Service s3Service;
 	
 	@Autowired
-	private ReviseMyInfoService reviseMyInfoService;
+	private ReviseMyInfoService reviseTrainerInfoService;
 
 	@GetMapping("/trainer")
 	public String trainerMain(@AuthenticationPrincipal Account account, Model model){
@@ -61,7 +61,7 @@ public class TrainerController {
 			logger.info(bindingResult.getAllErrors().get(0).toString());
 			return "/trainer/tr_mypage";
 		}
-		String message=reviseMyInfoService.reviseTrainerInfo(req.getParameter("cur_password"), trainer);
+		String message=reviseTrainerInfoService.reviseMyInfo(req.getParameter("cur_password"), trainer);
 		if(!multipartFile.isEmpty()){
 			s3Service.deleteFile(trainer.getId());
 			s3Service.upload(multipartFile, "trainer", trainer.getId());
