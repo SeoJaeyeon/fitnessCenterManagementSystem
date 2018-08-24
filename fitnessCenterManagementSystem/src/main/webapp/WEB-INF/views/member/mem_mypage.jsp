@@ -15,6 +15,14 @@
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath}/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
+  
+  <script>
+  	var message='${message}';
+  	if(message!=""){
+  		alert(message);
+  	}
+  </script>
+  
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
@@ -26,42 +34,44 @@
  <div class="card">
   <h5 class="card-header">마이페이지</h5>
   <div class="card-body">
-    <form:form method="post" modelAttribute="member" enctype="multipart/form-data" action="/trainer/mypage">
+    <form:form method="post" modelAttribute="member" action="/member/mypage">
            
             <div class="form-group ">
             <label for="ShowId">아이디</label>
-            <form:input readonly="true" type="text" class="form-control" id="id" name="trainer.id"  path="id"/><p style="color:red"><form:errors path="id"/></p>
+            <form:input readonly="true" style="background-color:white"  type="text" class="form-control" id="id" name="id"  path="id"/><p style="color:red"><form:errors path="id"/></p>
             </div>
               <div class="form-row">
             <div class="form-group col-md-6">
               <label for="InputPassword">현재비밀번호</label>
-              <input type="password" class="form-control" id="cur_password"  name="cur_password" placeholder="Password">
+              <input type="password" class="form-control" id="cur_password"  name="cur_password" placeholder="Current Password">
             </div>
              <div class="form-group col-md-6">
               <label for="InputNewPassword">변경할비밀번호(변경하지 않을 시 기존 비밀번호 입력 )</label>
-              <form:input type="password" class="form-control" id="password"  name="password" placeholder="New Password" path="password" /><p style="color:red"><form:errors path="password"/></p>
+              <form:input type="password" class="form-control" id="password"  name="member.password" placeholder="New Password" path="password" /><p style="color:red"><form:errors path="password"/></p>
             </div>
             </div>
               <div class="form-row">
             <div class="form-group col-md-6">
               <label for="InputName">이름</label>
-              <form:input readonly="true" type="text" class="form-control" id="name" name="trainer.name"  path="name"/><p style="color:red"><form:errors path="name"/></p>
+              <form:input readonly="true" style="background-color:white"  type="text" class="form-control" id="name" name="member.name"  path="name"/><p style="color:red"><form:errors path="name"/></p>
             </div>
              <div class="form-group col-md-6">
               <label for="phoneNumber">휴대폰 번호</label>
-              <form:input type="text" class="form-control" id="phone_number" name="trainer.phone_number" path="phone_number"/><p style="color:red"><form:errors path="phone_number"/></p>
+              <form:input type="text" class="form-control" id="phone_number" name="member.phone_number" path="phone_number"/><p style="color:red"><form:errors path="phone_number"/></p>
             </div>
             </div>
             <div class="form-row">
              <div class="form-group col-md-6"> 
              <label for="phoneNumber">주PT횟수(변경문의는 헬스장에 해주시기 바랍니다)</label>
-             <input type="password" class="form-control" id="pt"  name="pt" value="${pt}" readonly="readonly">
+             <form:input type="text" class="form-control" id="pt"  name="member.pt" path="pt" style="background-color:white" readonly="true"/><form:errors path="pt"/>
              </div>
              <div class="form-group col-md-6"> 
              <label for="phoneNumber">담당트레이너(변경문의는 헬스장에 해주시기 바랍니다)</label>
-             <input type="password" class="form-control" id="trainer"  name="trainer_id" value="${trainer_id}" readonly="readonly">
+             <form:input type="text" class="form-control" id="trainer"  name="member.trainer_id" style="background-color:white"  path="trainer_id" readonly="true"/><form:errors path="trainer_id"/>
              </div>
             </div>
+             <input type="hidden" name="gender" value="${member.gender}" id="gender"
+				value="${_csrf.token}" />
             <button type="submit" class="btn btn-block btn-primary text-light">개인정보 수정</button>
                   <input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />

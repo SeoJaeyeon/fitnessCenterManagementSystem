@@ -12,15 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import kr.ac.fcm.DTO.ArticleDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.service.BoardService;
 import kr.ac.fcm.service.FindUserService;
+import kr.ac.fcm.service.ReviseMyInfoService;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder.BindingResolver;
 
 @Controller
 public class MemberController {
@@ -32,6 +36,9 @@ public class MemberController {
 	
 	@Autowired
 	private FindUserService findUserService;
+	
+	@Autowired
+	private ReviseMyInfoService reviseMyFinoService;
 
 	
 	@GetMapping("/member")
@@ -44,10 +51,31 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/mypage")
-	public String myPageByGet( Model model){
+	public String myPageByGet( Model model, HttpServletRequest req){
 		model.addAttribute("mypage","active");
 		model.addAttribute("member",member);
+		if(req.getParameter("pwerror")!=null)
+			model.addAttribute("message","패스워드를 다시한번 확인해주세요!!");
+		else if(req.getParameter("error")!=null)
+			model.addAttribute("message","예기치못한 오류가 발생하였습니다!!");
+		else if(req.getParameter("success")!=null)
+			model.addAttribute("message","정상적으로 변경되었습니다!!");
+		else
+			model.addAttribute("message","");
 		return "/member/mem_mypage";
+	}
+	
+	@PostMapping("/member/mypage")
+	public String myPageByPost(@Valid @ModelAttribute("member") MemberDTO member, BindingResult bindingResult, HttpServletRequest req,Model model){
+		if(bindingResult.hasErrors()){
+			logger.info(Integer.toString(bindingResult.getErrorCount()));
+			logger.info(bindingResult.getAllErrors().get(0).toString());
+			return "/member/mem_mypage";
+		}
+		String result=reviseMyFinoService.reviseMemberInfo(req.getParameter("cur_password"), member);
+		model.addAttribute("mypage","active");
+		model.addAttribute("member",member);
+		return "redirect:/member/mypage?"+result;
 	}
 
 }
