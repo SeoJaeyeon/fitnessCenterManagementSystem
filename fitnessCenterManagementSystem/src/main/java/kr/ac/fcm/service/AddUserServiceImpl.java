@@ -51,21 +51,7 @@ public class AddUserServiceImpl implements AddUserService {
 		accountService.save(account, "ROLE_TRAINER", "TRAINER");
 		trainerMapper.insertTrainer(trainer);
 	}
-	@Override
-	@Transactional
-	public void addManager(ManagerDTO manager, CenterDTO center) throws Exception {
-		// TODO Auto-generated method stub
-		Account account=new Account();
-		account.setId(manager.getId());
-		account.setType("MANAGER");
-		account.setPassword(manager.getPassword());
-		account.setCenter_id(center.getCenter_id());
-		accountService.save(account, "ROLE_MANAGER", "MANAGER");
-		managerMapper.insertManager(manager);
-		centerMapper.insertCenterData(center);
-		
-		
-	}
+
 
 
 

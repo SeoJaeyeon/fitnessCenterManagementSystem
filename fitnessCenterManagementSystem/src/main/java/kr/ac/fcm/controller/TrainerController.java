@@ -77,7 +77,7 @@ public class TrainerController {
 	@GetMapping("/trainer/mypage")
 	public String trainerMyPage(Model model,HttpServletRequest req){
 		model.addAttribute("trainer",trainer);
-		//model.addAttribute("closed_day",trainer.getClosed_day());
+		model.addAttribute("closed_day",trainer.getClosed_day());
 		model.addAttribute("img",s3Service.getFileURL(s3Service.getBucket(), trainer.getId()));
 		if(req.getParameter("message")==null)
 			model.addAttribute("message",req.getParameter(""));
