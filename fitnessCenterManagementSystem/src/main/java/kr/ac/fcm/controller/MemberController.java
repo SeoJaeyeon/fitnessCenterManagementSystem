@@ -1,7 +1,5 @@
 package kr.ac.fcm.controller;
 
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -16,16 +14,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndViewDefiningException;
 
-import kr.ac.fcm.DTO.ArticleDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.MemberDTO;
-import kr.ac.fcm.service.BoardService;
+
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseMyInfoService;
-import net.bytebuddy.implementation.bind.MethodDelegationBinder.BindingResolver;
-
 @Controller
 public class MemberController {
 	

@@ -10,10 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.ac.fcm.DTO.user.Account;
-import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.mapper.AccountMapper;
-import kr.ac.fcm.mapper.MemberMapper;
 import kr.ac.fcm.mapper.TrainerMapper;
 
 @Service("reviseTrainerInfoService")
@@ -24,8 +22,7 @@ public class ReviseTrainerInfoServiceImpl implements ReviseMyInfoService {
 	private AccountService accountService;
 	@Autowired
 	private TrainerMapper trainerMapper;
-	@Autowired 
-	private MemberMapper memberMapper;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired

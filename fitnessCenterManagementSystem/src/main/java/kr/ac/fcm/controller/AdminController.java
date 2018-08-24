@@ -20,6 +20,7 @@ import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.mapper.CenterMapper;
 import kr.ac.fcm.mapper.ManagerMapper;
 import kr.ac.fcm.service.AccountService;
+import kr.ac.fcm.service.AddManagerService;
 import kr.ac.fcm.service.AddUserService;
 import kr.ac.fcm.service.s3.S3ServiceImpl;
 
@@ -32,7 +33,7 @@ public class AdminController {
 
 	
 	@Autowired
-	private AddUserService addUserService;
+	private AddManagerService addManagerService;
 	
 	@RequestMapping(value="/admin", method=RequestMethod.GET)
 	public String adminPage(Model model,HttpServletRequest req){
@@ -45,7 +46,7 @@ public class AdminController {
 
 	
 		try{
-			addUserService.addManager(manager, center);
+			addManagerService.addManager(manager, center);
 		
 		}catch(Exception ex){ 
 			ex.printStackTrace();
