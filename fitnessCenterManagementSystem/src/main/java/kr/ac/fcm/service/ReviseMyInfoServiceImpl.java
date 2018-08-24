@@ -9,8 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.mapper.AccountMapper;
+import kr.ac.fcm.mapper.MemberMapper;
 import kr.ac.fcm.mapper.TrainerMapper;
 
 @Service
@@ -21,6 +23,8 @@ public class ReviseMyInfoServiceImpl implements ReviseMyInfoService {
 	private AccountService accountService;
 	@Autowired
 	private TrainerMapper trainerMapper;
+	@Autowired 
+	private MemberMapper memberMapper;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
@@ -41,6 +45,22 @@ public class ReviseMyInfoServiceImpl implements ReviseMyInfoService {
 			return "예기치 못한 오류가 발생했습니다";
 		}
 		return "정상적으로 변경되었습니다.";
+	}
+
+	@Override
+	public String reviseMemberInfo(String oldpassword, MemberDTO member) {
+		UserDetails account=accountService.loadUserByUsername(member.getId());
+		if(!passwordEncoder.matches(oldpassword, account.getPassword())){
+			return "pwerror";
+		}
+		try{
+			memberMapper.reviseMemberData(member);
+			accountMapper.updatePassword(member.getId(),passwordEncoder.encode(member.getPassword()));
+		}catch(Exception e){
+			e.printStackTrace();
+			return "error";
+		}
+		return "success";
 	}
 
 }

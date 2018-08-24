@@ -61,6 +61,7 @@ public class MainController {
 		model.addAttribute("message","default");
 		model.addAttribute("saved_id","");
 		model.addAttribute("chk","");
+		if(req.getCookies()!=null){
 		for(Cookie cookie: req.getCookies()){
 			if(cookie.getName().equals("saved_username")){
 				if(!cookie.getValue().toString().equals("")){
@@ -68,6 +69,7 @@ public class MainController {
 					model.addAttribute("chk","checked");
 				}
 			}
+		}
 		}
 		if(req.getParameter("error")!=null){
 			//error
