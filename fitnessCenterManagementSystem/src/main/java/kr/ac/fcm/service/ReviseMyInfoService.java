@@ -1,17 +1,13 @@
 package kr.ac.fcm.service;
 
-import java.sql.SQLException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import kr.ac.fcm.DTO.user.Account;
-import kr.ac.fcm.DTO.user.MemberDTO;
-import kr.ac.fcm.DTO.user.TrainerDTO;
-import kr.ac.fcm.mapper.MemberMapper;
 
-
+/*
+ * 회원/트레이너의 개인정보수정 서비스
+ * 변경가능성 보
+ */
 public interface ReviseMyInfoService {
 
-	public String reviseMyInfo(String oldpassword, Account trainer) ;
-	//public String reviseMemberInfo(String oldpassword, MemberDTO member);
+	public String reviseMyInfo(String oldpassword, Account account) ;
+
 }
