@@ -43,7 +43,7 @@
   </c:if>
 
 		
-    <div class="container-fluid" style="padding-left: 15%; padding-right:15%; padding-top: 5%">	
+    <div class="container-fluid" style="padding-left: 15%; padding-right:15%; padding-top: 5%; padding-bottom:5%;">	
     	<form method="post" action="/article?no=${article.idx}">
     	<div class="form-group">
  		 <a href="/board.do" class="btn btn-primary active" role="button" aria-pressed="true">목록</a>
@@ -99,7 +99,7 @@
 				value="${_csrf.token}" />
    		 </form>
   </div>
-
+	<%@ include file="../footer.jsp" %>
     <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

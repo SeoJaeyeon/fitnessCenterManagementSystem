@@ -29,7 +29,7 @@
 <body>
   <%@ include file="../header/header_manager.jsp" %>
 <form:form method="post" modelAttribute="member">
-   <div class="container-fulid" style="padding-top:5%; padding-left:10%; padding-right:10%;">
+   <div class="container-fulid" style="padding-top:5%; padding-left:10%; padding-right:10%; padding-bottom:5%;">
 		     <div class="card">
 		  <h5 class="card-header">회원추가</h5>
   		<div class="card-body">
@@ -98,7 +98,7 @@
  	</div>
  	</div>
  	</form:form>
- 	
+ 	<%@ include file="../footer.jsp" %>
      <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
