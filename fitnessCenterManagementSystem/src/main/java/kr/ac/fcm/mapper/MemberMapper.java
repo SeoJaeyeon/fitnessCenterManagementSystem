@@ -25,4 +25,5 @@ public interface MemberMapper {
 	//| id      | name      | center_id | gender | pt   | phone_number | trainer_id
 	@Select("SELECT member.id, member.name, member.gender, member.pt, member.phone_number, trainer.name as trainer_name  FROM Member as member, Trainer as trainer WHERE member.center_id=#{center_id} and member.trainer_id=trainer.id")
 	List<MemberTrDTO> selectAllMembersWithTrainer(String center_id);
+	
 }

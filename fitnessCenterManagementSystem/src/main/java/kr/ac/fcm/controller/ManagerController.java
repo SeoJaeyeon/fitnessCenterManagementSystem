@@ -134,6 +134,17 @@ public class ManagerController {
 		return "/manager/userinfo";
 	}
 	
+	//https://localhost:8090/manager/reviseMemInfo.do?member1
+	@GetMapping("/manager/reviseMemInfo.do")
+	public String reviseMemberInfoByGet(HttpServletRequest req,Model model){
+		MemberDTO member=findUserService.findMemberById(req.getParameter("id"));
+		List<TrainerDTO> trainers=findUserService.findAllTrainers(member.getCenter_id());
+		model.addAttribute("member",member);
+		model.addAttribute("trainers",trainers);
+		model.addAttribute("management","active");
+		return "/manager/reviseMember";
+	}
+	
 	
 
 
