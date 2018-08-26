@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.DTO.user.MemberDTO;
+import kr.ac.fcm.DTO.user.MemberTrDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.mapper.ManagerMapper;
 import kr.ac.fcm.mapper.MemberMapper;
@@ -44,6 +45,13 @@ public class FindUserServiceImpl implements FindUserService {
 		// TODO Auto-generated method stub
 		List<TrainerDTO> trainers=trainerMapper.selectAllTrainerByCenter_id(center_id);
 		return trainers;
+	}
+
+	@Override
+	public List<MemberTrDTO> findAllMembers(String center_id) {
+		// TODO Auto-generated method stub
+		List<MemberTrDTO> members=memberMapper.selectAllMembersWithTrainer(center_id);
+		return members;
 	}
 
 }
