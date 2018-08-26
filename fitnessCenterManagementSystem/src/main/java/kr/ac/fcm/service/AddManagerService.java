@@ -12,6 +12,11 @@ import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.mapper.CenterMapper;
 import kr.ac.fcm.mapper.ManagerMapper;
 
+/*
+ * 시스템관리자(Admin)의 서비스이용자추가서비스
+ * 변경가능성 낮음 
+ * 
+ */
 @Service
 public class AddManagerService {
 	@Autowired

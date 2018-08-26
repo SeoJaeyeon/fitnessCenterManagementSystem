@@ -6,12 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.ac.fcm.DTO.user.Account;
-import kr.ac.fcm.DTO.user.CenterDTO;
-import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
-import kr.ac.fcm.mapper.CenterMapper;
-import kr.ac.fcm.mapper.ManagerMapper;
 import kr.ac.fcm.mapper.MemberMapper;
 import kr.ac.fcm.mapper.TrainerMapper;
 
@@ -23,10 +19,6 @@ public class AddUserServiceImpl implements AddUserService {
 	private MemberMapper memberMapper;
 	@Autowired
 	private TrainerMapper trainerMapper;
-	@Autowired
-	private ManagerMapper managerMapper;
-	@Autowired
-	private CenterMapper centerMapper;
 	
 	@Override
 	@Transactional

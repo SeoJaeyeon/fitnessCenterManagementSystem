@@ -5,6 +5,11 @@ import java.util.List;
 import kr.ac.fcm.DTO.ArticleDTO;
 import kr.ac.fcm.DTO.CommentDTO;
 
+/*
+ * 게시판 이용관련 서비스
+ * CRUD 
+ * 변경가능성 보통
+ */
 public interface BoardService {
 	public List<ArticleDTO> showAllArticles();
 	public int write(ArticleDTO article) throws Exception;

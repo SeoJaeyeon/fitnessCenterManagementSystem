@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,11 +12,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import ch.qos.logback.classic.Logger;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.AccountRepository;
 
+/**
+ * 
+ * @author seojaeyeon
+ * spring-security UserDetailsService 구현
+ * passwordEncoder- Default 
+ * kr.ac.fcm.DTO.user.AccountRepository.class 와 함께 동작 
+ * 
+ */
 @Service
 public class AccountService implements UserDetailsService{
 	
@@ -84,7 +89,6 @@ public class AccountService implements UserDetailsService{
 	}
 
 	public Account save(Account account,String role,String type) {
-		// TODO Auto-generated method stub
 
 		account.setPassword(passwordEncoder.encode(account.getPassword()));
 		account.setAccountNonExpired(true);
