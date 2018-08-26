@@ -1,5 +1,6 @@
 package kr.ac.fcm.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import com.mysql.jdbc.SQLError;
 
 import kr.ac.fcm.DTO.ArticleDTO;
 import kr.ac.fcm.DTO.user.Account;
@@ -29,6 +33,7 @@ import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.service.AddUserService;
 import kr.ac.fcm.service.BoardService;
 import kr.ac.fcm.service.FindUserService;
+import kr.ac.fcm.service.ReviseUserInfoServiceByManager;
 import kr.ac.fcm.service.s3.S3Service;
 
 
@@ -45,6 +50,8 @@ public class ManagerController {
 	private AddUserService addUserService;
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	ReviseUserInfoServiceByManager reviseUserInfoService;
 	
 	@GetMapping("/manager")
 	public String manager(@AuthenticationPrincipal Account account, Model model){
@@ -133,16 +140,40 @@ public class ManagerController {
 		model.addAttribute("management","active");
 		return "/manager/userinfo";
 	}
-	
-	//https://localhost:8090/manager/reviseMemInfo.do?member1
+
 	@GetMapping("/manager/reviseMemInfo.do")
-	public String reviseMemberInfoByGet(HttpServletRequest req,Model model){
+	public String reviseMemberInfoByGet( HttpServletRequest req,Model model){
+		
+		if(req.getParameter("error")!=null){
+			model.addAttribute("message","수정중 오류가 발생하였습니다!!");
+		
+		}
+		else if(req.getParameterValues("success")!=null)
+			model.addAttribute("message","정상적으로 수정되었습니다!!");
+		else
+			model.addAttribute("message","");
+		
 		MemberDTO member=findUserService.findMemberById(req.getParameter("id"));
 		List<TrainerDTO> trainers=findUserService.findAllTrainers(member.getCenter_id());
 		model.addAttribute("member",member);
 		model.addAttribute("trainers",trainers);
 		model.addAttribute("management","active");
 		return "/manager/reviseMember";
+	}
+	
+	@PostMapping("/manager/reviseMemInfo.do")
+	public String reviseMemberInfoByPoset(@ModelAttribute("member") MemberDTO member, BindingResult bindingResult, HttpServletRequest req,Model model)
+	{
+		//주 pt횟수, 담당 트레이너 업데이트 
+		try{
+			model.addAttribute("id",member.getId());
+			reviseUserInfoService.reviseMemberInfo(member);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			return "redirect:/manager/reviseMemInfo.do?error&id="+member.getId();
+		}
+		return "redirect:/manager/reviseMemInfo.do?success&id="+member.getId();
+		
 	}
 	
 	
