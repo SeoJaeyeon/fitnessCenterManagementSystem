@@ -19,7 +19,7 @@ public interface TrainerMapper {
 	void insertTrainer(@Param("trainer")TrainerDTO trainer);	
 	@Update("UPDATE TRAINER SET phone_number=#{trainer.phone_number}, closed_day=#{trainer.closed_day} where id=#{trainer.id}")
 	void updateTrainer(@Param("trainer") TrainerDTO trainer);
-	@Select("SELECT id, name FROM TRAINER WHERE CENTER_ID=#{center_id}")
+	@Select("SELECT * FROM TRAINER WHERE CENTER_ID=#{center_id}")
 	List<TrainerDTO> selectAllTrainerByCenter_id(String center_id);
 	
 }

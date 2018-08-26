@@ -24,6 +24,7 @@ import kr.ac.fcm.DTO.ArticleDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.DTO.user.MemberDTO;
+import kr.ac.fcm.DTO.user.MemberTrDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.service.AddUserService;
 import kr.ac.fcm.service.BoardService;
@@ -122,6 +123,17 @@ public class ManagerController {
 
 		return "redirect:/manager/addTrainer?success";
 	}
+	
+	@GetMapping("/manager/userInfo")
+	public String managingUser(Model model){
+		List<MemberTrDTO> members=findUserService.findAllMembers(manager.getCenter_id());
+		List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
+		model.addAttribute("members",members);
+		model.addAttribute("trainers",trainers);
+		model.addAttribute("management","active");
+		return "/manager/userinfo";
+	}
+	
 	
 
 
