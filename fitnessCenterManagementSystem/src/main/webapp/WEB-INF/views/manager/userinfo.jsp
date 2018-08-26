@@ -23,6 +23,7 @@
     	var message='${message}';
     	if(message!="")
     		alert(message);
+    		
     </script>
 
 </head>
@@ -49,7 +50,7 @@
   		<div class="col-md-4">
   			 <div class="card">
       <div class="card-body">
-        <h5 class="card-title">${member.name}님</h5>
+        <h5 class="card-title">${member.name} 회원님</h5>
         <p class="card-text">담당트레이너:${member.trainer_name}</p>
         <p class="card-text">연락처:${member.phone_number}</p>
         <a href="/manager/reviseMemInfo.do?id=${member.id}" class="btn btn-primary">수정</a>
@@ -59,11 +60,11 @@
      <c:if test="${status.count%3==0}"></div></c:if>
      </c:forEach>
      <c:forEach var="trainer" items="${trainers}"  varStatus="status">
-     <c:if test="${status.count}%3=1"><div class="row"></c:if>
+     <c:if test="${status.count%3==1}"><div class="row"></c:if>
   		<div class="col-md-4">
   			 <div class="card">
       <div class="card-body">
-        <h5 class="card-title">${trainer.name}님</h5>
+        <h5 class="card-title">${trainer.name} 트레이너님</h5>
         <p class="card-text">휴무일:${trainer.closed_day}</p>
         <p class="card-text">연락처:${trainer.phone_number}</p>
         <a href="/manager/reviseTrInfo.do?id=${trainer.id}" class="btn btn-primary">수정</a>

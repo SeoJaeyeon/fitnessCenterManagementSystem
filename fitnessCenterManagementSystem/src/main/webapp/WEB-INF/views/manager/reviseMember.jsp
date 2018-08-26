@@ -23,6 +23,13 @@
     	var message='${message}';
     	if(message!="")
     		alert(message);
+    	
+    	var delmessage='${delmessage}'
+        	if(delmessage!=""){
+    			var re=confirm("해당사용자를 정말 삭제하시겠습니까? 한번 삭제된 사용자의 데이터는 복구할 수 없습니다.");
+    			if(re)
+    				window.location.href = '/manager/member/delete.do?id=${member.id}';
+    		}
     </script>
 
 </head>
@@ -76,7 +83,7 @@
             </div>      
             </div>      
             <input type="submit" class="btn btn-primary " value="정보수정">
-			<a href="/member/delete.do?id=${member.id}" class="btn btn-primary ">삭제</a>
+			<a href="/manager/reviseMemInfo.do?delete&id=${member.id}" class="btn btn-primary ">삭제</a>
                   <input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 		</div>

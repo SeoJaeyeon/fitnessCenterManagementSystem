@@ -3,6 +3,7 @@ package kr.ac.fcm.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -32,5 +33,11 @@ public interface AccountMapper {
 	
 	@Update("UPDATE USER SET password=#{password} WHERE id=#{id}")
 	public void updatePassword(@Param("id") String id, @Param("password")String password);
+	
+	@Delete("DELETE FROM AUTHORITY WHERE username=#{id}")
+	public void deleteUserFromAuth(String id);
+	
+	@Delete("DELETE FROM USER WHERE id=#{id}")
+	public void deleteUserFromUser(String id);
 
 }

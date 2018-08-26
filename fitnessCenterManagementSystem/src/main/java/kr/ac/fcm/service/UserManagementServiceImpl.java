@@ -8,17 +8,20 @@ import org.springframework.stereotype.Service;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
+import kr.ac.fcm.mapper.AccountMapper;
 import kr.ac.fcm.mapper.MemberMapper;
 import kr.ac.fcm.mapper.TrainerMapper;
 
 @Service
-public class AddUserServiceImpl implements AddUserService {
+public class UserManagementServiceImpl implements UserManagementService {
 	@Autowired
 	private AccountService accountService;
 	@Autowired
 	private MemberMapper memberMapper;
 	@Autowired
 	private TrainerMapper trainerMapper;
+	@Autowired
+	private AccountMapper accountMapper;
 	
 	@Override
 	@Transactional
@@ -42,6 +45,14 @@ public class AddUserServiceImpl implements AddUserService {
 		account.setCenter_id(trainer.getCenter_id());
 		accountService.save(account, "ROLE_TRAINER", "TRAINER");
 		trainerMapper.insertTrainer(trainer);
+	}
+
+	@Override
+	@Transactional
+	public void removeMember(String id) {
+		memberMapper.deleteMember(id);	
+		accountMapper.deleteUserFromAuth(id);
+		accountMapper.deleteUserFromUser(id);
 	}
 
 
