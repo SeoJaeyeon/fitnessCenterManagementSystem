@@ -52,7 +52,7 @@
         <h5 class="card-title">${member.name}님</h5>
         <p class="card-text">담당트레이너:${member.trainer_name}</p>
         <p class="card-text">연락처:${member.phone_number}</p>
-        <a href="/manager/reviseMemInfo.do?${member.id}" class="btn btn-primary">수정</a>
+        <a href="/manager/reviseMemInfo.do?id=${member.id}" class="btn btn-primary">수정</a>
       </div>
      </div>
      </div>
@@ -66,7 +66,7 @@
         <h5 class="card-title">${trainer.name}님</h5>
         <p class="card-text">휴무일:${trainer.closed_day}</p>
         <p class="card-text">연락처:${trainer.phone_number}</p>
-        <a href="/manager/reviseTrInfo.do?${trainer.id}" class="btn btn-primary">수정</a>
+        <a href="/manager/reviseTrInfo.do?id=${trainer.id}" class="btn btn-primary">수정</a>
       </div>
      </div>
      </div>
