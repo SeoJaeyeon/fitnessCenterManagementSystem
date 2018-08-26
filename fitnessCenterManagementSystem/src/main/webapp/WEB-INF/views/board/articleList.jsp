@@ -40,7 +40,7 @@
  	<%@ include file="../header/header_member.jsp" %>
   </c:if>
 
-        <div class="container-fluid" style="padding-left: 10%; padding-right:10%; padding-top: 5%">	
+        <div class="container-fluid" style="padding-left: 10%; padding-right:10%; padding-top: 5%; padding-bottom:5%;">	
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
@@ -70,7 +70,7 @@
 				<a href="/write.do" class="btn btn-primary active" role="button" aria-pressed="true">글쓰기</a>
 		</div>
 	</div>
-
+<%@ include file="../footer.jsp" %>
     <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -22,7 +22,7 @@
 <!-- header-->
   <%@ include file="../header/header_trainer.jsp" %>
   <!-- header-->
-    <div class="container-fuild" style="padding-top:5%; padding-left:10%; padding-right:10%">
+    <div class="container-fuild" style="padding-top:5%; padding-left:10%; padding-right:10%; padding-bottom:10%; padding-bottom:10%;">
  	<div class="row">
  <table class="table table-bordered">
   <thead>
@@ -50,7 +50,7 @@
 </table>
 </div>
 </div>
-  
+  <%@ include file="../footer.jsp" %>
     <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

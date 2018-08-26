@@ -45,7 +45,7 @@
   <!-- header-->
   <%@ include file="../header/header_trainer.jsp" %>
   <!-- header-->
-    <div class="container-fluid" style="padding-left: 20%; padding-right:20%; padding-top: 5%">	
+    <div class="container-fluid" style="padding-left: 20%; padding-right:20%; padding-top: 5%; padding-bottom:10%">	
  <div class="card">
   <h5 class="card-header">마이페이지</h5>
   <div class="card-body">
@@ -99,6 +99,7 @@
 			</div>
 			</div>
 		</div>
+		<%@ include file="../footer.jsp" %>
   
     <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>

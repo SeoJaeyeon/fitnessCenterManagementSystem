@@ -28,7 +28,7 @@
 </head>
 <body>
   <%@ include file="../header/header_manager.jsp" %>
-  <div class="contianer-fuild" style="padding-left:5%; padding-right:5%">
+  <div class="contianer-fuild" style="padding-top:5%;padding-left:5%; padding-right:5%; padding-bottom:5%;">
   <div class="row">
   <div class="input-group mb-3" style="padding-left:60%;">
   <div class="input-group-prepend">
@@ -73,8 +73,9 @@
           <c:if test="${status.count}%3=0"></div></c:if>
      </c:forEach>
     </div>
-
-	
+    </div>
+    
+	<%@ include file="../footer.jsp" %>
      <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

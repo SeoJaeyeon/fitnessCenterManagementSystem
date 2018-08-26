@@ -33,7 +33,7 @@
   </c:if>
 
 		
-    <div class="container-fluid" style="padding-left: 15%; padding-right:15%; padding-top: 5%">	
+    <div class="container-fluid" style="padding-left: 15%; padding-right:15%; padding-top: 5%; padding-bottom:5%;">	
     	<form method="post">
  		 <div class="form-group">
     			<input type="text" class="form-control" id="exampleFormControlInput1" name="subject" placeholder="제목을 입력하세요">
@@ -48,7 +48,7 @@
 				value="${_csrf.token}" />
    		 </form>
   </div>
-
+<%@ include file="../footer.jsp" %>
     <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -23,16 +23,13 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMulti">
             <li>
+              <a href="/manager/userInfo">사용자관리</a>
+            </li>
+            <li>
               <a href="/manager/addMember">회원추가</a>
             </li>
             <li>
-              <a href="#">회원관리</a>
-            </li>
-            <li>
               <a href="/manager/addTrainer">트레이너추가</a>
-            </li>
-              <li>
-              <a href="#">트레이너관리</a>
             </li>
           </ul>
         </li>
