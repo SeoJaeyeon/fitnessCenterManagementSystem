@@ -2,6 +2,7 @@ package kr.ac.fcm.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -28,4 +29,7 @@ public interface MemberMapper {
 	
 	@Update("UPDATE MEMBER SET pt=#{member.pt}, trainer_id=#{member.trainer_id} WHERE id=#{member.id}")
 	void updateMemberInfoByManager(@Param("member") MemberDTO member);	
+	
+	@Delete("DELETE FROM MEMBER WHERE id=#{id}")
+	void deleteMember(String id);
 }

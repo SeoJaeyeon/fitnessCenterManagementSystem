@@ -30,10 +30,10 @@ import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.MemberTrDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
-import kr.ac.fcm.service.AddUserService;
 import kr.ac.fcm.service.BoardService;
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseUserInfoServiceByManager;
+import kr.ac.fcm.service.UserManagementService;
 import kr.ac.fcm.service.s3.S3Service;
 
 
@@ -47,7 +47,7 @@ public class ManagerController {
 	@Autowired
 	private S3Service s3Service;
 	@Autowired
-	private AddUserService addUserService;
+	private UserManagementService userService;
 	@Autowired
 	private BoardService boardService;
 	@Autowired
@@ -90,7 +90,7 @@ public class ManagerController {
 		}
 		member.setCenter_id(this.manager.getCenter_id());
 		try{
-			addUserService.addMember(member);
+			userService.addMember(member);
 		}catch(Exception ex){
 			ex.printStackTrace();
 			return "redirect:/manager/addMember?error";
@@ -121,7 +121,7 @@ public class ManagerController {
 		
 		trainer.setCenter_id(this.manager.getCenter_id());
 		try{
-			addUserService.addTrainer(trainer);
+			userService.addTrainer(trainer);
 			s3Service.upload(multipartFile, "trainer",trainer.getId());
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -132,7 +132,9 @@ public class ManagerController {
 	}
 	
 	@GetMapping("/manager/userInfo")
-	public String managingUser(Model model){
+	public String managingUser(Model model, HttpServletRequest req){
+		if(req.getParameter("success")!=null)
+			model.addAttribute("message","정상적으로 삭제되었습니다!!");
 		List<MemberTrDTO> members=findUserService.findAllMembers(manager.getCenter_id());
 		List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
 		model.addAttribute("members",members);
@@ -148,8 +150,12 @@ public class ManagerController {
 			model.addAttribute("message","수정중 오류가 발생하였습니다!!");
 		
 		}
-		else if(req.getParameterValues("success")!=null)
+		else if(req.getParameter("success")!=null)
 			model.addAttribute("message","정상적으로 수정되었습니다!!");
+		else if(req.getParameter("delete")!=null){
+			model.addAttribute("delmessage","delete");
+			model.addAttribute("message","");
+		}
 		else
 			model.addAttribute("message","");
 		
@@ -174,6 +180,14 @@ public class ManagerController {
 		}
 		return "redirect:/manager/reviseMemInfo.do?success&id="+member.getId();
 		
+	}
+	
+	@GetMapping("/manager/member/delete.do")
+	public String deleteMember(HttpServletRequest req, Model model)
+	{
+		
+		userService.removeMember(req.getParameter("id"));
+		return "redirect:/manager/userInfo?success";
 	}
 	
 	
