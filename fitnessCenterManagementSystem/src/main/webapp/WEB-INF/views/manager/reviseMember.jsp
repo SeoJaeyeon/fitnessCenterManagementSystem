@@ -28,19 +28,19 @@
 </head>
 <body>
   <%@ include file="../header/header_manager.jsp" %>
-<form:form method="post" modelAttribute="member">
+<form method="post">
    <div class="container-fulid" style="padding-top:5%; padding-left:10%; padding-right:10%; padding-bottom:5%;">
 		     <div class="card">
 		  <h5 class="card-header">회원조회</h5>
   		<div class="card-body">
   		<div class="form-group ">
             <label for="ShowId">아이디</label>
-            <form:input readonly="true" style="background-color:#EDEFEF"  type="text" class="form-control" id="id" name="member.id"  path="id"/><p style="color:red"><form:errors path="id"/></p>
+            <input readonly="true" style="background-color:#EDEFEF"  type="text" class="form-control" id="id" name="member.id" value=${member.id} "/>
         </div>
               <div class="form-row">
             <div class="form-group col-md-6">
               <label for="InputName">이름</label>
-              <form:input readonly="true" style="background-color:#EDEFEF"  type="text" class="form-control" id="name" name="member.name"  path="name"/><p style="color:red"><form:errors path="name"/></p>
+              <input readonly="true" style="background-color:#EDEFEF"  type="text" class="form-control" id="name" name="member.name" value=${member.name} />
             </div>
               <div class="form-group col-md-6">
               <label for="InputName">성별</label><br/>
@@ -50,7 +50,7 @@
 				</div>
              <div class="form-group">
               <label for="phoneNumber">휴대폰 번호</label>
-              <form:input type="text" style="background-color:#EDEFEF" readonly="true" class="form-control" id="phone_number" name="phone_number" placeholder="Phone_number" path="phone_number"/><p style="color:red"><form:errors path="phone_number"/></p>
+              <input type="text" style="background-color:#EDEFEF" readonly="true" class="form-control" id="phone_number" name="phone_number" value=${member.phone_number}/><p style="color:red">
             </div>
              <div class="form-group">
               <label for="pt">주 pt횟수</label>
@@ -76,13 +76,13 @@
             </div>      
             </div>      
             <input type="submit" class="btn btn-primary " value="정보수정">
-			<a href="#" class="btn btn-primary ">삭제</a>
+			<a href="/member/delete.do?id=${member.id}" class="btn btn-primary ">삭제</a>
                   <input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 		</div>
  	</div>
  	</div>
- 	</form:form>
+ 	</form>
  	<%@ include file="../footer.jsp" %>
      <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
