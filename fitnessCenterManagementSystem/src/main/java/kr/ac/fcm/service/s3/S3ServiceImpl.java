@@ -35,13 +35,15 @@ import lombok.Data;
 @Data
 public class S3ServiceImpl implements S3Service{
     @Autowired
-      private AmazonS3 amazonS3Client;
+    private AmazonS3 amazonS3Client;
     @Value("${amazonProperties.bucketName}")
-     private String bucket;
+    private String bucket;
     
     Logger logger=LoggerFactory.getLogger(S3ServiceImpl.class);
     
-
+    /*
+     *  파일생성 규칙 -> trainer/trainerid 에 따라 해당 경로를 통해 이미지 불러옴 
+     */
 	public String getFileURL(String bucketName, String fileName) {
 			return "https://s3-ap-southeast-1.amazonaws.com/fmbucketest/trainer/"+fileName;
 	}
@@ -49,7 +51,7 @@ public class S3ServiceImpl implements S3Service{
 
     public String upload(MultipartFile multipartFile, String dirName, String tr_id) throws IOException {
         File uploadFile = convert(multipartFile, tr_id)
-                .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("Convert Fail!!"));
 
         return upload(uploadFile, dirName);
     }

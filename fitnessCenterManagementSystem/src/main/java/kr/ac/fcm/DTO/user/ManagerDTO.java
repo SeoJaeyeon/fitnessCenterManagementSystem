@@ -1,10 +1,9 @@
 package kr.ac.fcm.DTO.user;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+import lombok.Data;
+
+
+@Data
 public class ManagerDTO extends Account{	
 	private String name;
 	private String phoneNumber;
