@@ -19,12 +19,15 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<ArticleDTO> showAllArticles() {
 		// TODO Auto-generated method stub
+		
 		return boardMapper.selectAllArticles();
 	}
 
 	@Override
+	@Transactional
 	public int write(ArticleDTO article) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
+		boardMapper.indexingBoard();
 		return boardMapper.addArticle(article);
 	}
 
@@ -35,9 +38,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+
 	public void reviseArticle(ArticleDTO article) {
 		// TODO Auto-generated method stub
 		boardMapper.reviseArticle(article);
+
 		
 	}
 
