@@ -24,9 +24,9 @@ public class ReviseUserInfoServiceImpl implements ReviseUserInfoServiceByManager
 	}
 
 	@Override
-	public void reviseTrainerInfo(TrainerDTO account) {
-		// TODO Auto-generated method stub
-
+	public void reviseTrainerInfo(TrainerDTO trainer) {
+		// TODO 휴무일만 변경 가능 
+		trainerMapper.updateTrainerInfoByManager(trainer);
 	}
 
 }

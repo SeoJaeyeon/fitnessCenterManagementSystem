@@ -13,4 +13,5 @@ public interface UserManagementService {
 	public void addTrainer(TrainerDTO trainer) throws Exception;
 	
 	public void removeMember(String id);
+	public void removeTrainer(String id);
 }

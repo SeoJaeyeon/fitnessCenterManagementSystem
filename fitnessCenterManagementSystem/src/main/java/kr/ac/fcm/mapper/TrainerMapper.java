@@ -2,6 +2,7 @@ package kr.ac.fcm.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,5 +22,8 @@ public interface TrainerMapper {
 	void updateTrainer(@Param("trainer") TrainerDTO trainer);
 	@Select("SELECT * FROM TRAINER WHERE CENTER_ID=#{center_id}")
 	List<TrainerDTO> selectAllTrainerByCenter_id(String center_id);
-	
+	@Update("UPDATE TRAINER SET closed_day=#{trainer.closed_day} WHERE id=#{trainer.id}")
+	void updateTrainerInfoByManager(@Param("trainer") TrainerDTO trainer);
+	@Delete("DELETE FROM TRAINER WHERE id=#{id}")
+	void deleteTrainer(String id);
 }

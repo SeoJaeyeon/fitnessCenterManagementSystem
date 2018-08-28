@@ -39,7 +39,7 @@ public class ManagerController {
 	@Autowired
 	private S3Service s3Service;
 	@Autowired
-	private UserManagementService userService;
+	private UserManagementService userManagementService;
 	@Autowired
 	ReviseUserInfoServiceByManager reviseUserInfoService;
 	
@@ -86,7 +86,7 @@ public class ManagerController {
 		
 		member.setCenter_id(manager.getCenter_id());
 		try{
-			userService.addMember(member);
+			userManagementService.addMember(member);
 		}catch(Exception ex){
 			ex.printStackTrace();
 			return "redirect:/manager/addMember?error";
@@ -119,7 +119,7 @@ public class ManagerController {
 		
 		trainer.setCenter_id(manager.getCenter_id());
 		try{
-			userService.addTrainer(trainer);
+			userManagementService.addTrainer(trainer);
 			s3Service.upload(multipartFile, "trainer",trainer.getId());
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -146,7 +146,7 @@ public class ManagerController {
 	public String reviseMemberInfoByGet( HttpServletRequest req,Model model){
 		
 		if(req.getParameter("error")!=null){
-			model.addAttribute("message","수정중 오류가 발생하였습니다!!");
+			model.addAttribute("message","처리중 오류가 발생하였습니다!!");
 		
 		}
 		else if(req.getParameter("success")!=null)
@@ -184,12 +184,48 @@ public class ManagerController {
 	@GetMapping("/manager/member/delete.do")
 	public String deleteMember(HttpServletRequest req, Model model)
 	{
-		
-		userService.removeMember(req.getParameter("id"));
+		try{
+			userManagementService.removeMember(req.getParameter("id"));
+		}catch(Exception e){
+			return "redirect:/manager/reviseMemInfo.do?error&id="+req.getParameter("id");
+		}
 		return "redirect:/manager/userInfo?success";
 	}
 	
+	@GetMapping("/manager/reviseTrInfo.do")
+	public String reviseTrInfoByGet(Model model, HttpServletRequest req){
+		if(req.getParameter("success")!=null){
+			model.addAttribute("message", "정상적으로 변경되었습니다!!");
+		}
+		else if(req.getParameter("error")!=null){
+			model.addAttribute("message","처리중 오류가 발생했습니다!!");
+		}
+		else if(req.getParameter("delete")!=null){
+			model.addAttribute("delmessage","delete");
+		}
+		TrainerDTO trainer=findUserService.findTrainerById(req.getParameter("id"));
+		model.addAttribute("trainer", trainer);
+		return "/manager/reviseTrainer";
+	}
 	
-
+	@PostMapping("/manager/reviseTrInfo.do")
+	public String reviseTrInfoByPost(TrainerDTO trainer, Model model, HttpServletRequest req){
+		try{
+			reviseUserInfoService.reviseTrainerInfo(trainer);
+		}catch(Exception e){
+			return "redirect:/manager/reviseTrInfo.do?error&id="+trainer.getId();
+		}
+		return "redirect:/manager/reviseTrInfo.do?success&id="+trainer.getId();
+	}
+	
+	@GetMapping("/manager/trainer/delete.do")
+	public String deleteTrainer(HttpServletRequest req){
+		try{
+			userManagementService.removeTrainer(req.getParameter("id"));
+		}catch(Exception e){
+			return "redirect:/manager/reviseInfo.do?error&id="+req.getParameter("id");
+		}
+		return "redirect:/manager/userInfo?success";
+	}
 
 }
