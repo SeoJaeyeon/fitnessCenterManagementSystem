@@ -44,9 +44,9 @@
     <button class="btn btn-outline-primary" type="submit" >검색</button>
    </div>
 </div>
-  </div>
+  </div><% int count=0; %>
   	<c:forEach var="member" items="${members}"  varStatus="status">
-  		<c:if test="${status.count%3==1}"><div class="row"></c:if>
+  		<% if((count%3)==0) %><div class="row"><%; %>
   		<div class="col-md-4">
   			 <div class="card">
       <div class="card-body">
@@ -57,10 +57,12 @@
       </div>
      </div>
      </div>
-     <c:if test="${status.count%3==0}"></div></c:if>
+     <% count++;
+     	if(count!=0 && (count%3)==0)
+      %></div><%;%>
      </c:forEach>
      <c:forEach var="trainer" items="${trainers}"  varStatus="status">
-     <c:if test="${status.count%3==1}"><div class="row"></c:if>
+     <% if((count%3)==0) %><div class="row"><%; %>
   		<div class="col-md-4">
   			 <div class="card">
       <div class="card-body">
@@ -71,11 +73,12 @@
       </div>
      </div>
      </div>
-          <c:if test="${status.count}%3=0"></div></c:if>
+         <% count++;
+     	if(count!=0 && (count%3)==0)
+      %></div><%;%>
      </c:forEach>
     </div>
-    </div>
-    
+
 	<%@ include file="../footer.jsp" %>
      <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
