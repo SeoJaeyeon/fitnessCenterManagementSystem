@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.CenterDTO;
@@ -56,6 +57,7 @@ public class AdminController {
 	
 	//ADMIN 계정 부여
 		@GetMapping("/create")
+		@ResponseBody
 		public Account create(){
 			Account account=new Account();
 			account.setId("admin");
