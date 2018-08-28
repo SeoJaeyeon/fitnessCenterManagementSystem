@@ -47,7 +47,7 @@
   </div><% int count=0; %>
   	<c:forEach var="member" items="${members}"  varStatus="status">
   		<% if((count%3)==0) %><div class="row"><%; %>
-  		<div class="col-md-4">
+  		<div class="col-md-4" style="padding-bottom:2%">
   			 <div class="card">
       <div class="card-body">
         <h5 class="card-title">${member.name} 회원님</h5>
@@ -63,7 +63,7 @@
      </c:forEach>
      <c:forEach var="trainer" items="${trainers}"  varStatus="status">
      <% if((count%3)==0) %><div class="row"><%; %>
-  		<div class="col-md-4">
+  		<div class="col-md-4" style="padding-bottom:2%">
   			 <div class="card">
       <div class="card-body">
         <h5 class="card-title">${trainer.name} 트레이너님</h5>
@@ -78,7 +78,7 @@
       %></div><%;%>
      </c:forEach>
     </div>
-
+	</div>
 	<%@ include file="../footer.jsp" %>
      <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
