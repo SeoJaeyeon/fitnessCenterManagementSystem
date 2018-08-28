@@ -1,6 +1,5 @@
 package kr.ac.fcm.DTO.user;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
