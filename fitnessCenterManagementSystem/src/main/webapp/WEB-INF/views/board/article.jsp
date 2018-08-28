@@ -86,7 +86,7 @@
 				</c:forEach>
 				<tr>
 					<td><input type="text" class="form-control" id="exampleFormControlInput1" name="writer" value="${user.id}" readonly="readonly" style="background-color: white"></td>
-					<td><input type="text" class="form-control" id="exampleFormControlInput1" name="content" value="댓글내용"  style="background-color: white"></td>
+					<td><input type="text" class="form-control" id="exampleFormControlInput1" name="content" placeholder="댓글내용"  style="background-color: white"></td>
 					<td><input type="submit" class="form-control btn btn-primary" id="exampleFormControlInput1"  value="작성"></td>
 					
 				</tr>

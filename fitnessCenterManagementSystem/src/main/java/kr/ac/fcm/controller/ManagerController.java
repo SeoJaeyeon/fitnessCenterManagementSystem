@@ -178,6 +178,7 @@ public class ManagerController {
 			ex.printStackTrace();
 			return "redirect:/manager/reviseMemInfo.do?error&id="+member.getId();
 		}
+		model.addAttribute("management","active");
 		return "redirect:/manager/reviseMemInfo.do?success&id="+member.getId();
 		
 	}
@@ -206,6 +207,8 @@ public class ManagerController {
 		}
 		TrainerDTO trainer=findUserService.findTrainerById(req.getParameter("id"));
 		model.addAttribute("trainer", trainer);
+		model.addAttribute("imgUrl",s3Service.getFileURL("trbucket", req.getParameter("id")));
+		model.addAttribute("management","active");
 		return "/manager/reviseTrainer";
 	}
 	

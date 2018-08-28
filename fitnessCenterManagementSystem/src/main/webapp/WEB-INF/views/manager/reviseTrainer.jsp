@@ -41,7 +41,7 @@
 		  <h5 class="card-header">트레이너조회</h5>
   		<div class="card-body">
   		<div class="form-group">
-  			<img id="ShowImage" src="${imgUrl}"/>
+  			<img id="ShowImage" src="${imgUrl}" style="width:20%; hieght:20%"/>
   		</div>
   		<div class="form-group ">
             <label for="ShowId">아이디</label>
