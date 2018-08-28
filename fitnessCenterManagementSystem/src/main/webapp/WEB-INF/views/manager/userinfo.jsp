@@ -51,7 +51,7 @@
   			 <div class="card">
       <div class="card-body">
         <h5 class="card-title">${member.name} 회원님</h5>
-        <p class="card-text">담당트레이너:${member.trainer_name}</p>
+        <p class="card-text">담당트레이너:<c:choose> <c:when test="${member.trainer_name=='NULL'}">없음</c:when><c:otherwise>${member.trainer_name}</c:otherwise></c:choose></p>
         <p class="card-text">연락처:${member.phone_number}</p>
         <a href="/manager/reviseMemInfo.do?id=${member.id}" class="btn btn-primary">수정</a>
       </div>

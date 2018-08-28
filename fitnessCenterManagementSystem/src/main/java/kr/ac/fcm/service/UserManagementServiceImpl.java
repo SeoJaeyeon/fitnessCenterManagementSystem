@@ -59,7 +59,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 	@Transactional
 	public void removeTrainer(String id) {
 		trainerMapper.deleteTrainer(id);
-		accountMapper.deleteUserFromAuth(id);
+		accountMapper.deleteUserFromUser(id);
 		accountMapper.deleteUserFromAuth(id);	
 	}
 

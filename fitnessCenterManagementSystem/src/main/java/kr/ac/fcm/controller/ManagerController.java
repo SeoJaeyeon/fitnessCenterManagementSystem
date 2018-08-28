@@ -51,6 +51,7 @@ public class ManagerController {
 		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
 		model.addAttribute("schedule","active");
 		model.addAttribute("type",manager.getType());
+		logger.info(manager.toString());
 		return "/schedule";
 	}
 	
