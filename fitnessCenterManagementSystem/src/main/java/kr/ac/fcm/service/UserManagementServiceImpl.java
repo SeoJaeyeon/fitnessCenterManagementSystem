@@ -11,6 +11,7 @@ import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.mapper.AccountMapper;
 import kr.ac.fcm.mapper.MemberMapper;
 import kr.ac.fcm.mapper.TrainerMapper;
+import kr.ac.fcm.service.s3.S3Service;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -22,6 +23,8 @@ public class UserManagementServiceImpl implements UserManagementService {
 	private TrainerMapper trainerMapper;
 	@Autowired
 	private AccountMapper accountMapper;
+	@Autowired
+	private S3Service s3Service;
 	
 	@Override
 	@Transactional
@@ -61,6 +64,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 		trainerMapper.deleteTrainer(id);
 		accountMapper.deleteUserFromUser(id);
 		accountMapper.deleteUserFromAuth(id);	
+		s3Service.deleteFile(id);
 	}
 
 

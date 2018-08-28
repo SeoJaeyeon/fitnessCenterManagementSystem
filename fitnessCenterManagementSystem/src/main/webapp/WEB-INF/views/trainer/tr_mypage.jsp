@@ -58,7 +58,7 @@
             </div>
             <div class="form-group ">
             <label for="ShowId">아이디</label>
-            <form:input readonly="true" type="text" class="form-control" id="id" name="trainer.id"  path="id"/><p style="color:red"><form:errors path="id"/></p>
+            <form:input style="background-color:#EDEFEF"  readonly="true" type="text" class="form-control" id="id" name="trainer.id"  path="id"/><p style="color:red"><form:errors path="id"/></p>
             </div>
               <div class="form-row">
             <div class="form-group col-md-6">
@@ -73,7 +73,7 @@
               <div class="form-row">
             <div class="form-group col-md-6">
               <label for="InputName">이름</label>
-              <form:input readonly="true" type="text" class="form-control" id="name" name="trainer.name"  path="name"/><p style="color:red"><form:errors path="name"/></p>
+              <form:input readonly="true"  style="background-color:#EDEFEF" type="text" class="form-control" id="name" name="trainer.name"  path="name"/><p style="color:red"><form:errors path="name"/></p>
             </div>
              <div class="form-group col-md-6">
               <label for="phoneNumber">휴대폰 번호</label>

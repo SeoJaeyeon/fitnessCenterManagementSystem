@@ -38,7 +38,7 @@
            
             <div class="form-group ">
             <label for="ShowId">아이디</label>
-            <form:input readonly="true" style="background-color:white"  type="text" class="form-control" id="id" name="id"  path="id"/><p style="color:red"><form:errors path="id"/></p>
+            <form:input  style="background-color:#EDEFEF" readonly="true" type="text" class="form-control" id="id" name="id"  path="id"/><p style="color:red"><form:errors path="id"/></p>
             </div>
               <div class="form-row">
             <div class="form-group col-md-6">
@@ -53,7 +53,7 @@
               <div class="form-row">
             <div class="form-group col-md-6">
               <label for="InputName">이름</label>
-              <form:input readonly="true" style="background-color:white"  type="text" class="form-control" id="name" name="member.name"  path="name"/><p style="color:red"><form:errors path="name"/></p>
+              <form:input readonly="true"   style="background-color:#EDEFEF" type="text" class="form-control" id="name" name="member.name"  path="name"/><p style="color:red"><form:errors path="name"/></p>
             </div>
              <div class="form-group col-md-6">
               <label for="phoneNumber">휴대폰 번호</label>
@@ -63,11 +63,11 @@
             <div class="form-row">
              <div class="form-group col-md-6"> 
              <label for="phoneNumber">주PT횟수(변경문의는 헬스장에 해주시기 바랍니다)</label>
-             <form:input type="text" class="form-control" id="pt"  name="member.pt" path="pt" style="background-color:white" readonly="true"/><form:errors path="pt"/>
+             <form:input type="text" class="form-control" id="pt"  name="member.pt" path="pt"  style="background-color:#EDEFEF" readonly="true"/><form:errors path="pt"/>
              </div>
              <div class="form-group col-md-6"> 
              <label for="phoneNumber">담당트레이너(변경문의는 헬스장에 해주시기 바랍니다)</label>
-             <form:input type="text" class="form-control" id="trainer"  name="member.trainer_id" style="background-color:white"  path="trainer_id" readonly="true"/><form:errors path="trainer_id"/>
+             <form:input type="text" class="form-control" id="trainer"  name="member.trainer_id"  style="background-color:#EDEFEF"  path="trainer_id" readonly="true"/><form:errors path="trainer_id"/>
              </div>
             </div>
              <input type="hidden" name="gender" value="${member.gender}" id="gender"
