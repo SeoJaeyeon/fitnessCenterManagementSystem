@@ -25,14 +25,7 @@ public class SaveLoginIdHandler extends SavedRequestAwareAuthenticationSuccessHa
 	 private static final Logger logger = LoggerFactory.getLogger(SaveLoginIdHandler.class);
 	static final String REQUEST_PARAM_NAME = "_remember_username";
 	static final String COOKIE_NAME = "saved_username";
-	static final int DEFAULT_MAX_AGE = 60*60*24*7;
-	 
-	 private int maxAge = DEFAULT_MAX_AGE;
-	 
-	 public void setMaxAge(int maxAge) {
-	  this.maxAge = maxAge;
-	 }
-	 
+
 
 	 @Override
 	 public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,

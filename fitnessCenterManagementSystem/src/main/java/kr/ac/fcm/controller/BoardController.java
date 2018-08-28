@@ -17,7 +17,6 @@ import kr.ac.fcm.DTO.ArticleDTO;
 import kr.ac.fcm.DTO.CommentDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.service.BoardService;
-import kr.ac.fcm.service.FindUserService;
 
 @Controller
 public class BoardController {
