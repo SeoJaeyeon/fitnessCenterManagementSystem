@@ -26,6 +26,7 @@ public class SaveLoginIdHandler extends SavedRequestAwareAuthenticationSuccessHa
 	static final String REQUEST_PARAM_NAME = "_remember_username";
 	static final String COOKIE_NAME = "saved_username";
 
+
 	 @Override
 	 public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 	   Authentication authentication) throws IOException, ServletException {

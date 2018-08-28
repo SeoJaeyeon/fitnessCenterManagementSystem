@@ -18,7 +18,6 @@ import kr.ac.fcm.DTO.CommentDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.service.BoardService;
 
-
 @Controller
 public class BoardController {
 	
