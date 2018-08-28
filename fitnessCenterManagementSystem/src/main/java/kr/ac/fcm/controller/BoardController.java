@@ -23,30 +23,27 @@ import kr.ac.fcm.service.FindUserService;
 public class BoardController {
 	
 	
-	private Account user;
-	
 	@Autowired
 	private BoardService boardService;
 	
 	@GetMapping("/board.do")
-	public String showArticleList(@AuthenticationPrincipal Account account, Model model){
-		this.user=account;
+	public String showArticleList(@AuthenticationPrincipal Account user, Model model){
 		List<ArticleDTO> articles=boardService.showAllArticles();
 		model.addAttribute("articles",articles);
-		model.addAttribute("type",account.getType());
+		model.addAttribute("type",user.getType());
 		model.addAttribute("board","active");
 		return "/board/articleList";
 	}
 	
 	@GetMapping("/write.do")
-	public String showArticle(Model model){
+	public String showArticle(@AuthenticationPrincipal Account user, Model model){
 		model.addAttribute("board","active");
 		model.addAttribute("type",user.getType());
 		return "/board/write";
 	}
 	
 	@PostMapping("/write.do")
-	public String addArticle(ArticleDTO article,Model model){
+	public String addArticle(@AuthenticationPrincipal Account user, ArticleDTO article,Model model){
 		try{
 			article.setWriter(user.getId());
 			article.setView(0);
@@ -61,7 +58,7 @@ public class BoardController {
 	}
 	@GetMapping("/article")
 	@Transactional
-	public String showArticle(HttpServletRequest req, Model model){
+	public String showArticle(@AuthenticationPrincipal Account user, HttpServletRequest req, Model model){
 		int idx=Integer.parseInt(req.getParameter("no"));
 		if(req.getParameter("delete")!=null){
 			model.addAttribute("message","정말 삭제하시겠습니까?");
@@ -85,7 +82,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/revise.do")
-	public String reviseArticle(Model model, HttpServletRequest req){	
+	public String reviseArticle(@AuthenticationPrincipal Account user, Model model, HttpServletRequest req){	
 		int idx=Integer.parseInt(req.getParameter("no"));
 		ArticleDTO article=new ArticleDTO();
 		article=boardService.showArticleByIdx(idx);
@@ -113,7 +110,7 @@ public class BoardController {
 	
 	//댓글작성
 	@PostMapping("/article")
-	public String addComment(CommentDTO comment, HttpServletRequest req){
+	public String addComment(@AuthenticationPrincipal Account user, CommentDTO comment, HttpServletRequest req){
 		comment.setCenter_id(user.getCenter_id());
 		comment.setCreated(new Date());
 		comment.setIdx(Integer.parseInt(req.getParameter("no")));

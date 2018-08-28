@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.ac.fcm.DTO.ArticleDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.TrainerDTO;
+import kr.ac.fcm.DTO.user.UserRepository;
 import kr.ac.fcm.service.BoardService;
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseMyInfoService;
@@ -33,8 +34,6 @@ import kr.ac.fcm.service.s3.S3ServiceImpl;
 public class TrainerController {
 	Logger logger=LoggerFactory.getLogger(TrainerController.class);
 	
-	private TrainerDTO trainer;
-	
 	@Autowired
 	private FindUserService findUserService;
 	
@@ -43,19 +42,21 @@ public class TrainerController {
 	
 	@Autowired
 	private ReviseMyInfoService reviseTrainerInfoService;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@GetMapping("/trainer")
 	public String trainerMain(@AuthenticationPrincipal Account account, Model model){
-		this.trainer=findUserService.findTrainerById(account.getUsername());
-		this.trainer.setType(account.getType());
+		
 		model.addAttribute("schedule", "active");
-		model.addAttribute("type",trainer.getType());
+		model.addAttribute("type",userRepository.getTrainer(account.getId(), account.getType()).getType());
 		return "/schedule";
 	}
 	
 	@PostMapping("/trainer/mypage")
 	@Transactional
-	public String trainerMyPageByPost(@Valid TrainerDTO trainer, HttpServletRequest req, BindingResult bindingResult, Model model, @RequestParam("file") MultipartFile multipartFile) throws IOException{
+	public String trainerMyPageByPost(@AuthenticationPrincipal Account account, @Valid TrainerDTO trainer, HttpServletRequest req, BindingResult bindingResult, Model model, @RequestParam("file") MultipartFile multipartFile) throws IOException{
 		if(bindingResult.hasErrors())
 		{
 			logger.info(bindingResult.getAllErrors().get(0).toString());
@@ -68,14 +69,14 @@ public class TrainerController {
 		}
 		logger.info("//////////"+multipartFile);
 		model.addAttribute("message",message);
-		this.trainer=findUserService.findTrainerById(trainer.getId());
-		model.addAttribute("trainer",trainer);
+		model.addAttribute("trainer",userRepository.getTrainer(account.getId(), account.getType()));
 		model.addAttribute("mypage", "active");
 		return "/trainer/tr_mypage";
 	}
 	
 	@GetMapping("/trainer/mypage")
-	public String trainerMyPage(Model model,HttpServletRequest req){
+	public String trainerMyPage(@AuthenticationPrincipal Account account, Model model,HttpServletRequest req){
+		TrainerDTO trainer=userRepository.getTrainer(account.getId(), account.getType());
 		model.addAttribute("trainer",trainer);
 		model.addAttribute("closed_day",trainer.getClosed_day());
 		model.addAttribute("img",s3Service.getFileURL(s3Service.getBucket(), trainer.getId()));

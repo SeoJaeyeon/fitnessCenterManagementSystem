@@ -28,9 +28,6 @@ public class MainController {
 	@Autowired
 	private EmailService emailService;
 	
-	@Autowired
-	private AccountRepository accounts;
-
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home(HttpServletRequest req, Model model){

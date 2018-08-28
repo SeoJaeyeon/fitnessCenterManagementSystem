@@ -1,12 +1,9 @@
 package kr.ac.fcm.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,21 +13,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mysql.jdbc.SQLError;
-
-import kr.ac.fcm.DTO.ArticleDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.MemberTrDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
-import kr.ac.fcm.service.BoardService;
+import kr.ac.fcm.DTO.user.UserRepository;
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseUserInfoServiceByManager;
 import kr.ac.fcm.service.UserManagementService;
@@ -40,7 +33,6 @@ import kr.ac.fcm.service.s3.S3Service;
 @Controller
 public class ManagerController {
 	Logger logger=LoggerFactory.getLogger(ManagerController.class);
-	private ManagerDTO manager;
 
 	@Autowired
 	private FindUserService findUserService;
@@ -49,22 +41,21 @@ public class ManagerController {
 	@Autowired
 	private UserManagementService userService;
 	@Autowired
-	private BoardService boardService;
-	@Autowired
 	ReviseUserInfoServiceByManager reviseUserInfoService;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@GetMapping("/manager")
 	public String manager(@AuthenticationPrincipal Account account, Model model){
-		logger.info(account.getUsername()+"접속");
-		this.manager=findUserService.findManagerById(account.getUsername());
-		this.manager.setType(account.getType());
+		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
 		model.addAttribute("schedule","active");
 		model.addAttribute("type",manager.getType());
 		return "/schedule";
 	}
 	
 	@GetMapping("/manager/addMember")
-	public String addUserByGet(Model model, HttpServletRequest req){
+	public String addUserByGet(@AuthenticationPrincipal Account account, Model model, HttpServletRequest req){
 		if(req.getParameter("error")==null && req.getParameter("success")!=null)
 		{
 			model.addAttribute("message","정상적으로 등록되었습니다");
@@ -73,6 +64,8 @@ public class ManagerController {
 		{
 			model.addAttribute("message","사용자등록오류");
 		}
+		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
+		logger.info(manager.toString());
 		List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
 		model.addAttribute("management","active");
 		model.addAttribute("member", new MemberDTO());
@@ -81,14 +74,17 @@ public class ManagerController {
 	}
 	
 	@PostMapping("/manager/addMember")
-	public String addUserByPost(@Valid @ModelAttribute("member") MemberDTO member, BindingResult bindingResult,Model model){
+	public String addUserByPost(@AuthenticationPrincipal Account account,@Valid @ModelAttribute("member") MemberDTO member, BindingResult bindingResult,Model model){
+		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
+		logger.info(manager.toString());
 		if(bindingResult.hasErrors()){
 			List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
 			model.addAttribute("management","active");
 			model.addAttribute("trainers",trainers);
 			return "/manager/addMember";
 		}
-		member.setCenter_id(this.manager.getCenter_id());
+		
+		member.setCenter_id(manager.getCenter_id());
 		try{
 			userService.addMember(member);
 		}catch(Exception ex){
@@ -113,13 +109,15 @@ public class ManagerController {
 		return "/manager/addTrainer";
 	}
 	@PostMapping("/manager/addTrainer")
-	public String addTrainer(@Valid @ModelAttribute("trainer") TrainerDTO trainer,BindingResult bindingResult, Model model,HttpServletRequest req,@RequestParam("file") MultipartFile multipartFile){
+	public String addTrainer(@AuthenticationPrincipal Account account,@Valid @ModelAttribute("trainer") TrainerDTO trainer,BindingResult bindingResult, Model model,HttpServletRequest req,@RequestParam("file") MultipartFile multipartFile){
+		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
+		logger.info(manager.toString());
 		if(bindingResult.hasErrors()){
 			logger.info("form error in addTrainer");
 			return "/manager/addTrainer";
 		}
 		
-		trainer.setCenter_id(this.manager.getCenter_id());
+		trainer.setCenter_id(manager.getCenter_id());
 		try{
 			userService.addTrainer(trainer);
 			s3Service.upload(multipartFile, "trainer",trainer.getId());
@@ -132,7 +130,8 @@ public class ManagerController {
 	}
 	
 	@GetMapping("/manager/userInfo")
-	public String managingUser(Model model, HttpServletRequest req){
+	public String managingUser(@AuthenticationPrincipal Account account,Model model, HttpServletRequest req){
+		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
 		if(req.getParameter("success")!=null)
 			model.addAttribute("message","정상적으로 삭제되었습니다!!");
 		List<MemberTrDTO> members=findUserService.findAllMembers(manager.getCenter_id());

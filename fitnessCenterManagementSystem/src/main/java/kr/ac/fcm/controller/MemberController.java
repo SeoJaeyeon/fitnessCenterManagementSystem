@@ -17,37 +17,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.MemberDTO;
-
+import kr.ac.fcm.DTO.user.UserRepository;
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseMyInfoService;
 @Controller
 public class MemberController {
 	
-	private MemberDTO member;
-	
 	
 	Logger logger=LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
-	private FindUserService findUserService;
-	
+	private FindUserService findUserService;	
 	@Autowired
 	private ReviseMyInfoService reviseMemberInfoService;
+	@Autowired
+	private UserRepository userRepository;
 
 	
 	@GetMapping("/member")
 	public String showMemberView(@AuthenticationPrincipal Account account,Model model){
-		this.member=findUserService.findMemberById(account.getId());
-		this.member.setType(account.getType());
+		
 		model.addAttribute("schedule","active");
-		model.addAttribute("type",member.getType());
+		model.addAttribute("type",userRepository.getMember(account.getId(),account.getType()).getType());
 		return "/schedule";
 	}
 	
 	@GetMapping("/member/mypage")
-	public String myPageByGet( Model model, HttpServletRequest req){
+	public String myPageByGet(@AuthenticationPrincipal Account account, Model model, HttpServletRequest req){
 		model.addAttribute("mypage","active");
-		model.addAttribute("member",member);
+		model.addAttribute("member",userRepository.getMember(account.getId(),account.getType()));
 		if(req.getParameter("pwerror")!=null)
 			model.addAttribute("message","패스워드를 다시한번 확인해주세요!!");
 		else if(req.getParameter("error")!=null)

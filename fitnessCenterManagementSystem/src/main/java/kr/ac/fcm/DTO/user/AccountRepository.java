@@ -16,11 +16,8 @@ public class AccountRepository {
 	@Autowired
 	AccountMapper accountMapper;
 	
-	Account account;
-	
 	public Account saveAccount(Account account){
-		this.account=account;
-		return this.account;
+		return account;
 	}
 	
 	public Account save(Account account,String role){
