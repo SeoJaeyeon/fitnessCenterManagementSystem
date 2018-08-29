@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +17,7 @@ import kr.ac.fcm.DTO.user.CenterDTO;
 import kr.ac.fcm.DTO.user.ManagerDTO;
 
 import kr.ac.fcm.service.AccountService;
-import kr.ac.fcm.service.AddManagerService;
+import kr.ac.fcm.service.SaveManagerService;
 
 
 @Controller
@@ -26,10 +25,9 @@ public class AdminController {
 	
 	@Autowired
 	AccountService accountService;
-
 	
 	@Autowired
-	private AddManagerService addManagerService;
+	private SaveManagerService addManagerService;
 	
 	@RequestMapping(value="/admin", method=RequestMethod.GET)
 	public String adminPage(Model model,HttpServletRequest req){
@@ -42,7 +40,14 @@ public class AdminController {
 
 	
 		try{
-			addManagerService.addManager(manager, center);
+			Account account=new Account();
+			account.setId(manager.getId());
+			account.setType("MANAGER");
+			account.setPassword(manager.getPassword());
+			account.setCenter_id(center.getCenter_id());
+			
+			accountService.save(account, "ROLE_MANAGER", "MANAGER");
+			addManagerService.saveManager(manager, center);
 		
 		}catch(Exception ex){ 
 			ex.printStackTrace();
