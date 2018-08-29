@@ -11,50 +11,47 @@ import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.MemberTrDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
-import kr.ac.fcm.mapper.ManagerMapper;
-import kr.ac.fcm.mapper.MemberMapper;
-import kr.ac.fcm.mapper.TrainerMapper;
+import kr.ac.fcm.dao.ManagerDAO;
+import kr.ac.fcm.dao.MemberDAO;
+import kr.ac.fcm.dao.TrainerDAO;
 
 @Service
 public class FindUserServiceImpl implements FindUserService {
+
 	@Autowired
-	private MemberMapper memberMapper;
+	private ManagerDAO managerDao;
+	
 	@Autowired
-	private TrainerMapper trainerMapper;
+	private TrainerDAO trainerDao;
+	
 	@Autowired
-	private ManagerMapper managerMapper;
+	private MemberDAO memberDao;
 	
 	@Override
 	public ManagerDTO findManagerById(String id) {
-		// TODO Auto-generated method stub
-		return managerMapper.findManagerByManagerId(id);
+		return managerDao.findManagerById(id);
 	}
 
 	@Override
 	public TrainerDTO findTrainerById(String id) {
-		// TODO Auto-generated method stub
-		return trainerMapper.findTrainerByTrainerId(id);
+		return trainerDao.findTrainerById(id);
 	}
 
 	@Override
 	public MemberDTO findMemberById(String id) {
-		// TODO Auto-generated method stub
-		return memberMapper.findMemberByMemberId(id);
+		return memberDao.findMemberById(id);
 	}
 
 	@Override
 	public List<TrainerDTO> findAllTrainers(String center_id) {
-		// TODO Auto-generated method stub
-		List<TrainerDTO> trainers=trainerMapper.selectAllTrainerByCenter_id(center_id);
-		return trainers;
+		return trainerDao.findAllTrainers(center_id);
 	}
 
 	@Override
 	@Transactional
 	public List<MemberTrDTO> findAllMembers(String center_id) {
-		// TODO Auto-generated method stub
-		List<MemberTrDTO> members=memberMapper.selectAllMembersWithTrainer(center_id);
-		members.addAll(memberMapper.selectAllMemberWithNullTrainer(center_id));
+		List<MemberTrDTO> members=memberDao.findAllMembersWithTrainer(center_id);
+		members.addAll(memberDao.findAllMembersWithNullTrainer(center_id));
 		return members;
 	}
 

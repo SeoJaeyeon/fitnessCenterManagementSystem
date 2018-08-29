@@ -9,6 +9,7 @@ import kr.ac.fcm.mapper.CenterMapper;
 import kr.ac.fcm.mapper.ManagerMapper;
 /*
  *  Create Manager and Center
+ *  read Manager
  */
 @Repository
 public class ManagerDAO {
@@ -20,4 +21,7 @@ public class ManagerDAO {
 		return manager;
 	}
 	
+	public ManagerDTO findManagerById(String id){
+		return managerMapper.findManagerByManagerId(id);
+	}
 }
