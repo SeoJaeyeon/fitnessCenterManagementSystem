@@ -23,7 +23,6 @@ import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.MemberTrDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
-import kr.ac.fcm.DTO.user.UserRepository;
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseUserInfoServiceByManager;
 import kr.ac.fcm.service.UserManagementService;
@@ -46,12 +45,9 @@ public class ManagerController {
 	@Autowired
 	private ReviseUserInfoServiceByManager reviseUserInfoService;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
 	@GetMapping("/manager")
 	public String manager(@AuthenticationPrincipal Account account, Model model){
-		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
+		ManagerDTO manager=findUserService.findManagerById(account.getId());
 		model.addAttribute("schedule","active");
 		model.addAttribute("type",manager.getType());
 		logger.info(manager.toString());
@@ -68,7 +64,7 @@ public class ManagerController {
 		{
 			model.addAttribute("message","사용자등록오류");
 		}
-		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
+		ManagerDTO manager=findUserService.findManagerById(account.getId());
 		logger.info(manager.toString());
 		List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
 		model.addAttribute("management","active");
@@ -79,7 +75,7 @@ public class ManagerController {
 	
 	@PostMapping("/manager/addMember")
 	public String addUserByPost(@AuthenticationPrincipal Account account,@Valid @ModelAttribute("member") MemberDTO member, BindingResult bindingResult,Model model){
-		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
+		ManagerDTO manager=findUserService.findManagerById(account.getId());
 
 		if(bindingResult.hasErrors()){
 			List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
@@ -114,7 +110,7 @@ public class ManagerController {
 	}
 	@PostMapping("/manager/addTrainer")
 	public String addTrainer(@AuthenticationPrincipal Account account,@Valid @ModelAttribute("trainer") TrainerDTO trainer,BindingResult bindingResult, Model model,HttpServletRequest req,@RequestParam("file") MultipartFile multipartFile){
-		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
+		ManagerDTO manager=findUserService.findManagerById(account.getId());
 		logger.info(manager.toString());
 		if(bindingResult.hasErrors()){
 			logger.info("form error in addTrainer");
@@ -135,7 +131,7 @@ public class ManagerController {
 	
 	@GetMapping("/manager/userInfo")
 	public String managingUser(@AuthenticationPrincipal Account account,Model model, HttpServletRequest req){
-		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
+		ManagerDTO manager=findUserService.findManagerById(account.getId());
 		
 		if(req.getParameter("success")!=null)
 			model.addAttribute("message","정상적으로 삭제되었습니다!!");
