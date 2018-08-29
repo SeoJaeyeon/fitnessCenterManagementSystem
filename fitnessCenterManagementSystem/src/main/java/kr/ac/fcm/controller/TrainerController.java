@@ -20,16 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.DTO.user.UserRepository;
-import kr.ac.fcm.service.FindUserService;
+import kr.ac.fcm.service.AccountService;
 import kr.ac.fcm.service.ReviseMyInfoService;
 import kr.ac.fcm.service.s3.S3Service;
 
 @Controller
 public class TrainerController {
 	Logger logger=LoggerFactory.getLogger(TrainerController.class);
-	
-	@Autowired
-	private FindUserService findUserService;
 	
 	@Autowired
 	private S3Service s3Service;
@@ -39,6 +36,9 @@ public class TrainerController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private AccountService accountService;
 
 	@GetMapping("/trainer")
 	public String trainerMain(@AuthenticationPrincipal Account account, Model model){
@@ -46,41 +46,54 @@ public class TrainerController {
 		model.addAttribute("schedule", "active");
 		model.addAttribute("type",userRepository.getTrainer(account.getId(), account.getType()).getType());
 		return "/schedule";
-	}
+	}	
 	
-	@PostMapping("/trainer/mypage")
+	@GetMapping("/trainer/mypage")
+	public String trainerMyPage(@AuthenticationPrincipal Account account, Model model,HttpServletRequest req){
+		if(req.getParameter("pwerror")!=null)
+			model.addAttribute("message","패스워드를 다시한번 확인해주세요!!");
+		else if(req.getParameter("error")!=null)
+			model.addAttribute("message","예기치못한 오류가 발생하였습니다!!");
+		else if(req.getParameter("success")!=null)
+			model.addAttribute("message","정상적으로 변경되었습니다!!");
+		else
+			model.addAttribute("message","");
+		
+		TrainerDTO trainer=userRepository.getTrainer(account.getId(), account.getType());
+		model.addAttribute("trainer",trainer);
+		model.addAttribute("closed_day",trainer.getClosed_day());
+		model.addAttribute("img",s3Service.getFileURL(s3Service.getBucket(), trainer.getId()));
+		
+		model.addAttribute("mypage", "active");
+		return "trainer/tr_mypage";
+	}
+
 	@Transactional
+	@PostMapping("/trainer/mypage")
 	public String trainerMyPageByPost(@AuthenticationPrincipal Account account, @Valid TrainerDTO trainer, HttpServletRequest req, BindingResult bindingResult, Model model, @RequestParam("file") MultipartFile multipartFile) throws IOException{
 		if(bindingResult.hasErrors())
 		{
 			logger.info(bindingResult.getAllErrors().get(0).toString());
 			return "/trainer/tr_mypage";
 		}
-		String message=reviseTrainerInfoService.reviseMyInfo(req.getParameter("cur_password"), trainer);
-		if(!multipartFile.isEmpty()){
-			s3Service.deleteFile(trainer.getId());
-			s3Service.upload(multipartFile, "trainer", trainer.getId());
+		
+		// confirm password 
+		if(!accountService.matchPassword(trainer.getId(),req.getParameter("cur_password"))){
+			return "redirect:/trainer/mypage?pwerror";
 		}
-		logger.info("//////////"+multipartFile);
-		model.addAttribute("message",message);
+		try{
+			accountService.updatePassword(trainer.getId(), trainer.getPassword());
+			reviseTrainerInfoService.reviseMyInfo(trainer);
+			if(!multipartFile.isEmpty()){
+				s3Service.deleteFile(trainer.getId());
+				s3Service.upload(multipartFile, "trainer", trainer.getId());
+			}
+		}catch(Exception e){
+			return "redirect:/trainer/mypage?error";
+		}
+		
 		model.addAttribute("trainer",userRepository.getTrainer(account.getId(), account.getType()));
 		model.addAttribute("mypage", "active");
 		return "/trainer/tr_mypage";
 	}
-	
-	@GetMapping("/trainer/mypage")
-	public String trainerMyPage(@AuthenticationPrincipal Account account, Model model,HttpServletRequest req){
-		TrainerDTO trainer=userRepository.getTrainer(account.getId(), account.getType());
-		model.addAttribute("trainer",trainer);
-		model.addAttribute("closed_day",trainer.getClosed_day());
-		model.addAttribute("img",s3Service.getFileURL(s3Service.getBucket(), trainer.getId()));
-		if(req.getParameter("message")==null)
-			model.addAttribute("message",req.getParameter(""));
-		else if(req.getParameter("message").length()>0){
-			model.addAttribute("message",req.getParameter("message"));
-		}
-		model.addAttribute("mypage", "active");
-		return "trainer/tr_mypage";
-	}
-
 }

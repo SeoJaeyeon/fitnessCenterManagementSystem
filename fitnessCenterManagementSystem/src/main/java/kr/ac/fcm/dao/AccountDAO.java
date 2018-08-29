@@ -3,6 +3,7 @@ package kr.ac.fcm.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.fcm.DTO.user.Account;
@@ -13,13 +14,14 @@ import lombok.Getter;
 /*
  * Create Account and Account's Authority - save, saveAutority
  * Read Account and Accounts' Authorities - findById, findAuthoritiesById
+ * Revise password
  */
 @Repository
 @Getter
 public class AccountDAO {
 	
 	@Autowired
-	AccountMapper accountMapper;
+	private AccountMapper accountMapper;
 	
 	public Account save(Account account){
 		accountMapper.insertUser(account);
@@ -37,6 +39,10 @@ public class AccountDAO {
 	
 	public List<String> findAuthoritiesByID(String username){
 		return accountMapper.readAutorities(username);
+	}
+	
+	public void updatePassword(String id, String password){
+		accountMapper.updatePassword(id,password);
 	}
 	
 }
