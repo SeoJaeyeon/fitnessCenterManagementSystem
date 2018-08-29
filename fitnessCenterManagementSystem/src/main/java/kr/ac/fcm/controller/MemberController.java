@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.UserRepository;
-import kr.ac.fcm.service.FindUserService;
+import kr.ac.fcm.service.AccountService;
 import kr.ac.fcm.service.ReviseMyInfoService;
 @Controller
 public class MemberController {
@@ -27,12 +27,12 @@ public class MemberController {
 	Logger logger=LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
-	private FindUserService findUserService;	
-	@Autowired
 	private ReviseMyInfoService reviseMemberInfoService;
 	@Autowired
 	private UserRepository userRepository;
-
+	
+	@Autowired
+	private AccountService accountService;
 	
 	@GetMapping("/member")
 	public String showMemberView(@AuthenticationPrincipal Account account,Model model){
@@ -64,10 +64,19 @@ public class MemberController {
 			logger.info(bindingResult.getAllErrors().get(0).toString());
 			return "/member/mem_mypage";
 		}
-		String result=reviseMemberInfoService.reviseMyInfo(req.getParameter("cur_password"), member);
+		// confirm password 
+		if(!accountService.matchPassword(member.getId(),req.getParameter("cur_password"))){
+			return "redirect:/member/mypage?pwerror";
+		}
+		try{
+			accountService.updatePassword(member.getId(),member.getPassword());
+			reviseMemberInfoService.reviseMyInfo(member);
+		}catch(Exception e){
+			return "redirect:/member/mypage?error";
+		}
 		model.addAttribute("mypage","active");
 		model.addAttribute("member",member);
-		return "redirect:/member/mypage?"+result;
+		return "redirect:/member/mypage?success";
 	}
 
 }

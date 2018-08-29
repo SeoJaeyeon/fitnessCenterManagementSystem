@@ -10,6 +10,7 @@ import kr.ac.fcm.mapper.TrainerMapper;
 
 /*
  * read trainer
+ * revise trainer data
  */
 @Repository
 public class TrainerDAO {
@@ -24,4 +25,11 @@ public class TrainerDAO {
 		List<TrainerDTO> trainers=trainerMapper.selectAllTrainerByCenter_id(center_id);
 		return trainers;
 	}
+	
+	public TrainerDTO reviseTrainerData(TrainerDTO trainer){
+		trainerMapper.updateTrainer((TrainerDTO)trainer);
+		return trainer;
+	}
+	
+	
 }

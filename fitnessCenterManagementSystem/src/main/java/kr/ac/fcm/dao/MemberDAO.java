@@ -3,6 +3,7 @@ package kr.ac.fcm.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.MemberTrDTO;
@@ -10,7 +11,9 @@ import kr.ac.fcm.mapper.MemberMapper;
 
 /*
  * read member
+ * revise member data
  */
+@Repository
 public class MemberDAO {
 	
 	@Autowired
@@ -28,5 +31,10 @@ public class MemberDAO {
 	public List<MemberTrDTO> findAllMembersWithNullTrainer(String center_id) {
 		List<MemberTrDTO> members=memberMapper.selectAllMemberWithNullTrainer(center_id);
 		return members;
+	}
+	
+	public MemberDTO reviseMemberData(MemberDTO member){
+		memberMapper.reviseMemberData(member);
+		return member;
 	}
 }

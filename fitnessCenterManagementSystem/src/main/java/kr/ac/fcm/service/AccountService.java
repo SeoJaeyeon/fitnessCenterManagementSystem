@@ -79,7 +79,6 @@ public class AccountService implements UserDetailsService{
 	}
 
 	public Account save(Account account,String role,String type) {
-
 		account.setPassword(passwordEncoder.encode(account.getPassword()));
 		account.setAccountNonExpired(true);
 		account.setAccountNonLocked(true);
@@ -91,6 +90,7 @@ public class AccountService implements UserDetailsService{
 		
 		return account;
 	}
+	
 	public Collection<GrantedAuthority> getAuthorities(String username) 
 	{ 
 		List<String> string_authorities = accountDao.findAuthoritiesByID(username);
@@ -100,6 +100,16 @@ public class AccountService implements UserDetailsService{
 			authorities.add(new SimpleGrantedAuthority(authority)); 
 		} 
 		return authorities; 
+	}
+	
+	public boolean matchPassword(String id, String password){
+		String ori=loadUserByUsername(id).getPassword();
+		return passwordEncoder.matches(password,ori);
+	}
+	
+	public boolean updatePassword(String id, String password){
+		accountDao.updatePassword(id, passwordEncoder.encode(password));
+		return true;
 	}
 
 
