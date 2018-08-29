@@ -8,6 +8,6 @@ import kr.ac.fcm.DTO.user.TrainerDTO;
  * 변경가능성 보통
  */
 public interface ReviseUserInfoServiceByManager {
-	public void reviseMemberInfo(MemberDTO member );
-	public void reviseTrainerInfo(TrainerDTO trainer);
+	public MemberDTO reviseMemberInfo(MemberDTO member );
+	public TrainerDTO reviseTrainerInfo(TrainerDTO trainer);
 }

@@ -37,4 +37,9 @@ public class MemberDAO {
 		memberMapper.reviseMemberData(member);
 		return member;
 	}
+	
+	public MemberDTO reviseMemberDataByManager(MemberDTO member){
+		memberMapper.updateMemberInfoByManager(member);
+		return member;
+	}
 }

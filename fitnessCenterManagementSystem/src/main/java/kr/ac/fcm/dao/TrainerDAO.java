@@ -31,5 +31,9 @@ public class TrainerDAO {
 		return trainer;
 	}
 	
+	public TrainerDTO reviseTrainerDataMyManager(TrainerDTO trainer){
+		trainerMapper.updateTrainerInfoByManager(trainer);
+		return trainer;
+	}
 	
 }
