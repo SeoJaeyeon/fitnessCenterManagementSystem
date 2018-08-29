@@ -12,7 +12,7 @@ import kr.ac.fcm.DTO.CommentDTO;
  */
 public interface BoardService {
 	public List<ArticleDTO> showAllArticles();
-	public int write(ArticleDTO article) throws Exception;
+	public Integer write(ArticleDTO article) throws Exception;
 	public ArticleDTO showArticleByIdx(int idx);
 	public void reviseArticle(ArticleDTO article);
 	public void deleteArticle(int idx);
