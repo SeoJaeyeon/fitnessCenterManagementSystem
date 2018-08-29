@@ -20,4 +20,8 @@ public class TrainerDTO extends Account{
 	private String closed_day;
 	@Pattern(regexp="^[0-9][0-9][0-9][0-9]\\-[0-9][0-9]\\-[0-9][0-9]$", message="0000-00-00 형식을 준수해주세요!!!")
 	private String birthdate;
+	
+	public TrainerDTO(){
+		this.setType("TRAINER");
+	}
 }

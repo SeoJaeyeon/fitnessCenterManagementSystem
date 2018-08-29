@@ -19,8 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.TrainerDTO;
-import kr.ac.fcm.DTO.user.UserRepository;
 import kr.ac.fcm.service.AccountService;
+import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseMyInfoService;
 import kr.ac.fcm.service.s3.S3Service;
 
@@ -33,18 +33,18 @@ public class TrainerController {
 	
 	@Autowired
 	private ReviseMyInfoService reviseTrainerInfoService;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
+
 	@Autowired
 	private AccountService accountService;
+	
+	@Autowired
+	private FindUserService findUserService;
 
 	@GetMapping("/trainer")
 	public String trainerMain(@AuthenticationPrincipal Account account, Model model){
 		
 		model.addAttribute("schedule", "active");
-		model.addAttribute("type",userRepository.getTrainer(account.getId(), account.getType()).getType());
+		model.addAttribute("type", findUserService.findTrainerById(account.getId()).getType());
 		return "/schedule";
 	}	
 	
@@ -59,7 +59,7 @@ public class TrainerController {
 		else
 			model.addAttribute("message","");
 		
-		TrainerDTO trainer=userRepository.getTrainer(account.getId(), account.getType());
+		TrainerDTO trainer=findUserService.findTrainerById(account.getId());
 		model.addAttribute("trainer",trainer);
 		model.addAttribute("closed_day",trainer.getClosed_day());
 		model.addAttribute("img",s3Service.getFileURL(s3Service.getBucket(), trainer.getId()));
@@ -92,7 +92,7 @@ public class TrainerController {
 			return "redirect:/trainer/mypage?error";
 		}
 		
-		model.addAttribute("trainer",userRepository.getTrainer(account.getId(), account.getType()));
+		model.addAttribute("trainer",findUserService.findTrainerById(account.getId()));
 		model.addAttribute("mypage", "active");
 		return "/trainer/tr_mypage";
 	}
