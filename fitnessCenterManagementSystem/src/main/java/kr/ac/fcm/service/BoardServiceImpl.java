@@ -9,62 +9,51 @@ import org.springframework.stereotype.Service;
 
 import kr.ac.fcm.DTO.ArticleDTO;
 import kr.ac.fcm.DTO.CommentDTO;
-import kr.ac.fcm.mapper.BoardMapper;
+import kr.ac.fcm.dao.BoardDAO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 	@Autowired
-	private BoardMapper boardMapper;
+	private BoardDAO boardDao;
 	
 	@Override
 	public List<ArticleDTO> showAllArticles() {
-		// TODO Auto-generated method stub
-		
-		return boardMapper.selectAllArticles();
+		return boardDao.findAllArticles();
+	}
+	
+	@Override
+	public ArticleDTO showArticleByIdx(int idx) {
+		return boardDao.findArticleByIndex(idx);
 	}
 
 	@Override
 	@Transactional
-	public int write(ArticleDTO article) {
+	public Integer write(ArticleDTO article) {
 		// TODO Auto-generated method stub	
-		boardMapper.indexingBoard();
-		return boardMapper.addArticle(article);
+		boardDao.refreshIdx();
+		return boardDao.saveArticle(article);
 	}
 
 	@Override
-	public ArticleDTO showArticleByIdx(int idx) {
-		// TODO Auto-generated method stub
-		return boardMapper.selectArticleByIdx(idx);
-	}
-
-	@Override
-
 	public void reviseArticle(ArticleDTO article) {
-		// TODO Auto-generated method stub
-		boardMapper.reviseArticle(article);
-
-		
+		boardDao.reviseArticle(article);
 	}
 
 	@Override
 	@Transactional
 	public void deleteArticle(int idx) {
-		// TODO Auto-generated method stub
-		boardMapper.deleteArticle(idx);
-		boardMapper.indexingBoard();
+		boardDao.deleteArticle(idx);
+		boardDao.refreshIdx();
 	}
 
 	@Override
 	public void addComment(CommentDTO comment) {
-		// TODO Auto-generated method stub
-		boardMapper.addComment(comment);
+		boardDao.saveComment(comment);
 	}
 
 	@Override
 	public List<CommentDTO> showAllComments(int idx) {
-		// TODO Auto-generated method stub
-		List<CommentDTO> comments=boardMapper.showAllComments(idx);
-		return comments;
+		return boardDao.findAllCommentsByIdx(idx);
 	}
 	
 
