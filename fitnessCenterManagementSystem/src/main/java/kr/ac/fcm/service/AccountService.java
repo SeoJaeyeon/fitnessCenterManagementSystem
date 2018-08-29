@@ -13,14 +13,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import kr.ac.fcm.DTO.user.Account;
-import kr.ac.fcm.DTO.user.AccountRepository;
+import kr.ac.fcm.dao.AccountDAO;
 
 /**
  * 
  * @author seojaeyeon
  * spring-security UserDetailsService 구현
  * passwordEncoder- Default 
- * kr.ac.fcm.DTO.user.AccountRepository.class 와 함께 동작 
  * 
  */
 @Service
@@ -28,7 +27,7 @@ public class AccountService implements UserDetailsService{
 	
 	
 	@Autowired
-	AccountRepository accounts;
+	AccountDAO accountDao;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -36,51 +35,43 @@ public class AccountService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		Account account=accounts.findById(username);
+		Account account=accountDao.findById(username);
 		account.setAuthorities(getAuthorities(username));
 		
 		UserDetails userDetails=new UserDetails() {
 			
 			@Override
 			public boolean isEnabled() {
-				// TODO Auto-generated method stub
 				return true;
 			}
 			
 			@Override
 			public boolean isCredentialsNonExpired() {
-				// TODO Auto-generated method stub
 				return true;
 			}
 			
 			@Override
 			public boolean isAccountNonLocked() {
-				// TODO Auto-generated method stub
 				return true;
 			}
 			
 			@Override
 			public boolean isAccountNonExpired() {
-				// TODO Auto-generated method stub
 				return true;
 			}
 			
 			@Override
 			public String getUsername() {
-				// TODO Auto-generated method stub
 				return account.getId();
 			}
 			
 			@Override
 			public String getPassword() {
-				// TODO Auto-generated method stub
 				return account.getPassword();
 			}
 			
 			@Override
 			public Collection<? extends GrantedAuthority> getAuthorities() {
-				// TODO Auto-generated method stub
-				
 				return account.getAuthorities();
 			}
 
@@ -96,11 +87,14 @@ public class AccountService implements UserDetailsService{
 		account.setCredentialsNonExpired(true);
 		account.setEnabled(true);
 		account.setType(type);
-		return accounts.save(account, role);
+		accountDao.save(account);
+		accountDao.saveAutority(account, role);
+		
+		return account;
 	}
 	public Collection<GrantedAuthority> getAuthorities(String username) 
 	{ 
-		List<String> string_authorities = accounts.findAuthoritiesByID(username);
+		List<String> string_authorities = accountDao.findAuthoritiesByID(username);
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(); 
 		for (String authority : string_authorities) 
 		{ 
