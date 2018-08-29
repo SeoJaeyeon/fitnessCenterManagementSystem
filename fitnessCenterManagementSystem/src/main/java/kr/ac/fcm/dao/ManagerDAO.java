@@ -14,18 +14,10 @@ import kr.ac.fcm.mapper.ManagerMapper;
 public class ManagerDAO {
 	@Autowired
 	private ManagerMapper managerMapper;
-	@Autowired
-	private CenterMapper centerMapper;
-	
+
 	public ManagerDTO saveManager(ManagerDTO manager){
 		managerMapper.insertManager(manager);
 		return manager;
 	}
 	
-	public CenterDTO saveCenter(CenterDTO center){
-		centerMapper.insertCenterData(center);
-		return center;
-	}
-	
-
 }

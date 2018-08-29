@@ -29,7 +29,6 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	@Transactional
 	public Integer write(ArticleDTO article) {
-		// TODO Auto-generated method stub	
 		boardDao.refreshIdx();
 		return boardDao.saveArticle(article);
 	}
