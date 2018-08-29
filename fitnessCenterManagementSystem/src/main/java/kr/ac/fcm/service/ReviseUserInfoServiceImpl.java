@@ -5,28 +5,28 @@ import org.springframework.stereotype.Service;
 
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
-import kr.ac.fcm.mapper.MemberMapper;
-import kr.ac.fcm.mapper.TrainerMapper;
+import kr.ac.fcm.dao.MemberDAO;
+import kr.ac.fcm.dao.TrainerDAO;
 
 @Service
 public class ReviseUserInfoServiceImpl implements ReviseUserInfoServiceByManager {
 	
 	@Autowired
-	MemberMapper memberMapper;
+	private MemberDAO memberDao;
 	
 	@Autowired
-	TrainerMapper trainerMapper;
+	private TrainerDAO trainerDao;
 
 	@Override
-	public void reviseMemberInfo(MemberDTO member) {
+	public MemberDTO reviseMemberInfo(MemberDTO member) {
 		// TODO 주 pt횟수와 담당트레이너만 변경 가능 
-		memberMapper.updateMemberInfoByManager(member);
+		return memberDao.reviseMemberDataByManager(member);
 	}
 
 	@Override
-	public void reviseTrainerInfo(TrainerDTO trainer) {
+	public TrainerDTO reviseTrainerInfo(TrainerDTO trainer) {
 		// TODO 휴무일만 변경 가능 
-		trainerMapper.updateTrainerInfoByManager(trainer);
+		return trainerDao.reviseTrainerDataMyManager(trainer);
 	}
 
 }
