@@ -9,9 +9,9 @@ import kr.ac.fcm.DTO.user.TrainerDTO;
  * 변경가능성 보통
  */
 public interface UserManagementService {
-	public void addMember(MemberDTO member) throws Exception;
-	public void addTrainer(TrainerDTO trainer) throws Exception;
+	public MemberDTO addMember(MemberDTO member) throws Exception;
+	public TrainerDTO addTrainer(TrainerDTO trainer) throws Exception;
 	
-	public void removeMember(String id);
-	public void removeTrainer(String id);
+	public String removeMember(String id);
+	public String removeTrainer(String id);
 }

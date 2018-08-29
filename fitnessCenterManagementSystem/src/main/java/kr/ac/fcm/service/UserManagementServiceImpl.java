@@ -3,68 +3,77 @@ package kr.ac.fcm.service;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
-import kr.ac.fcm.mapper.AccountMapper;
-import kr.ac.fcm.mapper.MemberMapper;
-import kr.ac.fcm.mapper.TrainerMapper;
-import kr.ac.fcm.service.s3.S3Service;
+import kr.ac.fcm.dao.AccountDAO;
+import kr.ac.fcm.dao.MemberDAO;
+import kr.ac.fcm.dao.TrainerDAO;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
+	
 	@Autowired
-	private AccountService accountService;
+	private AccountDAO accountDao;
+	
 	@Autowired
-	private MemberMapper memberMapper;
+	private MemberDAO memberDao;
+	
 	@Autowired
-	private TrainerMapper trainerMapper;
+	private TrainerDAO trainerDao;
+	
 	@Autowired
-	private AccountMapper accountMapper;
-	@Autowired
-	private S3Service s3Service;
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	@Transactional
-	public void addMember(MemberDTO member) {
+	public MemberDTO addMember(MemberDTO member) {
 		Account account=new Account();
 		account.setId(member.getId());
 		account.setPassword(member.getPassword());
-		account.setType("MEMBER");
 		account.setCenter_id(member.getCenter_id());
-		accountService.save(account, "ROLE_MEMBER", "MEMBER");
-		memberMapper.insertMember(member);
+		account.setPassword(passwordEncoder.encode(account.getPassword()));
+		account.setType("MEMBER");
+		accountDao.save(account);
+		accountDao.saveAutority(account, "ROLE_MEMBER");		
+		
+		return memberDao.saveMember(member);
 	}
 
 	@Override
 	@Transactional
-	public void addTrainer(TrainerDTO trainer) {
+	public TrainerDTO addTrainer(TrainerDTO trainer) {
 		Account account=new Account();
 		account.setId(trainer.getId());
 		account.setType("TRAINER");
 		account.setPassword(trainer.getPassword());
 		account.setCenter_id(trainer.getCenter_id());
-		accountService.save(account, "ROLE_TRAINER", "TRAINER");
-		trainerMapper.insertTrainer(trainer);
+		account.setPassword(passwordEncoder.encode(account.getPassword()));
+		accountDao.save(account);
+		accountDao.saveAutority(account, "ROLE_TRAINER");	
+		
+		return trainerDao.saveTrainer(trainer);
 	}
 
 	@Override
 	@Transactional
-	public void removeMember(String id) {
-		memberMapper.deleteMember(id);	
-		accountMapper.deleteUserFromAuth(id);
-		accountMapper.deleteUserFromUser(id);
+	public String removeMember(String id) {
+		accountDao.deleteAutorities(id);
+		accountDao.deleteUser(id);
+		memberDao.deleteMember(id);
+		return id;
 	}
 
 	@Override
 	@Transactional
-	public void removeTrainer(String id) {
-		trainerMapper.deleteTrainer(id);
-		accountMapper.deleteUserFromUser(id);
-		accountMapper.deleteUserFromAuth(id);	
-		s3Service.deleteFile(id);
+	public String removeTrainer(String id) {
+		accountDao.deleteAutorities(id);
+		accountDao.deleteUser(id);
+		trainerDao.deleteTrainer(id);
+		return id;
 	}
 
 

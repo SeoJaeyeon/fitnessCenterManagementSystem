@@ -36,12 +36,15 @@ public class ManagerController {
 
 	@Autowired
 	private FindUserService findUserService;
+	
 	@Autowired
 	private S3Service s3Service;
+	
 	@Autowired
 	private UserManagementService userManagementService;
+	
 	@Autowired
-	ReviseUserInfoServiceByManager reviseUserInfoService;
+	private ReviseUserInfoServiceByManager reviseUserInfoService;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -77,7 +80,7 @@ public class ManagerController {
 	@PostMapping("/manager/addMember")
 	public String addUserByPost(@AuthenticationPrincipal Account account,@Valid @ModelAttribute("member") MemberDTO member, BindingResult bindingResult,Model model){
 		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
-		logger.info(manager.toString());
+
 		if(bindingResult.hasErrors()){
 			List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
 			model.addAttribute("management","active");
@@ -133,10 +136,13 @@ public class ManagerController {
 	@GetMapping("/manager/userInfo")
 	public String managingUser(@AuthenticationPrincipal Account account,Model model, HttpServletRequest req){
 		ManagerDTO manager=userRepository.getManager(account.getId(), account.getType());
+		
 		if(req.getParameter("success")!=null)
 			model.addAttribute("message","정상적으로 삭제되었습니다!!");
+		
 		List<MemberTrDTO> members=findUserService.findAllMembers(manager.getCenter_id());
 		List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
+		
 		model.addAttribute("members",members);
 		model.addAttribute("trainers",trainers);
 		model.addAttribute("management","active");
@@ -226,6 +232,7 @@ public class ManagerController {
 	public String deleteTrainer(HttpServletRequest req){
 		try{
 			userManagementService.removeTrainer(req.getParameter("id"));
+			s3Service.deleteFile(req.getParameter("id"));
 		}catch(Exception e){
 			return "redirect:/manager/reviseInfo.do?error&id="+req.getParameter("id");
 		}

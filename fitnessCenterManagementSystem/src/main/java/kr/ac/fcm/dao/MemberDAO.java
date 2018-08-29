@@ -10,8 +10,10 @@ import kr.ac.fcm.DTO.user.MemberTrDTO;
 import kr.ac.fcm.mapper.MemberMapper;
 
 /*
+ * create member
  * read member
  * revise member data
+ * delete member
  */
 @Repository
 public class MemberDAO {
@@ -19,6 +21,10 @@ public class MemberDAO {
 	@Autowired
 	private MemberMapper memberMapper;
 
+	public MemberDTO saveMember(MemberDTO member){
+		memberMapper.insertMember(member);
+		return member;
+	}
 	public MemberDTO findMemberById(String id) {
 		return memberMapper.findMemberByMemberId(id);
 	}
@@ -41,5 +47,10 @@ public class MemberDAO {
 	public MemberDTO reviseMemberDataByManager(MemberDTO member){
 		memberMapper.updateMemberInfoByManager(member);
 		return member;
+	}
+	
+	public boolean deleteMember(String id){
+		memberMapper.deleteMember(id);	
+		return true;
 	}
 }
