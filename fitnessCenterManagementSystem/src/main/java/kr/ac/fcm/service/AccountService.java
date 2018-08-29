@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -80,14 +82,9 @@ public class AccountService implements UserDetailsService{
 
 	public Account save(Account account,String role,String type) {
 		account.setPassword(passwordEncoder.encode(account.getPassword()));
-		account.setAccountNonExpired(true);
-		account.setAccountNonLocked(true);
-		account.setCredentialsNonExpired(true);
-		account.setEnabled(true);
 		account.setType(type);
 		accountDao.save(account);
-		accountDao.saveAutority(account, role);
-		
+		accountDao.saveAutority(account, role);		
 		return account;
 	}
 	
@@ -111,8 +108,7 @@ public class AccountService implements UserDetailsService{
 		accountDao.updatePassword(id, passwordEncoder.encode(password));
 		return true;
 	}
-
-
+	
 
 
 

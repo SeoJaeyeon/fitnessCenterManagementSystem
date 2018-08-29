@@ -45,4 +45,14 @@ public class AccountDAO {
 		accountMapper.updatePassword(id,password);
 	}
 	
+	public boolean deleteUser(String id){
+		accountMapper.deleteAccount(id);
+		return true;
+	}
+	
+	public boolean deleteAutorities(String id){
+		accountMapper.deleteAuthorities(id);
+		return true;
+	}
+	
 }

@@ -9,14 +9,20 @@ import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.mapper.TrainerMapper;
 
 /*
+ * create trainer
  * read trainer
  * revise trainer data
+ * delete trainer
  */
 @Repository
 public class TrainerDAO {
 	@Autowired
 	private TrainerMapper trainerMapper;
 	
+	public TrainerDTO saveTrainer(TrainerDTO trainer){
+		trainerMapper.insertTrainer(trainer);
+		return trainer;
+	}
 	public TrainerDTO findTrainerById(String id) {
 		return trainerMapper.findTrainerByTrainerId(id);
 	}
@@ -34,6 +40,11 @@ public class TrainerDAO {
 	public TrainerDTO reviseTrainerDataMyManager(TrainerDTO trainer){
 		trainerMapper.updateTrainerInfoByManager(trainer);
 		return trainer;
+	}
+	
+	public boolean deleteTrainer(String id){
+		trainerMapper.deleteTrainer(id);
+		return true;
 	}
 	
 }

@@ -35,9 +35,9 @@ public interface AccountMapper {
 	public void updatePassword(@Param("id") String id, @Param("password")String password);
 	
 	@Delete("DELETE FROM AUTHORITY WHERE username=#{id}")
-	public void deleteUserFromAuth(String id);
+	public void deleteAuthorities(String id);
 	
 	@Delete("DELETE FROM USER WHERE id=#{id}")
-	public void deleteUserFromUser(String id);
+	public void deleteAccount(String id);
 
 }

@@ -18,10 +18,10 @@ public class Account implements UserDetails{
 	private String id;
 	private String password;
 	private String type;
-	private boolean isAccountNonExpired; 
-	private boolean isAccountNonLocked;
-	private boolean isCredentialsNonExpired; 
-	private boolean isEnabled;
+	private boolean isAccountNonExpired=true; 
+	private boolean isAccountNonLocked=true;
+	private boolean isCredentialsNonExpired=true; 
+	private boolean isEnabled=true;
 	private String center_id;
 	private Collection<? extends GrantedAuthority> authorities;
 	
