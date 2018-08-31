@@ -29,21 +29,21 @@
 </head>
 <body>
   <%@ include file="../header/header_manager.jsp" %>
+  <form method="post">
   <div class="contianer-fuild" style="padding-top:5%;padding-left:5%; padding-right:5%; padding-bottom:5%;">
   <div class="row">
   <div class="input-group mb-3" style="padding-left:60%;">
   <div class="input-group-prepend">
-    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">전체사용자</button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">회원</a>
-      <a class="dropdown-item" href="#">트레이너</a>
-    </div>
+    <select class="custom-select" id="category" name="category">
+    <option value="1">회원</option>
+    <option value="2">트레이너</option>
+  </select>
   </div>
-  <input type="text" class="form-control" aria-label="Name">
+  <input type="text" class="form-control" name="name" aria-label="Name">
    <div class="input-group-append">
     <button class="btn btn-outline-primary" type="submit" >검색</button>
    </div>
-</div>
+	</div>
   </div><% int count=0; %>
   	<c:forEach var="member" items="${members}"  varStatus="status">
   		<% if((count%3)==0) %><div class="row"><%; %>
@@ -78,7 +78,10 @@
       %></div><%;%>
      </c:forEach>
     </div>
-	</div>
+     <input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
+		</form>
+		</div>
 	<%@ include file="../footer.jsp" %>
      <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>

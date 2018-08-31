@@ -39,6 +39,16 @@ public class MemberDAO {
 		return members;
 	}
 	
+	public List<MemberTrDTO> findMembersByNameWithTrainer(String name, String center_id){
+		List<MemberTrDTO> members=memberMapper.selectMembersByNameWithTrainer(name, center_id);
+		return members;
+	}
+	
+	public List<MemberTrDTO> findMembersByNameWithNullTrainer(String name, String center_id){
+		List<MemberTrDTO> members=memberMapper.selectMembersByNameWithNullTrainer(name, center_id);
+		return members;
+	}
+	
 	public MemberDTO reviseMemberData(MemberDTO member){
 		memberMapper.reviseMemberData(member);
 		return member;

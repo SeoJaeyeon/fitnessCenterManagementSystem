@@ -16,5 +16,7 @@ public interface FindUserService {
 	public TrainerDTO findTrainerById(String id);
 	public MemberDTO findMemberById(String id);
 	public List<TrainerDTO> findAllTrainers(String center_id);
+	public List<TrainerDTO> findTrainersByName(String name, String center_id);
 	public List<MemberTrDTO> findAllMembers(String center_id);
+	public List<MemberTrDTO> findMembersByName(String name, String center_id);
 }

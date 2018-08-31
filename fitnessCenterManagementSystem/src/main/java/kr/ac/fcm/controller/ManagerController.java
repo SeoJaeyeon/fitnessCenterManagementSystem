@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.FixedSpaceIndenter;
+
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.DTO.user.MemberDTO;
@@ -50,7 +52,6 @@ public class ManagerController {
 		ManagerDTO manager=findUserService.findManagerById(account.getId());
 		model.addAttribute("schedule","active");
 		model.addAttribute("type",manager.getType());
-		logger.info(manager.toString());
 		return "/schedule";
 	}
 	
@@ -65,7 +66,6 @@ public class ManagerController {
 			model.addAttribute("message","사용자등록오류");
 		}
 		ManagerDTO manager=findUserService.findManagerById(account.getId());
-		logger.info(manager.toString());
 		List<TrainerDTO> trainers=findUserService.findAllTrainers(manager.getCenter_id());
 		model.addAttribute("management","active");
 		model.addAttribute("member", new MemberDTO());
@@ -111,7 +111,6 @@ public class ManagerController {
 	@PostMapping("/manager/addTrainer")
 	public String addTrainer(@AuthenticationPrincipal Account account,@Valid @ModelAttribute("trainer") TrainerDTO trainer,BindingResult bindingResult, Model model,HttpServletRequest req,@RequestParam("file") MultipartFile multipartFile){
 		ManagerDTO manager=findUserService.findManagerById(account.getId());
-		logger.info(manager.toString());
 		if(bindingResult.hasErrors()){
 			logger.info("form error in addTrainer");
 			return "/manager/addTrainer";
@@ -233,6 +232,24 @@ public class ManagerController {
 			return "redirect:/manager/reviseInfo.do?error&id="+req.getParameter("id");
 		}
 		return "redirect:/manager/userInfo?success";
+	}
+	
+	@PostMapping("/manager/userInfo")
+	public String findUser(@AuthenticationPrincipal Account account, HttpServletRequest req,Model model){
+		String name=req.getParameter("name");
+		int category=Integer.parseInt(req.getParameter("category"));
+		if(category==1){
+			//회원
+			List<MemberTrDTO> members=findUserService.findMembersByName(name, account.getCenter_id());
+			model.addAttribute("members",members);
+		}
+		if(category==2){
+			//트레이너
+			List<TrainerDTO> trainers=findUserService.findTrainersByName(name, account.getCenter_id());
+			model.addAttribute("trainers", trainers);
+		}
+		model.addAttribute("management","active");
+		return "/manager/userinfo";		
 	}
 
 }
