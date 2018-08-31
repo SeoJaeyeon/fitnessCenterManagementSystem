@@ -55,4 +55,18 @@ public class FindUserServiceImpl implements FindUserService {
 		return members;
 	}
 
+	@Override
+	@Transactional
+	public List<MemberTrDTO> findMembersByName(String name, String center_id) {
+		List<MemberTrDTO> members=memberDao.findMembersByNameWithTrainer(name, center_id);
+		members.addAll(memberDao.findMembersByNameWithNullTrainer(name, center_id));
+		return members;
+	}
+
+	@Override
+	public List<TrainerDTO> findTrainersByName(String name, String center_id) {
+		List<TrainerDTO> trainers=trainerDao.findTrainersByName(name, center_id);
+		return trainers;
+	}
+
 }

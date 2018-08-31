@@ -32,6 +32,11 @@ public class TrainerDAO {
 		return trainers;
 	}
 	
+	public List<TrainerDTO> findTrainersByName(String name, String center_id){
+		List<TrainerDTO> trainers=trainerMapper.selectTrainerByName(name,center_id);
+		return trainers;
+	}
+	
 	public TrainerDTO reviseTrainerData(TrainerDTO trainer){
 		trainerMapper.updateTrainer((TrainerDTO)trainer);
 		return trainer;
