@@ -69,4 +69,9 @@ public class FindUserServiceImpl implements FindUserService {
 		return trainers;
 	}
 
+	@Override
+	public List<MemberDTO> findMembersByTrainerId(String id) {
+		return memberDao.findMembersByTrainerId(id);
+	}
+
 }

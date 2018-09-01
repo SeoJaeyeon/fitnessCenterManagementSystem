@@ -15,22 +15,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-         <li class="nav-item ${management}" data-toggle="tooltip" data-placement="right" title="adminUser">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-sitemap"></i>
+          <li class="nav-item ${management}" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" href="/trainer/showMemberList">
+            <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">회원관리</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseMulti">
-            <li>
-              <a href="/trainer/showMemberList">회원조회</a>
-            </li>
-            <li>
-              <a href="#">인바디기록</a>
-            </li>
-            <li>
-              <a href="/trainer/showInbody">인바디조회</a>
-            </li>
-          </ul>
         </li>
           <li class="nav-item ${schedule}" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link" href="/trainer">

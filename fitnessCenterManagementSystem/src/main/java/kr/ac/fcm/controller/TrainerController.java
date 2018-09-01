@@ -1,5 +1,6 @@
 package kr.ac.fcm.controller;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.fcm.DTO.user.Account;
+import kr.ac.fcm.DTO.user.MemberDTO;
+import kr.ac.fcm.DTO.user.MemberTrDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.service.AccountService;
 import kr.ac.fcm.service.FindUserService;
@@ -95,5 +98,21 @@ public class TrainerController {
 		model.addAttribute("trainer",findUserService.findTrainerById(account.getId()));
 		model.addAttribute("mypage", "active");
 		return "/trainer/tr_mypage";
+	}
+	
+	@GetMapping("/trainer/showMemberList")
+	public String showMemberListByGet(@AuthenticationPrincipal Account account, Model model, HttpServletRequest req){
+		List<MemberDTO> members=findUserService.findMembersByTrainerId(account.getId());
+		model.addAttribute("members", members);
+		model.addAttribute("management", "active");
+		return "/trainer/memberinfo";
+	}
+	
+	@PostMapping("/trainer/showMemberList")
+	public String showMemberListByPost(@AuthenticationPrincipal Account account, Model model, HttpServletRequest req){
+		List<MemberTrDTO> members=findUserService.findMembersByName(req.getParameter("name"), account.getCenter_id());
+		model.addAttribute("members", members);
+		model.addAttribute("management", "active");
+		return "/trainer/memberinfo";
 	}
 }
