@@ -41,5 +41,7 @@ public interface MemberMapper {
 	
 	@Delete("DELETE FROM MEMBER WHERE id=#{id}")
 	void deleteMember(String id);
+	@Select("SELECT* FROM MEMBER WHERE trainer_id=#{id}")
+	List<MemberDTO> findMembersByTrainerId(String id);
 
 }
