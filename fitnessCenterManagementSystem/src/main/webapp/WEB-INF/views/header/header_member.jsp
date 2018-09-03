@@ -25,7 +25,7 @@
               <a href="/member">PT일정조회</a>
             </li>
             <li>
-              <a href="#">PT신청/예약</a>
+              <a href="/member/apply">PT신청/예약</a>
             </li>
           </ul>
         </li>
@@ -49,12 +49,7 @@
             </li>
           </ul>
         </li>
-          <li class="nav-item ${qna}" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-file"></i>
-           <span class="nav-link-text">Q&A</span>
-          </a>
-        </li>
+          
         <li class="nav justify-content-end">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
