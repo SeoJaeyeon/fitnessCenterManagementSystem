@@ -3,7 +3,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page session="false"%>
 <%@page import="java.util.*" %>
-<%@page import="kr.ac.fcm.DTO.Schedule" %>
+<%@page import="kr.ac.fcm.DTO.ScheduleDTO" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,7 +34,7 @@
  	<%@ include file="header/header_member.jsp" %>
   </c:if>
  <!-- header -->
-    <div class="container-fuild" style="padding-top:5%; padding-left:10%; padding-right:10%; padding-bottom:5%;">
+    <div class="container-fuild" style="padding-top:10%; padding-left:10%; padding-right:10%; padding-bottom:5%;">
  	<div class="row">
  <table class="table table-bordered ">
   <thead >
@@ -51,10 +51,10 @@
   </thead>
   <tbody class="text-center">
 	<% int count=0;
-	ArrayList<Schedule> list=new ArrayList<Schedule>();
+	ArrayList<ScheduleDTO> list=new ArrayList<ScheduleDTO>();
 	int size=-1;
-	if(request.getAttribute("list")!=null){
-		list = (ArrayList<Schedule>)request.getAttribute("list");
+	if(request.getAttribute("schedules")!=null){
+		list = (ArrayList<ScheduleDTO>)request.getAttribute("schedules");
 		size=list.size();
 	}
 	%>
@@ -63,8 +63,8 @@
       <th scope="row"><%= time %>시~<%= time+1 %>시</th>
 	  <%for(int i=0; i<7; i++){ %>
 	  	<td
-	  		<% if(size>0 && list.get(count).getTime()==time && list.get(count).getDay()==i){ System.out.println("test"); %> style="background-color:gray">
-	  			<%= list.get(count).getMemberName() %> - 	<%= list.get(count).getTrainerName() %> 
+	  		<% if(size>0 && list.get(count).getHour()==time && list.get(count).getDay()==i){ System.out.println("test"); %> style="background-color:rgb(204,255,255)">
+	  			<%= list.get(count).getMember_name()%> 회원 - 	<%= list.get(count).getTrainer_name()%> 트레이너 
 	  			 <%; if(count < size-1) count++; }else{%>><% }%>
 	  	</td>
 	  	<%}; %>

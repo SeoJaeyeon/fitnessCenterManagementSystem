@@ -20,8 +20,6 @@ public class ArticleDTO {
 	private String subject;
 	@NotNull @Size(min=1, max=10000000, message="내용이 너무 길거나 짧습니다!!")
 	private String content;
-	@NotNull
 	private Date created;
-	@NotNull
 	private int view;	
 }
