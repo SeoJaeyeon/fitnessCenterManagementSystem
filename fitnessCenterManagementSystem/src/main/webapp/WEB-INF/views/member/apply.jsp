@@ -20,26 +20,19 @@
   <!-- Page level plugin CSS-->
 
   <!-- Custom styles for this template-->
+
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
   <!-- header -->
- 	 <c:if test="${type=='MANAGER'}">
- 	<%@ include file="header/header_manager.jsp" %>
-  </c:if>
-   <c:if test="${type=='TRAINER'}">
- 	<%@ include file="header/header_trainer.jsp" %>
-  </c:if>
-   <c:if test="${type=='MEMBER'}">
- 	<%@ include file="header/header_member.jsp" %>
-  </c:if>
+ 	<%@ include file="../header/header_member.jsp" %>
  <!-- header -->
     <div class="container-fuild" style="padding-top:10%; padding-left:10%; padding-right:10%; padding-bottom:5%;">
  	<div class="row">
  <table class="table table-bordered ">
   <thead >
      <tr class="text-center">
-      <th scope="col" style="width:200px; height:" >시간</th>
+      <th scope="col" style="width:200px" >시간</th>
       <th scope="col" style="width:300px">월</th>
       <th scope="col" style="width:300px">화</th>
       <th scope="col" style="width:300px">수</th>
@@ -62,10 +55,10 @@
     <tr>
       <th scope="row"><%= time %>시~<%= time+1 %>시</th>
 	  <%for(int i=0; i<7; i++){ %>
-	  	<td
-	  		<% if(size>0 && list.get(count).getHour()==time && list.get(count).getDay()==i){%> style="background-color:rgb(204,255,255)">
-	  			<%= list.get(count).getMember_name()%> 회원 - 	<%= list.get(count).getTrainer_name()%> 트레이너 
-	  			 <%; if(count < size-1) count++; }else{%>><% }%>
+	  	<td>
+	  		<% if(size>0 && list.get(count).getHour()==time && list.get(count).getDay()==i){; if(count < size-1) count++; %><a style="color:blue" href="/member/reserv?day=<%=i%>&hour=<%=time%>">예약</a><%
+	  		}else{%><a style="color:gray" href="/member/apply?day=<%=i%>&hour=<%=time%>">신청</a>
+	  		<%}%>
 	  	</td>
 	  	<%}; %>
     </tr>
@@ -74,7 +67,7 @@
 </table>
 </div>
 </div>
-  <%@ include file="footer.jsp" %>
+  <%@ include file="../footer.jsp" %>
     <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -46,12 +46,21 @@ public class MemberController {
 	@GetMapping("/member")
 	public ModelAndView showMemberView(@AuthenticationPrincipal Account account,ModelAndView model){
 		ModelAndView mv=new ModelAndView("/schedule");
-		
-		MemberDTO member=findUserService.findMemberById(account.getId());
 		mv.addObject("schedule","active");
-		mv.addObject("type",member.getType());
+		mv.addObject("type",account.getType());
 		List<ScheduleDTO> schedules=scheduleService.findThisWeekScheduleByMemberId(account.getId());
 		mv.addObject("schedules",schedules);
+		return mv;
+	}
+	
+	@GetMapping("/member/apply")
+	public ModelAndView applySchedule(@AuthenticationPrincipal Account account){
+		ModelAndView mv=new ModelAndView("/member/apply");
+		mv.addObject("schedule","active");
+		mv.addObject("type",account.getType());
+		List<ScheduleDTO> schedules=scheduleService.findThisWeekScheduleByMemberId(account.getId());
+		mv.addObject("schedules",schedules);
+		
 		return mv;
 	}
 	
