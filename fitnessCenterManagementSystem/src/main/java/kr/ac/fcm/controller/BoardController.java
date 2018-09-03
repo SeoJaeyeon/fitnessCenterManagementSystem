@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,8 +58,8 @@ public class BoardController {
 	}
 	@GetMapping("/article")
 	@Transactional
-	public String showArticle(@AuthenticationPrincipal Account user, HttpServletRequest req, Model model){
-		int idx=Integer.parseInt(req.getParameter("no"));
+	public String showArticle(@AuthenticationPrincipal Account user, String no, HttpServletRequest req, Model model){
+		int idx=Integer.parseInt(no);
 		if(req.getParameter("delete")!=null){
 			model.addAttribute("message","정말 삭제하시겠습니까?");
 		}
