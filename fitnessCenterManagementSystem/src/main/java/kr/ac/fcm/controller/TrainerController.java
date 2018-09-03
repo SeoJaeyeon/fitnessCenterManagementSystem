@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import kr.ac.fcm.DTO.ScheduleDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.DTO.user.MemberTrDTO;
@@ -25,6 +27,7 @@ import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.service.AccountService;
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseMyInfoService;
+import kr.ac.fcm.service.ScheduleService;
 import kr.ac.fcm.service.s3.S3Service;
 
 @Controller
@@ -42,13 +45,22 @@ public class TrainerController {
 	
 	@Autowired
 	private FindUserService findUserService;
+	
+	@Autowired
+	private ScheduleService scheduleService;
 
 	@GetMapping("/trainer")
-	public String trainerMain(@AuthenticationPrincipal Account account, Model model){
+	public ModelAndView trainerMain(@AuthenticationPrincipal Account account){
+		ModelAndView mv=new ModelAndView("/schedule");
 		
-		model.addAttribute("schedule", "active");
-		model.addAttribute("type", findUserService.findTrainerById(account.getId()).getType());
-		return "/schedule";
+		mv.addObject("schedule", "active");
+		mv.addObject("type", account.getType());
+		
+		List<ScheduleDTO> schedules=scheduleService.findThisWeekScheduleByTrainerId(account.getId());
+		
+		mv.addObject("schedules",schedules);
+			
+		return mv;
 	}	
 	
 	@GetMapping("/trainer/mypage")

@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.FixedSpaceIndenter;
 
-import kr.ac.fcm.DTO.Schedule;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.ManagerDTO;
 import kr.ac.fcm.DTO.user.MemberDTO;
@@ -54,15 +53,7 @@ public class ManagerController {
 		ManagerDTO manager=findUserService.findManagerById(account.getId());
 		model.addAttribute("schedule","active");
 		model.addAttribute("type",manager.getType());
-		
-		List<Schedule> schedules=new ArrayList<>();
-		Schedule sc=new Schedule();
-		sc.setDay(0);
-		sc.setTime(9);
-		sc.setMemberName("abc");
-		sc.setTrainerName("ass");
-		schedules.add(sc);
-		model.addAttribute("list",schedules);
+
 		return "/schedule";
 	}
 	

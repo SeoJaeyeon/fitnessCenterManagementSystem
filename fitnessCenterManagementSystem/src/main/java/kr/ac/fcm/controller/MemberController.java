@@ -1,6 +1,8 @@
 package kr.ac.fcm.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -14,12 +16,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import kr.ac.fcm.DTO.ScheduleDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.MemberDTO;
 import kr.ac.fcm.service.AccountService;
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseMyInfoService;
+import kr.ac.fcm.service.ScheduleService;
 @Controller
 public class MemberController {
 	
@@ -35,13 +40,19 @@ public class MemberController {
 	@Autowired
 	private FindUserService findUserService;
 	
+	@Autowired
+	private ScheduleService scheduleService;
+	
 	@GetMapping("/member")
-	public String showMemberView(@AuthenticationPrincipal Account account,Model model){
+	public ModelAndView showMemberView(@AuthenticationPrincipal Account account,ModelAndView model){
+		ModelAndView mv=new ModelAndView("/schedule");
 		
 		MemberDTO member=findUserService.findMemberById(account.getId());
-		model.addAttribute("schedule","active");
-		model.addAttribute("type",member.getType());
-		return "/schedule";
+		mv.addObject("schedule","active");
+		mv.addObject("type",member.getType());
+		List<ScheduleDTO> schedules=scheduleService.findThisWeekScheduleByMemberId(account.getId());
+		mv.addObject("schedules",schedules);
+		return mv;
 	}
 	
 	@GetMapping("/member/mypage")

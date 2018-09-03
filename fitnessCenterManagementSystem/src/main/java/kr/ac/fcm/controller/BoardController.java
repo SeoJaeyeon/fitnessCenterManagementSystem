@@ -57,7 +57,6 @@ public class BoardController {
 		return "redirect:/article?no="+article.getIdx();
 	}
 	@GetMapping("/article")
-	@Transactional
 	public String showArticle(@AuthenticationPrincipal Account user, String no, HttpServletRequest req, Model model){
 		int idx=Integer.parseInt(no);
 		if(req.getParameter("delete")!=null){
@@ -82,8 +81,8 @@ public class BoardController {
 	}
 	
 	@GetMapping("/revise.do")
-	public String reviseArticle(@AuthenticationPrincipal Account user, Model model, HttpServletRequest req){	
-		int idx=Integer.parseInt(req.getParameter("no"));
+	public String reviseArticle(@AuthenticationPrincipal Account user, String no, Model model, HttpServletRequest req){	
+		int idx=Integer.parseInt(no);
 		ArticleDTO article=new ArticleDTO();
 		article=boardService.showArticleByIdx(idx);
 		model.addAttribute("article",article);
@@ -91,15 +90,15 @@ public class BoardController {
 		return "/board/revise";
 	}
 	@PostMapping("/revise.do")
-	public String reviseArticleByPost(ArticleDTO article, Model model, HttpServletRequest req){
+	public String reviseArticleByPost(ArticleDTO article, Model model, String no, HttpServletRequest req){
 		article.setCreated(new Date());
-		article.setIdx(Integer.parseInt(req.getParameter("no")));
+		article.setIdx(Integer.parseInt(no));
 		boardService.reviseArticle(article);
 		return "redirect:/article?no="+article.getIdx();
 	}
 	@GetMapping("/delete.do")
-	public String deleteArticle(Model model, HttpServletRequest req){
-		int idx=Integer.parseInt(req.getParameter("no"));
+	public String deleteArticle(Model model, String no, HttpServletRequest req){
+		int idx=Integer.parseInt(no);
 		try{
 			boardService.deleteArticle(idx);
 		}catch(Exception e){
@@ -110,12 +109,12 @@ public class BoardController {
 	
 	//댓글작성
 	@PostMapping("/article")
-	public String addComment(@AuthenticationPrincipal Account user, CommentDTO comment, HttpServletRequest req){
+	public String addComment(@AuthenticationPrincipal Account user, CommentDTO comment, String no, HttpServletRequest req){
 		comment.setCenter_id(user.getCenter_id());
 		comment.setCreated(new Date());
-		comment.setIdx(Integer.parseInt(req.getParameter("no")));
+		comment.setIdx(Integer.parseInt(no));
 		boardService.addComment(comment);
-		return "redirect:/article?no="+req.getParameter("no");
+		return "redirect:/article?no="+no;
 		
 	}
 
