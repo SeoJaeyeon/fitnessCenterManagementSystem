@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -26,9 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/", "/login","/service","/resources/**","/view","/mail").permitAll()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/manager/**").hasRole("MANAGER")
-                .anyRequest().authenticated()
+                .anyRequest().authenticated()             
                 .antMatchers("/**").permitAll()
                 .and()
+             
            .formLogin()
            		.successHandler(slh)
            		.loginPage("/login")
@@ -40,9 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
            		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .permitAll();
 
+
     }
 	
-
+	 @Override
+	 public void configure(WebSecurity web) throws Exception {
+	      //spring security 제외 경로설정 
+	      web.ignoring().antMatchers("/resources/**").antMatchers("/api/**");
+	 }
 	
 	@Bean
 	public PasswordEncoder passwordEncoder(){

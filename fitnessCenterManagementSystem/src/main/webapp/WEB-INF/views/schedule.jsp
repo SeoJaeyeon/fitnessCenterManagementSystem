@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ page session="false"%>
+<%@page import="java.util.*" %>
+<%@page import="kr.ac.fcm.DTO.Schedule" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,27 +34,39 @@
  	<%@ include file="header/header_member.jsp" %>
   </c:if>
  <!-- header -->
-    <div class="container-fuild" style="padding-top:5%; padding-left:10%; padding-right:10%; padding-bottom:10%;">
+    <div class="container-fuild" style="padding-top:5%; padding-left:10%; padding-right:10%; padding-bottom:5%;">
  	<div class="row">
- <table class="table table-bordered">
-  <thead>
+ <table class="table table-bordered ">
+  <thead >
      <tr class="text-center">
-      <th scope="col" style="width:15px">시간</th>
-      <th scope="col">월</th>
-      <th scope="col">화</th>
-      <th scope="col">수</th>
-      <th scope="col">목</th>
-      <th scope="col">금</th>
-      <th scope="col">토</th>
-      <th scope="col">일</th>
+      <th scope="col" style="width:150px" >시간</th>
+      <th scope="col" style="width:300px">월</th>
+      <th scope="col" style="width:300px">화</th>
+      <th scope="col" style="width:300px">수</th>
+      <th scope="col" style="width:300px">목</th>
+      <th scope="col" style="width:300px">금</th>
+      <th scope="col" style="width:300px">토</th>
+      <th scope="col" style="width:300px">일</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="text-center">
+	<% int count=0;
+	ArrayList<Schedule> list=new ArrayList<Schedule>();
+	int size=-1;
+	if(request.getAttribute("list")!=null){
+		list = (ArrayList<Schedule>)request.getAttribute("list");
+		size=list.size();
+	}
+	%>
   	<% for(int time=9; time<22; time++){ %>
     <tr>
       <th scope="row"><%= time %>시~<%= time+1 %>시</th>
 	  <%for(int i=0; i<7; i++){ %>
-	  	<td><%= i %></td>
+	  	<td
+	  		<% if(size>0 && list.get(count).getTime()==time && list.get(count).getDay()==i){ System.out.println("test"); %> style="background-color:gray">
+	  			<%= list.get(count).getMemberName() %> - 	<%= list.get(count).getTrainerName() %> 
+	  			 <%; if(count < size-1) count++; }else{%>><% }%>
+	  	</td>
 	  	<%}; %>
     </tr>
     <%}%>

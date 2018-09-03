@@ -51,5 +51,6 @@ public class SaveLoginIdHandler extends SavedRequestAwareAuthenticationSuccessHa
 			 new DefaultRedirectStrategy().sendRedirect(request, response, "/trainer");
 		 if(usertype.equals("MEMBER"))
 			 new DefaultRedirectStrategy().sendRedirect(request, response, "/member");
+		 
 	 }
 }
