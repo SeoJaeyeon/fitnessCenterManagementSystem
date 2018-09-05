@@ -8,7 +8,10 @@
 
 **시스템 구조**
 
+<<<<<<< HEAD
 ![system-architecture](https://github.com/SeoJaeyeon/fitnessCenterManagementSystem/blob/master/img/system-architecture.PNG)
+=======
+![system-architecture](https://github.com/SeoJaeyeon/fitnessCenterManagementSystem/blob/master/img/system-architecture.PNG?raw=true)
 
 
 
@@ -22,7 +25,7 @@
 
 : jsp 반복문을 통해 구현 
 
-[schedule.jsp]: https://github.com/SeoJaeyeon/fitnessCenterManagementSystem/blob/master/fitnessCenterManagementSystem/src/main/webapp/WEB-INF/views/schedule.jsp
+[schedule.jsp](https://github.com/SeoJaeyeon/fitnessCenterManagementSystem/blob/master/fitnessCenterManagementSystem/src/main/webapp/WEB-INF/views/schedule.jsp)
 
 ```html
 <% int count=0;
@@ -52,8 +55,8 @@
 
 : AWS S3 , form 태그, jstl c태그를 통해 구현 
 
-[tr_mypage.jsp]: https://github.com/SeoJaeyeon/fitnessCenterManagementSystem/blob/master/fitnessCenterManagementSystem/src/main/webapp/WEB-INF/views/trainer/tr_mypage.jsp
-[TrainerController.java]:https://github.com/SeoJaeyeon/fitnessCenterManagementSystem/blob/master/fitnessCenterManagementSystem/src/main/java/kr/ac/fcm/controller/TrainerController.java
+[tr_mypage.jsp](https://github.com/SeoJaeyeon/fitnessCenterManagementSystem/blob/master/fitnessCenterManagementSystem/src/main/webapp/WEB-INF/views/trainer/tr_mypage.jsp),
+[TrainerController.java](https://github.com/SeoJaeyeon/fitnessCenterManagementSystem/blob/master/fitnessCenterManagementSystem/src/main/java/kr/ac/fcm/controller/TrainerController.java)
 
 - <u>사용자 관리</u>: 헬스장 관리자는 트레이너와 회원 등록/정보 수정 가능
 
