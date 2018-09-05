@@ -8,9 +8,8 @@
 
 **시스템 구조**
 
-<<<<<<< HEAD
-![system-architecture](https://github.com/SeoJaeyeon/fitnessCenterManagementSystem/blob/master/img/system-architecture.PNG)
-=======
+
+
 ![system-architecture](https://github.com/SeoJaeyeon/fitnessCenterManagementSystem/blob/master/img/system-architecture.PNG?raw=true)
 
 
