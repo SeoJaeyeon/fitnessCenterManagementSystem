@@ -26,7 +26,7 @@
 
 ```html
 <% int count=0;
-	ArrayList&lt;ScheduleDTO&gt; list=new ArrayList<ScheduleDTO>();
+	ArrayList<ScheduleDTO> list=new ArrayList<ScheduleDTO>();
 	int size=-1;
 	if(request.getAttribute("schedules")!=null){
 		list = (ArrayList<ScheduleDTO>)request.getAttribute("schedules");
