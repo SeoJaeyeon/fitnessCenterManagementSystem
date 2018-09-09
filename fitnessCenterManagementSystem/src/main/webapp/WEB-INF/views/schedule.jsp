@@ -34,7 +34,7 @@
  	<%@ include file="header/header_member.jsp" %>
   </c:if>
  <!-- header -->
-    <div class="container-fuild" style="padding-top:10%; padding-left:10%; padding-right:10%; padding-bottom:5%;">
+    <div class="container-fuild" style="padding-top:5%; padding-left:10%; padding-right:10%; padding-bottom:5%;">
  	<div class="row">
  <table class="table table-bordered ">
   <thead >
@@ -63,7 +63,8 @@
       <th scope="row"><%= time %>시~<%= time+1 %>시</th>
 	  <%for(int i=0; i<7; i++){ %>
 	  	<td
-	  		<% if(size>0 && list.get(count).getHour()==time && list.get(count).getDay()==i){%> style="background-color:rgb(204,255,255)">
+	  		<% if(size>0 && list.get(count).getHour()==time && list.get(count).getDate().getDayOfWeek()==i+1)
+	  		{%> style="background-color:rgb(204,255,255)">
 	  			<%= list.get(count).getMember_name()%> 회원 - 	<%= list.get(count).getTrainer_name()%> 트레이너 
 	  			 <%; if(count < size-1) count++; }else{%>><% }%>
 	  	</td>
