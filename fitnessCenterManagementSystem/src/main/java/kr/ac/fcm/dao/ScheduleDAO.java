@@ -22,4 +22,11 @@ public class ScheduleDAO {
 		return scheduleMapper.selectThisWeekSchedulesByTrainerId(trainer_id);
 	}
 
+	public boolean applySchedule(String member_id, String trainer_id,  String hour, String date){
+		return scheduleMapper.applySchedule(member_id, trainer_id, hour,date);
+	}
+	
+	public int countApplySchedule(String member_id, String date){
+		return scheduleMapper.countApplyRecord(member_id, date);
+	}
 }

@@ -1,6 +1,9 @@
 package kr.ac.fcm.controller;
 
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.ac.fcm.DTO.ScheduleDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.MemberDTO;
+import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.service.AccountService;
 import kr.ac.fcm.service.FindUserService;
 import kr.ac.fcm.service.ReviseMyInfoService;
@@ -54,14 +58,35 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/apply")
-	public ModelAndView applySchedule(@AuthenticationPrincipal Account account){
+	public ModelAndView applyScheduleView(@AuthenticationPrincipal Account account,HttpServletRequest req){
+	//https://localhost:8090/member/apply?success
 		ModelAndView mv=new ModelAndView("/member/apply");
+		if(req.getParameter("success")!=null){
+			mv.addObject("message","신청완료");
+		}
+		if(req.getParameter("error")!=null){
+			mv.addObject("message","PT신청횟수를 초과하였습니다!!");
+		}
 		mv.addObject("schedule","active");
 		mv.addObject("type",account.getType());
 		List<ScheduleDTO> schedules=scheduleService.findThisWeekScheduleByMemberId(account.getId());
 		mv.addObject("schedules",schedules);
 		
+		TrainerDTO trainer=new TrainerDTO();
+		trainer=findUserService.findTrainerById(findUserService.findMemberById(account.getId()).getTrainer_id());
+		
+		mv.addObject("trainer",trainer);
+		
 		return mv;
+	}
+	
+	@GetMapping("/member/ptapply.do")
+	public String applySchedule(@AuthenticationPrincipal Account account, String day, String hour ){
+		
+		MemberDTO member=findUserService.findMemberById(account.getId());
+		if(scheduleService.applySchedule(member.getId(), member.getTrainer_id(),day , hour, member.getPt()))
+			return "redirect:/member/apply?success";
+		return "redirect:/member/apply?error";
 	}
 	
 	@GetMapping("/member/mypage")

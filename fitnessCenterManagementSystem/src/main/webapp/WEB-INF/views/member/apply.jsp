@@ -1,3 +1,4 @@
+<%@page import="kr.ac.fcm.DTO.user.TrainerDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
@@ -18,8 +19,13 @@
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath}/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
-
-  <!-- Custom styles for this template-->
+	<script>
+		var sm='${message}';
+		
+		if(sm!="")
+			alert(sm);
+	
+	</script>
 
 </head>
 
@@ -27,7 +33,10 @@
   <!-- header -->
  	<%@ include file="../header/header_member.jsp" %>
  <!-- header -->
-    <div class="container-fuild" style="padding-top:10%; padding-left:10%; padding-right:10%; padding-bottom:5%;">
+    <div class="container-fuild" style="padding-top:5%; padding-left:10%; padding-right:10%; padding-bottom:5%;">
+    <div class="row">
+    	<p>담당트레이너: ${trainer.name}</p>
+    </div>
  	<div class="row">
  <table class="table table-bordered ">
   <thead >
@@ -50,14 +59,41 @@
 		list = (ArrayList<ScheduleDTO>)request.getAttribute("schedules");
 		size=list.size();
 	}
+	
+	TrainerDTO trainer=(TrainerDTO)request.getAttribute("trainer");
+	
+	int cd=-1;
+	switch(trainer.getClosed_day()){
+	case "MON":
+		cd=0;
+		break;
+	case "TUE":
+		cd=1;
+		break;
+	case "WED":
+		cd=2;
+		break;
+	case "THU":
+		cd=3;
+		break;
+	case "FRI":
+		cd=4;
+		break;
+	case "SAT":
+		cd=5;
+		break;
+	case "SUN":
+		cd=6;
+		
+	}
 	%>
   	<% for(int time=9; time<22; time++){ %>
     <tr>
       <th scope="row"><%= time %>시~<%= time+1 %>시</th>
 	  <%for(int i=0; i<7; i++){ %>
 	  	<td>
-	  		<% if(size>0 && list.get(count).getHour()==time && list.get(count).getDay()==i){; if(count < size-1) count++; %><a style="color:blue" href="/member/reserv?day=<%=i%>&hour=<%=time%>">예약</a><%
-	  		}else{%><a style="color:gray" href="/member/apply?day=<%=i%>&hour=<%=time%>">신청</a>
+	  		<% if(size>0 && list.get(count).getHour()==time && list.get(count).getDate().getDayOfWeek()==i+1){; if(count < size-1) count++; %><a style="color:blue" href="/member/reserv?day=<%=i%>&hour=<%=time%>">예약</a><%
+	  		}else if(cd==i){%><p>신청불가</p><%}else{%><a style="color:gray" href="/member/ptapply.do?day=<%=i%>&hour=<%=time%>">신청</a>
 	  		<%}%>
 	  	</td>
 	  	<%}; %>
