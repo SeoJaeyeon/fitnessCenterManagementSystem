@@ -3,6 +3,7 @@ package kr.ac.fcm.controller;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -69,14 +70,16 @@ public class MemberController {
 		}
 		mv.addObject("schedule","active");
 		mv.addObject("type",account.getType());
-		List<ScheduleDTO> schedules=scheduleService.findThisWeekScheduleByMemberId(account.getId());
-		mv.addObject("schedules",schedules);
+		mv.addObject("id", account.getId());
 		
 		TrainerDTO trainer=new TrainerDTO();
 		trainer=findUserService.findTrainerById(findUserService.findMemberById(account.getId()).getTrainer_id());
 		
+		List<ScheduleDTO> schedules=scheduleService.findAfterTwoWeeksSchedulesByTrainerIdAndHour(trainer.getId());
+		mv.addObject("schedules",schedules);
+
 		mv.addObject("trainer",trainer);
-		
+	
 		return mv;
 	}
 	
