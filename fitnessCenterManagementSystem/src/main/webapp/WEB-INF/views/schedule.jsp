@@ -63,7 +63,7 @@
       <th scope="row"><%= time %>시~<%= time+1 %>시</th>
 	  <%for(int i=0; i<7; i++){ %>
 	  	<td
-	  		<% if(size>0 && list.get(count).getHour()==time && list.get(count).getDate().getDayOfWeek()==i+1)
+	  		<% if(size>0 && list.get(count).getHour()==time && list.get(count).getDate().getDay()==i)
 	  		{%> style="background-color:rgb(204,255,255)">
 	  			<%= list.get(count).getMember_name()%> 회원 - 	<%= list.get(count).getTrainer_name()%> 트레이너 
 	  			 <%; if(count < size-1) count++; }else{%>><% }%>

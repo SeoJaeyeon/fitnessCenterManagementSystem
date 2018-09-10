@@ -2,6 +2,7 @@ package kr.ac.fcm.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,5 +29,9 @@ public class ScheduleDAO {
 	
 	public int countApplySchedule(String member_id, String date){
 		return scheduleMapper.countApplyRecord(member_id, date);
+	}
+	
+	public List<ScheduleDTO> findSchedulesByHourAndDateAndTrainerId(String hour, String start_date,String end_date, String trainer_id){
+		return scheduleMapper.findSchedulesByHourAndDateAndTrainerId(hour, start_date, end_date, trainer_id);
 	}
 }
