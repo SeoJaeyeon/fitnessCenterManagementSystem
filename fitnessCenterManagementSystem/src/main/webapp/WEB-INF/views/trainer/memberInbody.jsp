@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="kr.ac.fcm.DTO.InbodyDTO"%>
+<%@page import="kr.ac.fcm.dao.InbodyDao"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,66 +16,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>관리자페이지</title>
+  <title>트레이너페이지</title>
   <!-- Bootstrap core CSS-->
   <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
   <link href="${pageContext.request.contextPath}/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin CSS-->
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script>
     
     	var message='${message}';
     	if(message!="")
     		alert(message);
-    	
-       	
-        function showPopup() { 
-        	window.open("/trainer/record_inbody?id=${member.id}", "인바디기록", "width=350, height=300, left=100, top=50"); 
-        	
-        }
     		
+    	
+    	<%
+     	List<InbodyDTO> inbodyList=new ArrayList<InbodyDTO>();
+    	
+    	if(request.getAttribute("inbody")!=null){
+    		inbodyList=(ArrayList<InbodyDTO>)request.getAttribute("inbody");
+    	}
+    	
+    	%>
+    	
+    	
+    function showPopup() { 
+    	window.open("/trainer/record_inbody?id=${member.id}", "인바디기록", "width=350, height=300, left=100, top=50"); 
+    	
+    }
     </script>
 
 </head>
-<body>
+<body >
   <%@ include file="../header/header_trainer.jsp" %>
-  <form method="post">
-  <div class="contianer-fuild" style="padding-top:5%;padding-left:5%; padding-right:5%; padding-bottom:5%;">
-  <div class="row">
-  <div class="input-group mb-3" style="padding-left:60%;">
-  <div class="input-group-prepend">
-  	<input type="button" class="btn btn-primary" disabled="true" value="회원이름"/> 
-  </div>
-  <input type="text" class="form-control" name="name" aria-label="Name">
-   <div class="input-group-append">
-    <button class="btn btn-outline-primary" type="submit" >검색</button>
-   </div>
-	</div>
-  </div><% int count=0; %>
-  	<c:forEach var="member" items="${members}"  varStatus="status">
-  		<% if((count%3)==0) %><div class="row"><%; %>
-  		<div class="col-md-4" style="padding-bottom:2%">
-  			 <div class="card">
+   <div class="container-fuild" style="padding-top:5%; padding-left:10%; padding-right:10%; padding-bottom:5%;text-align: center">
+   <div class="row" style="text-align: center">
+   <div style="width:25%"></div>
+   <div class="card" style="width:50%">
       <div class="card-body">
         <h5 class="card-title">${member.name} 회원님</h5>
         <p class="card-text">성별: <c:choose><c:when test="${member.gender=='M'}">남성</c:when><c:otherwise>여성</c:otherwise></c:choose></p>
         <p class="card-text">주 pt횟수: ${member.pt}회</p>
         <p class="card-text">연락처: ${member.phone_number}</p>
-        <a href="/trainer/inbody.do?id=${member.id}" class="btn btn-primary">인바디조회</a>
-        <input type="button" onclick=showPopup() class="btn btn-primary" value="인바디기록">
       </div>
      </div>
+     <div style="width:25%"></div>
      </div>
-     <% count++;
-     	if(count!=0 && (count%3)==0)
-      %></div><%;%>
-     </c:forEach>
-     <input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
-	</form>
-	</div>
-	</div>
-	<%@ include file="../footer.jsp" %>
+ 	<div class="row" style="text-align: center">
+ 	<div id="inbody-chart" style="height: 250px; width: 100%"></div>
+ 	</div>
+      <p class="display-4">인바디 기록을 활용하기 전에 꼭 확인해주세요!</p>    
+      <p>1. 기록 확인을 요청한 회원이 <mark>본인</mark>이 맞나요?<br/></p>
+      <p>2. 마지막으로 기록한 날짜가 <mark>3개월</mark>이 넘어간다면? --><input type="button" class="btn btn-primary" value="인바디기록" onclick="showPopup();" /></p> 
+      <p>3. 기록에 문제가 있다면 관리자에게 문의해주세요<br/></p>
+ 	</div>
+ </div>
+ <script>
+
+ new Morris.Bar({
+	  element: 'inbody-chart',
+	  data: [
+	    <% for(int i=0; i<inbodyList.size(); i++){%>
+	    { y: '<%=inbodyList.get(i).getRecord().toString()%>',a:<%=inbodyList.get(i).getWeight()%>,
+	    b: <%=inbodyList.get(i).getFat()%>, c:<%=inbodyList.get(i).getMuscle()%> },<%};%>
+	  ],
+	  xkey: 'y',
+	  ykeys: ['a', 'b','c'],
+	  labels: ['몸무게', '체지방','근육량']
+	});
+ </script>
+
      <!-- Bootstrap core JavaScript-->
     <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

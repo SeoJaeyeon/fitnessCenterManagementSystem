@@ -49,7 +49,6 @@
                       <th>작성자</th>
                       <th style="width:40%">제목</th>
                       <th>작성시간</th>
-                      <th>조회수</th>
                     </tr>
                   </thead>
  				 <tbody>
@@ -62,7 +61,6 @@
 								<td><a href="/article?no=${article.idx}">${article.subject}</a></td>
 						
 							<td>${article.created}</td>
-							<td>${article.view}</td>
 						</tr>
 				</c:forEach>
   				</tbody>

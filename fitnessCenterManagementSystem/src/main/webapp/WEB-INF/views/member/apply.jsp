@@ -60,8 +60,6 @@
 		size=list.size();
 	}
 	
-	System.out.println(list.get(count).getDate());
-	
 	TrainerDTO trainer=(TrainerDTO)request.getAttribute("trainer");
 	
 	int cd=-1;
@@ -94,7 +92,7 @@
       <th scope="row"><%= time %>시~<%= time+1 %>시</th>
 	  <%for(int i=0; i<7; i++){ %>
 	  	<td>
-	  		<%if(count==size || list.get(count).getHour()!=time || list.get(count).getDate().getDay()!=i+1){%><a href="/member/ptapply.do?day=<%=i%>&hour=<%=time%>">신청</a><%}
+	  		<%if(size==0 || count==size || list.get(count).getHour()!=time || list.get(count).getDate().getDay()!=i+1){%><a href="/member/ptapply.do?day=<%=i%>&hour=<%=time%>">신청</a><%}
 	  		else if(list.get(count).getMember_id().equals(request.getAttribute("id").toString()) && list.get(count).getHour()==time && list.get(count).getDate().getDay()==i+1){%>
 	  		<a href="/member/ptcancle.do" style="color:red">취소</a><%; count++;}else{
 	  		%><a href="/member/ptreserv.do" style="color:blue">예약대기</a><%; count++;}%>
