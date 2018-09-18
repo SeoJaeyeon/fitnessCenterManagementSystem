@@ -1,11 +1,14 @@
 package kr.ac.fcm.controller;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.ac.fcm.DTO.InbodyDTO;
 import kr.ac.fcm.DTO.ScheduleDTO;
 import kr.ac.fcm.DTO.user.Account;
 import kr.ac.fcm.DTO.user.MemberDTO;
@@ -26,6 +30,7 @@ import kr.ac.fcm.DTO.user.MemberTrDTO;
 import kr.ac.fcm.DTO.user.TrainerDTO;
 import kr.ac.fcm.service.AccountService;
 import kr.ac.fcm.service.FindUserService;
+import kr.ac.fcm.service.InbodyServiceImpl;
 import kr.ac.fcm.service.ReviseMyInfoService;
 import kr.ac.fcm.service.ScheduleService;
 import kr.ac.fcm.service.s3.S3Service;
@@ -48,6 +53,9 @@ public class TrainerController {
 	
 	@Autowired
 	private ScheduleService scheduleService;
+	
+	@Autowired
+	private InbodyServiceImpl inbodyService;
 
 	@GetMapping("/trainer")
 	public ModelAndView trainerMain(@AuthenticationPrincipal Account account){
@@ -127,4 +135,34 @@ public class TrainerController {
 		model.addAttribute("management", "active");
 		return "/trainer/memberinfo";
 	}
+	
+	@GetMapping("/trainer/inbody.do")
+	public String showMemberInbody(@AuthenticationPrincipal Account account, Model model, HttpServletRequest req){
+		MemberDTO member=findUserService.findMemberById(req.getParameter("id"));
+		model.addAttribute("management", "active");
+		model.addAttribute("member",member);
+		
+		List<InbodyDTO> inbody=inbodyService.selectInbodyList(req.getParameter("id"));
+		model.addAttribute("inbody",inbody);
+		return "/trainer/memberInbody";
+	}
+	
+	@GetMapping("/trainer/record_inbody")
+	public ModelAndView recordInbody(@AuthenticationPrincipal Account account, Model model, HttpServletRequest req){
+		ModelAndView mv=new ModelAndView("/trainer/record_inbody");
+		MemberDTO member=findUserService.findMemberById(req.getParameter("id"));
+		mv.addObject("member", member);
+		return mv;
+	}
+	@PostMapping("/trainer/record_inbody")
+	public ModelAndView recordInbodyByPM(@AuthenticationPrincipal Account account, Model model, HttpServletRequest req,InbodyDTO inbody){
+		ModelAndView mv=new ModelAndView("/trainer/record_inbody");
+		MemberDTO member=findUserService.findMemberById(req.getParameter("id"));
+		mv.addObject("member", member);
+		inbodyService.insertInbodyInfo(inbody);
+		
+		mv.addObject("message","기록되었습니다");
+		return mv;
+	}
+	
 }
