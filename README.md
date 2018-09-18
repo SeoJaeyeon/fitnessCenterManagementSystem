@@ -34,6 +34,10 @@
 
 : AWS S3, form 태그를 통해 구현
 
+- 인바디기록: 트레이너는 회원의 인바디 기록을 조회하고 기록 가능
+
+: Morris.js 라이브러리
+
 - <u>커뮤니티</u>: 모든 사용자는 내부 게시판을 통해 소통 가능
 
 : DB와 비교하여 각 게시글에 대한 차등 권한 부여, 게시글 작성/수정/삭제/댓글 작성 기능 구현
@@ -42,4 +46,4 @@
 
 **시연영상**
 
-  [![Video Label](http://img.youtube.com/vi/uLR1RNqJ1Mw/0.jpg)](https://youtu.be/3Q0snPGf3og)
+  [![Video Label](http://img.youtube.com/vi/uLR1RNqJ1Mw/0.jpg)](https://youtu.be/1oYm_qbyaqw)
