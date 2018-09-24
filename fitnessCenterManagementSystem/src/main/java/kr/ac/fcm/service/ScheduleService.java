@@ -10,4 +10,5 @@ public interface ScheduleService {
 	public boolean applySchedule(String member_id, String trainer_id, String day, String hour, int pt);
 	public List<ScheduleDTO> findAfterTwoWeeksSchedulesByTrainerIdAndHour(String trainer_id);
 	public void cancleSchedule(String member_id, String day, String hour);
+	public int reserveSchedule(String member_id, String trainer_id, String hour, String date);
 }

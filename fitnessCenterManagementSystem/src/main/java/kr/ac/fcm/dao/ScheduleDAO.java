@@ -38,4 +38,12 @@ public class ScheduleDAO {
 	public void cancleSchedule(String member_id, String date, String hour){
 		scheduleMapper.cancleSchedule(hour, date, member_id);
 	}
+
+	public  void reservSchedule(String member_id, String trainer_id, String hour, String date, int idx){
+		scheduleMapper.reserveSchedule(member_id, trainer_id, hour, date, idx);
+	}
+	
+	public Integer getMaxIdxByReservTable(String member_id, String trainer_id, String date, String hour){
+		return scheduleMapper.getMaxIdxFromReserve(hour, date, member_id, trainer_id);
+	}
 }

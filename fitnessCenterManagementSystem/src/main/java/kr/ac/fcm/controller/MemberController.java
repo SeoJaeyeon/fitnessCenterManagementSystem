@@ -1,11 +1,5 @@
 package kr.ac.fcm.controller;
 
-
-import java.sql.Date;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,6 +68,12 @@ public class MemberController {
 		}
 		if(req.getParameter("cancle_success")!=null){
 			mv.addObject("message","취소완료");
+		}
+		if(req.getParameter("reserve_error")!=null){
+			mv.addObject("message","예약 대기중 오류 발생!!");
+		}
+		if(req.getParameter("reserve_success")!=null){
+			mv.addObject("message",req.getParameter("idx")+"번째 예약대기 성공");
 		}
 		mv.addObject("schedule","active");
 		mv.addObject("type",account.getType());
@@ -147,5 +147,20 @@ public class MemberController {
 		}
 		return "redirect:/member/apply?cancle_success";
 	}
+	
+	@GetMapping("/member/ptreserv.do")
+	public String reserveSchedule(@AuthenticationPrincipal Account account, String day, String hour )
+	{
+		MemberDTO member=findUserService.findMemberById(account.getId());
+		int idx=0;
+		try{
+			idx=scheduleService.reserveSchedule(account.getId(), member.getTrainer_id(), hour, day);
+		}catch(Exception e){
+			e.printStackTrace();
+			return "redirect:/member/apply?reserve_error";
+		}
+		return "redirect:/member/apply?reserve_success&idx="+idx;
+	}
+
 
 }

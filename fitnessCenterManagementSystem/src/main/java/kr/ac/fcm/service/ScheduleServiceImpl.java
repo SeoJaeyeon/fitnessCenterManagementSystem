@@ -4,6 +4,8 @@ package kr.ac.fcm.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +72,22 @@ public class ScheduleServiceImpl implements ScheduleService {
 		LocalDate afterTwoWeeks= currentDate.plusDays(15-curday+Integer.parseInt(day));
 
 		scheduleDao.cancleSchedule(member_id, afterTwoWeeks.toString(), hour);
+	}
+
+	@Override
+	@Transactional
+	public int reserveSchedule(String member_id, String trainer_id, String hour, String day) {
+
+		LocalDate currentDate = LocalDate.now();  
+		int curday=currentDate.getDayOfWeek();
+
+		LocalDate afterTwoWeeks= currentDate.plusDays(15-curday+Integer.parseInt(day));
+		String date=afterTwoWeeks.toString();
+		int idx=1;
+		if(scheduleDao.getMaxIdxByReservTable(member_id, trainer_id, date, hour)!=null)
+			idx=scheduleDao.getMaxIdxByReservTable(member_id, trainer_id, date, hour)+1;
+		scheduleDao.reservSchedule(member_id, trainer_id,hour, date, idx);
+		return idx;
 	}
 
 }

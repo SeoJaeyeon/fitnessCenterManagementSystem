@@ -21,7 +21,6 @@ public interface ScheduleMapper {
 			+ "WHERE tr.id=#{trainer_id} and mem.id=sc.member_id and tr.id=sc.trainer_id and YEARWEEK(date) = YEARWEEK(now()) order by date asc")
 	public List<ScheduleDTO> selectThisWeekSchedulesByTrainerId(@Param("trainer_id") String trainer_id);
 	
-	//member_id | trainer_id | day  | hour | date   
 	@Insert("INSERT INTO SCHEDULES VALUE(#{member_id}, #{trainer_id}, #{hour},#{date} )")
 	public boolean applySchedule(@Param("member_id")String member_id, @Param("trainer_id") String trainer_id, @Param("hour") String hour,@Param("date") String date);
 	
@@ -34,5 +33,10 @@ public interface ScheduleMapper {
 	@Delete("DELETE FROM SCHEDULES WHERE hour=#{hour} AND date=#{date} AND member_id=#{member_id}")
 	public void cancleSchedule(@Param("hour") String hour, @Param("date") String date, @Param("member_id") String member_id);
 	
-	
+	@Select("SELECT MAX(idx) FROM RESERVE WHERE hour=#{hour} AND date=#{date} AND member_id=#{member_id} AND trainer_id=#{trainer_id}")
+	public Integer getMaxIdxFromReserve(@Param("hour") String hour, @Param("date") String date, @Param("member_id") String member_id, @Param("trainer_id") String trainer_id);
+ 
+	@Insert("INSERT INTO RESERVE VALUES(#{member_id},#{trainer_id},#{hour},#{date}, #{idx})")
+	public void reserveSchedule(@Param("member_id")String member_id, @Param("trainer_id")String trainer_id, @Param("hour") String hour, @Param("date") String date, @Param("idx") int idx);
+
 }
