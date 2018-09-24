@@ -57,4 +57,9 @@ public class BoardDAO {
 		List<CommentDTO> comments=boardMapper.showAllComments(idx);
 		return comments;
 	}
+	
+	public int deleteComment(int idx){
+		boardMapper.deleteCommentByIdx(idx);
+		return idx;
+	}
 }

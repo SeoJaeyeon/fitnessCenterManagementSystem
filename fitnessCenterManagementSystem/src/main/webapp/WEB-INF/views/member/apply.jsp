@@ -94,7 +94,7 @@
 	  	<td>
 	  		<%if(size==0 || count==size || list.get(count).getHour()!=time || list.get(count).getDate().getDay()!=i+1){%><a href="/member/ptapply.do?day=<%=i%>&hour=<%=time%>">신청</a><%}
 	  		else if(list.get(count).getMember_id().equals(request.getAttribute("id").toString()) && list.get(count).getHour()==time && list.get(count).getDate().getDay()==i+1){%>
-	  		<a href="/member/ptcancle.do" style="color:red">취소</a><%; count++;}else{
+	  		<a href="/member/ptcancle.do?day=<%=i%>&hour=<%=time%>" style="color:red">취소</a><%; count++;}else{
 	  		%><a href="/member/ptreserv.do" style="color:blue">예약대기</a><%; count++;}%>
 	  	</td>
 	  	<%}; %>

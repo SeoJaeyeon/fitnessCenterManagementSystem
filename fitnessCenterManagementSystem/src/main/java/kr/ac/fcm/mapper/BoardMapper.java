@@ -42,5 +42,8 @@ public interface BoardMapper {
 	@Select("SELECT* FROM COMMENT WHERE IDX=#{idx} order by created asc")
 	public List<CommentDTO> showAllComments(int idx);
 	
+	@Delete("DELETE FROM COMMENT WHERE IDX=#{idx}")
+	public void deleteCommentByIdx(int idx);
+	
 	
 }
