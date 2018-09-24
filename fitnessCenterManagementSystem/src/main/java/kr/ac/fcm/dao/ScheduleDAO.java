@@ -34,4 +34,8 @@ public class ScheduleDAO {
 	public List<ScheduleDTO> findSchedulesByHourAndDateAndTrainerId(String hour, String start_date,String end_date, String trainer_id){
 		return scheduleMapper.findSchedulesByHourAndDateAndTrainerId(hour, start_date, end_date, trainer_id);
 	}
+	
+	public void cancleSchedule(String member_id, String date, String hour){
+		scheduleMapper.cancleSchedule(hour, date, member_id);
+	}
 }

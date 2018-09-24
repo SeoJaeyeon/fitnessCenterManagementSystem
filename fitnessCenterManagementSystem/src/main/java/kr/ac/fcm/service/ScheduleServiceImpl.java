@@ -62,4 +62,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return schedules;
 	}
 
+	@Override
+	public void cancleSchedule(String member_id, String day, String hour) {
+		LocalDate currentDate = LocalDate.now();  
+		int curday=currentDate.getDayOfWeek();
+
+		LocalDate afterTwoWeeks= currentDate.plusDays(15-curday+Integer.parseInt(day));
+
+		scheduleDao.cancleSchedule(member_id, afterTwoWeeks.toString(), hour);
+	}
+
 }
