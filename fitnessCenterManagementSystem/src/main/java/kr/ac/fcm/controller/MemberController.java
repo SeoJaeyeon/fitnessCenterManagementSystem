@@ -128,5 +128,13 @@ public class MemberController {
 		model.addAttribute("member",member);
 		return "redirect:/member/mypage?success";
 	}
+	
+	@GetMapping("/member/ptcancle.do")
+	public ModelAndView cancleSchedule(@AuthenticationPrincipal Account account, String day, String hour )
+	{
+		ModelAndView mv=new ModelAndView();
+		
+		return mv;
+	}
 
 }

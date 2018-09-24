@@ -43,6 +43,7 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteArticle(int idx) {
 		boardDao.deleteArticle(idx);
 		boardDao.refreshIdx();
+		boardDao.deleteComment(idx);
 	}
 
 	@Override
