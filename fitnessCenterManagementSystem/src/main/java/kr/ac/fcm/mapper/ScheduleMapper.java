@@ -2,6 +2,7 @@ package kr.ac.fcm.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -30,6 +31,8 @@ public interface ScheduleMapper {
 	@Select("SELECT* FROM SCHEDULES WHERE hour=#{hour} AND date >=#{start_date} AND date <=#{end_date} AND trainer_id=#{trainer_id} ORDER BY DATE ASC")
 	public List<ScheduleDTO> findSchedulesByHourAndDateAndTrainerId(@Param("hour") String hour, @Param("start_date") String start_date, @Param("end_date") String end_date, @Param("trainer_id") String trainer_id);
 	
+	@Delete("DELETE FROM SCHEDULES WHERE hour=#{hour} AND date=#{date} AND member_id=#{member_id}")
+	public void cancleSchedule(@Param("hour") String hour, @Param("date") String date, @Param("member_id") String member_id);
 	
 	
 }

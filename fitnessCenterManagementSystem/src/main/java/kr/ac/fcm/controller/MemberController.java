@@ -2,6 +2,7 @@ package kr.ac.fcm.controller;
 
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,6 +69,12 @@ public class MemberController {
 		if(req.getParameter("error")!=null){
 			mv.addObject("message","PT신청횟수를 초과하였습니다!!");
 		}
+		if(req.getParameter("cancle_error")!=null){
+			mv.addObject("message","PT취소 중 에러가 발생했습니다!!");
+		}
+		if(req.getParameter("cancle_success")!=null){
+			mv.addObject("message","취소완료");
+		}
 		mv.addObject("schedule","active");
 		mv.addObject("type",account.getType());
 		mv.addObject("id", account.getId());
@@ -130,11 +137,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member/ptcancle.do")
-	public ModelAndView cancleSchedule(@AuthenticationPrincipal Account account, String day, String hour )
+	public String cancleSchedule(@AuthenticationPrincipal Account account, String day, String hour )
 	{
-		ModelAndView mv=new ModelAndView();
-		
-		return mv;
+		try{
+			scheduleService.cancleSchedule(account.getId(), day, hour);
+		}catch(Exception e){
+			e.printStackTrace();
+			return "redirect:/member/apply?cancle_error";
+		}
+		return "redirect:/member/apply?cancle_success";
 	}
 
 }
