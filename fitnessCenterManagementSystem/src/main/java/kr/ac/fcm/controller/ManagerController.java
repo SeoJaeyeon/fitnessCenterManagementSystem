@@ -36,17 +36,31 @@ import kr.ac.fcm.service.s3.S3Service;
 public class ManagerController {
 	Logger logger=LoggerFactory.getLogger(ManagerController.class);
 
-	@Autowired
+
 	private FindUserService findUserService;
-	
-	@Autowired
 	private S3Service s3Service;
-	
-	@Autowired
 	private UserManagementService userManagementService;
+	private ReviseUserInfoServiceByManager reviseUserInfoService;
 	
 	@Autowired
-	private ReviseUserInfoServiceByManager reviseUserInfoService;
+	public void setFindUserService(FindUserService findUserService){
+		this.findUserService=findUserService;
+	}
+	
+	@Autowired
+	public void setS3Service(S3Service s3Service){
+		this.s3Service=s3Service;
+	}
+	
+	@Autowired
+	public void setUserManagementService(UserManagementService userManagementService){
+		this.userManagementService=userManagementService;
+	}
+	
+	@Autowired
+	public void setReviseUserInfoServiceByManager(ReviseUserInfoServiceByManager reviseUserInfoService){
+		this.reviseUserInfoService=reviseUserInfoService;
+	}
 	
 	@GetMapping("/manager")
 	public String manager(@AuthenticationPrincipal Account account, Model model){

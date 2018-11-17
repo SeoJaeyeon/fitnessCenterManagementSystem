@@ -23,17 +23,29 @@ import kr.ac.fcm.service.SaveManagerService;
 @Controller
 public class AdminController {
 	
-	@Autowired
-	AccountService accountService;
+	private AccountService accountService;
+	
+	private SaveManagerService saveManagerService;
 	
 	@Autowired
-	private SaveManagerService addManagerService;
+	public void setAccountService(AccountService accountService){
+		this.accountService=accountService;
+	}
+	
+	@Autowired
+	public void setSaveManagerService(SaveManagerService saveManagerService){
+		this.saveManagerService=saveManagerService;
+	}
+
 	
 	@RequestMapping(value="/admin", method=RequestMethod.GET)
 	public String adminPage(Model model,HttpServletRequest req){
 		
 		return "admin/admin";
 	}
+
+	
+	
 	//관리자 추가 
 	@RequestMapping(value="/admin", method=RequestMethod.POST) 
 	public String addManager(CenterDTO center,ManagerDTO manager,HttpServletRequest req,Model model){
@@ -47,7 +59,7 @@ public class AdminController {
 			account.setCenter_id(center.getCenter_id());
 			
 			accountService.save(account, "ROLE_MANAGER", "MANAGER");
-			addManagerService.saveManager(manager, center);
+			saveManagerService.saveManager(manager, center);
 		
 		}catch(Exception ex){ 
 			ex.printStackTrace();

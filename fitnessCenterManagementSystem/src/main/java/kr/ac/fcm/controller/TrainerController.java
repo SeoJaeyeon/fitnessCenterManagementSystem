@@ -39,23 +39,44 @@ import kr.ac.fcm.service.s3.S3Service;
 public class TrainerController {
 	Logger logger=LoggerFactory.getLogger(TrainerController.class);
 	
-	@Autowired
-	private S3Service s3Service;
-	
-	@Autowired
-	private ReviseMyInfoService reviseTrainerInfoService;
 
-	@Autowired
+	private S3Service s3Service;
+	private ReviseMyInfoService reviseTrainerInfoService;
 	private AccountService accountService;
-	
-	@Autowired
 	private FindUserService findUserService;
-	
-	@Autowired
 	private ScheduleService scheduleService;
+	private InbodyServiceImpl inbodyService;
+	
 	
 	@Autowired
-	private InbodyServiceImpl inbodyService;
+	public void setS3Service(S3Service s3Service){
+		this.s3Service=s3Service;
+	}
+	
+	@Autowired
+	public void setReviseMyInfoService(ReviseMyInfoService reviseTrainerInfoService){
+		this.reviseTrainerInfoService=reviseTrainerInfoService;
+	}
+	@Autowired
+	public void setAccointService(AccountService accountService){
+		this.accountService=accountService;
+	}
+	
+	@Autowired
+	public void setFindUserService(FindUserService findUserService){
+		this.findUserService=findUserService;
+	}
+	
+	@Autowired
+	public void setScheduleService(ScheduleService scheduleService){
+		this.scheduleService=scheduleService;
+	}
+	
+	@Autowired
+	public void setInbodyService(InbodyServiceImpl inbodyService){
+		this.inbodyService=inbodyService;
+	}
+	
 
 	@GetMapping("/trainer")
 	public ModelAndView trainerMain(@AuthenticationPrincipal Account account){
