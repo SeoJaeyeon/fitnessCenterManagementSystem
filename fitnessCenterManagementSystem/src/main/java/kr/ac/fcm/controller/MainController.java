@@ -20,8 +20,13 @@ import org.springframework.ui.Model;
 @Controller
 public class MainController {
 	
-	@Autowired
+	
 	private EmailService emailService;
+	
+	@Autowired
+	public void setEmailService(EmailService emailService){
+		this.emailService=emailService;
+	}
 	
 
 	@RequestMapping(value="/", method=RequestMethod.GET)

@@ -31,17 +31,30 @@ public class MemberController {
 	
 	Logger logger=LoggerFactory.getLogger(MemberController.class);
 	
-	@Autowired
 	private ReviseMyInfoService reviseMemberInfoService;
-
-	@Autowired
 	private AccountService accountService;
-	
-	@Autowired
 	private FindUserService findUserService;
+	private ScheduleService scheduleService;
 	
 	@Autowired
-	private ScheduleService scheduleService;
+	public void setReviseMyInfoService(ReviseMyInfoService reviseMemberInfoService){
+		this.reviseMemberInfoService=reviseMemberInfoService;
+	}
+	
+	@Autowired
+	public void setAccountService(AccountService accountService){
+		this.accountService=accountService;
+	}
+	
+	@Autowired
+	public void setFindUserService(FindUserService findUserService){
+		this.findUserService=findUserService;
+	}
+	
+	@Autowired
+	public void setScheduleService(ScheduleService scheduleService){
+		this.scheduleService=scheduleService;
+	}
 	
 	@GetMapping("/member")
 	public ModelAndView showMemberView(@AuthenticationPrincipal Account account,ModelAndView model){

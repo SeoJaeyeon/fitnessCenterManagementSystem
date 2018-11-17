@@ -22,9 +22,13 @@ import kr.ac.fcm.service.BoardService;
 @Controller
 public class BoardController {
 	
+
+	private BoardService boardService;
 	
 	@Autowired
-	private BoardService boardService;
+	public void setBoardService(BoardService boardService){
+		this.boardService=boardService;
+	}
 	
 	@GetMapping("/board.do")
 	public String showArticleList(@AuthenticationPrincipal Account user, Model model){
