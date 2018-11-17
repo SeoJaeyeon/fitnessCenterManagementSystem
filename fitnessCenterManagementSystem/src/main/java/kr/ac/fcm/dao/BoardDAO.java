@@ -20,8 +20,13 @@ import kr.ac.fcm.mapper.BoardMapper;
  */
 @Repository
 public class BoardDAO {
-	@Autowired
+
 	private BoardMapper boardMapper;
+	
+	@Autowired
+	public void setBoardMapper(BoardMapper boardMapper){
+		this.boardMapper=boardMapper;
+	}
 	
 	public Integer saveArticle(ArticleDTO article){
 		return boardMapper.addArticle(article);

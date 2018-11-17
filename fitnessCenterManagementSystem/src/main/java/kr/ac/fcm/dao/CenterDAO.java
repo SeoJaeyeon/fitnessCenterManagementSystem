@@ -8,8 +8,13 @@ import kr.ac.fcm.mapper.CenterMapper;
 
 @Repository
 public class CenterDAO {
-	@Autowired
+
 	private CenterMapper centerMapper;
+	
+	@Autowired
+	public void setCenterMapper(CenterMapper centerMapper){
+		this.centerMapper=centerMapper;
+	}
 	
 	public CenterDTO saveCenter(CenterDTO center){
 		centerMapper.insertCenterData(center);
