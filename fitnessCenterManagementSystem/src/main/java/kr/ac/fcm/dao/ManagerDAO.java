@@ -13,8 +13,13 @@ import kr.ac.fcm.mapper.ManagerMapper;
  */
 @Repository
 public class ManagerDAO {
-	@Autowired
+
 	private ManagerMapper managerMapper;
+	
+	@Autowired
+	public void setManagerMapper(ManagerMapper managerMapper){
+		this.managerMapper=managerMapper;
+	}
 
 	public ManagerDTO saveManager(ManagerDTO manager){
 		managerMapper.insertManager(manager);

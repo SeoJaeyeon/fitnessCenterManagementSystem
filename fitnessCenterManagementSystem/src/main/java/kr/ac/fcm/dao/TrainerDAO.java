@@ -16,8 +16,13 @@ import kr.ac.fcm.mapper.TrainerMapper;
  */
 @Repository
 public class TrainerDAO {
-	@Autowired
+
 	private TrainerMapper trainerMapper;
+	
+	@Autowired
+	public void setTrainerMapper(TrainerMapper trainerMapper){
+		this.trainerMapper=trainerMapper;
+	}
 	
 	public TrainerDTO saveTrainer(TrainerDTO trainer){
 		trainerMapper.insertTrainer(trainer);

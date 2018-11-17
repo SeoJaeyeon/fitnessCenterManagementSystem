@@ -18,9 +18,13 @@ import kr.ac.fcm.mapper.MemberMapper;
 @Repository
 public class MemberDAO {
 	
-	@Autowired
 	private MemberMapper memberMapper;
 
+	@Autowired
+	public void setMemberMapper(MemberMapper memberMapper){
+		this.memberMapper=memberMapper;
+	}
+	
 	public MemberDTO saveMember(MemberDTO member){
 		memberMapper.insertMember(member);
 		return member;

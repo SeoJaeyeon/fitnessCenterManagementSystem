@@ -12,8 +12,12 @@ import kr.ac.fcm.mapper.ScheduleMapper;
 @Repository
 public class ScheduleDAO {
 	
-	@Autowired
 	private ScheduleMapper scheduleMapper;
+	
+	@Autowired
+	public void setScheduleMapper(ScheduleMapper scheduleMapper){
+		this.scheduleMapper=scheduleMapper;
+	}
 	
 	public List<ScheduleDTO> selectThisWeekScheduleByMemberId(String member_id){
 		return scheduleMapper.selectThisWeekSchedulesByMemberId(member_id);

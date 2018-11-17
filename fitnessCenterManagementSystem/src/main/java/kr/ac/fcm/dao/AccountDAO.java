@@ -20,8 +20,12 @@ import lombok.Getter;
 @Getter
 public class AccountDAO {
 	
-	@Autowired
 	private AccountMapper accountMapper;
+	
+	@Autowired
+	public void setAccountManager(AccountMapper accountMapper){
+		this.accountMapper=accountMapper;
+	}
 	
 	public Account save(Account account){
 		accountMapper.insertUser(account);

@@ -10,8 +10,13 @@ import kr.ac.fcm.mapper.InbodyMapper;
 
 @Repository
 public class InbodyDao {
-	@Autowired
+
 	private InbodyMapper inbodyMapper;
+	
+	@Autowired
+	public void setInbodyMapper(InbodyMapper inbodyMapper){
+		this.inbodyMapper=inbodyMapper;
+	}
 	
 	public List<InbodyDTO> selectInbodyByMemberId(String memberId){
 		return inbodyMapper.selectFromInbodyByMemberId(memberId);
