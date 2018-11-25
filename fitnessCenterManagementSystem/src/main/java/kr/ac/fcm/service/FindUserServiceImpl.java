@@ -18,14 +18,27 @@ import kr.ac.fcm.dao.TrainerDAO;
 @Service
 public class FindUserServiceImpl implements FindUserService {
 
-	@Autowired
 	private ManagerDAO managerDao;
 	
-	@Autowired
 	private TrainerDAO trainerDao;
 	
-	@Autowired
 	private MemberDAO memberDao;
+	
+	@Autowired
+	public void setManagerDao(ManagerDAO managerDao){
+		this.managerDao=managerDao;
+	}
+	
+	@Autowired
+	public void setTrainerDao(TrainerDAO trainerDao){
+		this.trainerDao=trainerDao;
+	}
+	
+	@Autowired
+	public void setMemberDao(MemberDAO memberDao){
+		this.memberDao=memberDao;
+	}
+
 	
 	@Override
 	public ManagerDTO findManagerById(String id) {

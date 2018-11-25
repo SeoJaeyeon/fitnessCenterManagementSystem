@@ -10,8 +10,12 @@ import kr.ac.fcm.dao.MemberDAO;
 @Service("reviseMemberInfoService")
 public class ReviseMemberInfoServiceImpl implements ReviseMyInfoService{
 	
-	@Autowired
 	private MemberDAO memberDao;
+	
+	@Autowired
+	public void setMemberDao(MemberDAO memberDao){
+		this.memberDao=memberDao;
+	}
 
 	@Override
 	public Account reviseMyInfo(Account member) {

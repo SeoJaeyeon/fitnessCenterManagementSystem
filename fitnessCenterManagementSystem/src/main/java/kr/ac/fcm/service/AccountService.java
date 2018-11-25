@@ -27,11 +27,19 @@ import kr.ac.fcm.dao.AccountDAO;
 @Service
 public class AccountService implements UserDetailsService{
 		
-	@Autowired
-	AccountDAO accountDao;
+	private AccountDAO accountDao;
+	
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	public void setAccountDao(AccountDAO accountDao){
+		this.accountDao=accountDao;
+	}
+	
+	@Autowired
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder){
+		this.passwordEncoder=passwordEncoder;
+	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

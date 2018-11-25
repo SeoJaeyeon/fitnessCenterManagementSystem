@@ -16,17 +16,35 @@ import kr.ac.fcm.dao.TrainerDAO;
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
 	
-	@Autowired
 	private AccountDAO accountDao;
 	
-	@Autowired
 	private MemberDAO memberDao;
 	
-	@Autowired
 	private TrainerDAO trainerDao;
 	
-	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	
+	@Autowired
+	public void setAccountDao(AccountDAO accountDao){
+		this.accountDao=accountDao;
+	}
+	
+	@Autowired
+	public void setMemberDao(MemberDAO memberDao){
+		this.memberDao=memberDao;
+	}
+	
+	@Autowired
+	public void setTrainerDao(TrainerDAO trainerDao){
+		this.trainerDao=trainerDao;
+	}
+	
+	@Autowired
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder){
+		this.passwordEncoder=passwordEncoder;
+	}
+	
 	
 	@Override
 	@Transactional

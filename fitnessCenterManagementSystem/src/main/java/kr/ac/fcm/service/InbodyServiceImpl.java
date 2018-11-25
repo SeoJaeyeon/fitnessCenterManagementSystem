@@ -12,9 +12,12 @@ import kr.ac.fcm.dao.InbodyDao;
 @Service
 public class InbodyServiceImpl {
 	
-	@Autowired
 	private InbodyDao inbodyDao;
 	
+	@Autowired
+	public void setInbodyDao(InbodyDao inbodyDao){
+		this.inbodyDao=inbodyDao;
+	}
 	
 	public List<InbodyDTO> selectInbodyList(String member_id){
 		return inbodyDao.selectInbodyByMemberId(member_id);

@@ -16,11 +16,19 @@ import kr.ac.fcm.dao.ManagerDAO;
 @Service
 public class SaveManagerService {
 	
-	@Autowired
 	private ManagerDAO managerDao;
+
+	private CenterDAO centerDao;
 	
 	@Autowired
-	private CenterDAO centerDao;
+	public void setManagerDao(ManagerDAO managerDao){
+		this.managerDao=managerDao;
+	}
+	
+	@Autowired
+	public void setCenterDao(CenterDAO centerDao){
+		this.centerDao=centerDao;
+	}
 	
 	@Transactional
 	public void saveManager(ManagerDTO manager, CenterDTO center) throws Exception {
