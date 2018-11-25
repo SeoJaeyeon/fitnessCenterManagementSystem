@@ -11,11 +11,20 @@ import kr.ac.fcm.dao.TrainerDAO;
 @Service
 public class ReviseUserInfoServiceImpl implements ReviseUserInfoServiceByManager {
 	
-	@Autowired
 	private MemberDAO memberDao;
 	
-	@Autowired
 	private TrainerDAO trainerDao;
+	
+	
+	@Autowired
+	public void setMemberDao(MemberDAO memberDao){
+		this.memberDao=memberDao;
+	}
+	
+	@Autowired
+	public void setTrainerDao(TrainerDAO trainerDao){
+		this.trainerDao=trainerDao;
+	}
 
 	@Override
 	public MemberDTO reviseMemberInfo(MemberDTO member) {

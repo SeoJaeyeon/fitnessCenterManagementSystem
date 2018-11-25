@@ -16,8 +16,12 @@ import kr.ac.fcm.dao.TrainerDAO;
 public class ReviseTrainerInfoServiceImpl implements ReviseMyInfoService {
 	Logger logger=LoggerFactory.getLogger(ReviseMyInfoService.class);
 	
-	@Autowired
 	private TrainerDAO trainerDao;
+	
+	@Autowired
+	public void setTrainerDao(TrainerDAO trainerDao){
+		this.trainerDao=trainerDao;
+	}
 	
 	@Override
 	@Transactional

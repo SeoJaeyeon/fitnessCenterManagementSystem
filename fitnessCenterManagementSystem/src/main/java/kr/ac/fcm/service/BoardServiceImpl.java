@@ -13,8 +13,15 @@ import kr.ac.fcm.dao.BoardDAO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-	@Autowired
+	
+	
 	private BoardDAO boardDao;
+	
+	
+	@Autowired
+	public void setBoardDAO(BoardDAO boardDao){
+		this.boardDao= boardDao;
+	}
 	
 	@Override
 	public List<ArticleDTO> showAllArticles() {

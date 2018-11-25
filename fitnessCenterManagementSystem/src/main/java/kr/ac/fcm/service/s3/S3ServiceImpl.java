@@ -26,12 +26,19 @@ import lombok.Data;
 @Transactional
 @Data
 public class S3ServiceImpl implements S3Service{
-    @Autowired
+
     private AmazonS3 amazonS3Client;
+    
     @Value("${amazonProperties.bucketName}")
     private String bucket;
     
     Logger logger=LoggerFactory.getLogger(S3ServiceImpl.class);
+    
+    
+    @Autowired
+    public void setAmazonS3Client(AmazonS3 amazonS3){
+    	this.amazonS3Client=amazonS3;
+    }
     
     /*
      *  파일생성 규칙 -> trainer/trainerid 에 따라 해당 경로를 통해 이미지 불러옴 

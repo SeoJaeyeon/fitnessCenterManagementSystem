@@ -17,10 +17,16 @@ import kr.ac.fcm.dao.ScheduleDAO;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
-	@Autowired
+
+	Logger logger=LoggerFactory.getLogger(ScheduleServiceImpl.class);
+	
 	private ScheduleDAO scheduleDao;
 	
-	Logger logger=LoggerFactory.getLogger(ScheduleServiceImpl.class);
+	@Autowired
+	public void setScheduleDao(ScheduleDAO scheduleDao){
+		this.scheduleDao=scheduleDao;
+	}
+	
 
 	@Override
 	public List<ScheduleDTO> findThisWeekScheduleByMemberId(String member_id) {
